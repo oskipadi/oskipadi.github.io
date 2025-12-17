@@ -19,7 +19,7 @@ a {
 	padding: 65px 0;
 }
 
-/* 3 columnas: flecha — título — espacio */
+/* 3 columnas: flecha â€” tÃ­tulo â€” espacio */
 .site-brandign {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -61,7 +61,7 @@ a {
   animation: moverFlecha 1s ease-in-out infinite;
 }
 
-/* Caja vacía solo para equilibrar el centrado */
+/* Caja vacÃ­a solo para equilibrar el centrado */
 .right-space {
   justify-self: end;
 }
@@ -173,7 +173,7 @@ a {
 /* Cubo completo */
 .swiper-container {
   width: 100%;
-  aspect-ratio: 1 / 1;  /* mantiene proporción */
+  aspect-ratio: 1 / 1;  /* mantiene proporciÃ³n */
 }
 
 /* Cara del cubo */
@@ -206,13 +206,13 @@ a {
   margin: 0 auto;
   padding-top: 41px;
 
-  /* animación inicial */
+  /* animaciÃ³n inicial */
   opacity: 0;
   transform: translateY(80px) scale(0.95);
   transition: all 1s cubic-bezier(.22,.61,.36,1);
 }
 
-/* Video detrás */
+/* Video detrÃ¡s */
 .iphone-video {
   aspect-ratio: 9 / 19.5;
   position: absolute;
@@ -266,11 +266,11 @@ a {
       padding-left: 20px;
       transition: padding-left 900ms ease;
       position: relative; 
-      z-index: 11;        /* por si quieres sobreponer aún más el texto frente a otros adornos */
+      z-index: 11;        /* por si quieres sobreponer aÃºn mÃ¡s el texto frente a otros adornos */
     }
 
     .menu_item::after {
-      content: "→";
+      content: "â†’";
       opacity: 0;
       display: inline-block;
       transition: transform 400ms ease, opacity 200ms ease;
@@ -284,5 +284,6 @@ a {
       opacity: 1;
       transform: translateX(20px);
     }
+
 
 
