@@ -218,7 +218,6 @@ a {
 
   /* animación inicial */
   opacity: 0;
-  transform: translateY(80px) scale(0.95);
   transition: all 1s cubic-bezier(.22,.61,.36,1);
 }
 
