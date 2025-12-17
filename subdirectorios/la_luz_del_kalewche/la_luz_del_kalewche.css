@@ -285,3 +285,113 @@ a {
       transform: translateX(20px);
     }
 
+/* =========================
+   ADAPTACIÓN MÓVIL
+   ========================= */
+@media (max-width: 768px) {
+
+  body {
+    overflow-x: hidden;
+  }
+
+  /* ---------- HEADER ---------- */
+  #masthead {
+    padding: 25px 0;
+  }
+
+  .site-title {
+    font-size: 28px;
+    max-width: none;
+  }
+
+  .flecha_izq {
+    font-size: 2em;
+    padding-left: 0.8em;
+  }
+
+  /* ---------- TITULOS ---------- */
+  .proyectos {
+    margin: 20px 0;
+    padding: 0;
+    text-align: center;
+    font-size: 1rem;
+  }
+
+  .titulo_proyecto {
+    font-size: clamp(42px, 10vw, 72px);
+    margin: 20px;
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .slogan {
+    font-size: clamp(22px, 6vw, 34px);
+    margin: 20px;
+    padding-left: 0;
+    text-align: center;
+  }
+
+  /* ---------- PORTADA ---------- */
+  .foto_portada {
+    width: 95%;
+  }
+
+  /* ---------- VIDEO + TEXTO ---------- */
+  .video_texto {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .video_kalewche {
+    width: 100%;
+    padding-left: 0;
+  }
+
+  .sinopsis {
+    font-size: 1rem;
+    max-width: none;
+    padding: 0 20px;
+    margin: 0;
+    text-align: justify;
+    text-indent: 1.5em;
+  }
+
+  /* ---------- SWIPER ---------- */
+  .headline {
+    padding-top: 80px;
+    padding-bottom: 40px;
+    font-size: 1.6rem;
+  }
+
+  .cubo-marco {
+    width: 90vw;
+    height: 90vw;
+  }
+
+  /* ---------- TECNICA ---------- */
+  .tecnica {
+    font-size: 0.95rem;
+    padding: 0 20px;
+  }
+
+  /* ---------- IPHONE ---------- */
+  .iphone-wrapper {
+    width: 85vw;
+    padding-top: 20px;
+  }
+
+  /* ---------- MENU FINAL ---------- */
+  .menu {
+    font-size: 1.4rem;
+    line-height: 1.6;
+    margin-bottom: 60px;
+  }
+
+  .menu_item {
+    padding-left: 0;
+  }
+
+  .menu_item::after {
+    display: none;
+  }
+}
