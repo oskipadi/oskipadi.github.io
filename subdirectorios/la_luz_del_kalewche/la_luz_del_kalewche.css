@@ -471,4 +471,20 @@ a {
     margin-top: 1.6em;
   }
 }
+/* ==============================
+   FIX VIDEO IPHONE EN MÓVIL iOS
+   ============================== */
+@media (max-width: 768px) {
+
+  .iphone-wrapper {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  .iphone-video {
+    transform: none !important;
+  }
+
+}
+
 
