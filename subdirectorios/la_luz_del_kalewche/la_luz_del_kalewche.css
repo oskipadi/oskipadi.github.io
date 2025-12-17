@@ -430,6 +430,86 @@ a {
     display: none;
   }
 }
+/* =====================================
+   ADAPTACIÓN MÓVIL AGRESIVA
+   NO AFECTA DESKTOP
+   ===================================== */
+
+@media (max-width: 768px) {
+
+  /* Reset márgenes laterales */
+  .proyectos,
+  .titulo_proyecto,
+  .slogan {
+    padding-left: 0;
+    margin-left: 0;
+    margin-right: 0;
+    text-align: center;
+  }
+
+  .titulo_proyecto {
+    font-size: 14vw;
+    margin: 12vw 6vw;
+  }
+
+  .slogan {
+    font-size: 7vw;
+    margin: 10vw 6vw;
+    line-height: 1.1;
+  }
+
+  /* VIDEO + TEXTO → COLUMNA */
+  .video_texto {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8vw;
+  }
+
+  .video_kalewche {
+    width: 100%;
+    padding-left: 0;
+  }
+
+  .sinopsis {
+    max-width: none;
+    font-size: 4.5vw;
+    padding: 0 8vw;
+    margin: 0;
+    text-indent: 0;
+  }
+
+  /* CUBO */
+  .cubo-marco {
+    width: 100vw;
+    height: 90vw;
+    margin-top: 15vw;
+    margin-bottom: 15vw;
+  }
+
+  /* DESCRIPCIÓN TÉCNICA */
+  .tecnica {
+    font-size: 4vw;
+    padding: 0 6vw;
+  }
+
+  .tecnica ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 6vw 0;
+  }
+
+  /* IPHONE VIDEO */
+  .iphone-wrapper {
+    width: 90vw;
+  }
+
+  /* MENÚ FINAL */
+  .menu {
+    font-size: 8vw;
+    margin-bottom: 20vw;
+  }
+}
+
 
 
 
