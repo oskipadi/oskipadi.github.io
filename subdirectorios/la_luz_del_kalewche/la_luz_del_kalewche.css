@@ -390,12 +390,7 @@ a {
     margin-bottom: 80px; /* 🔑 mantiene aire con técnica */
     overflow: hidden;
   }
-.swiper-slide {
-  display: block;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
+	
   /* -------- TECNICA -------- */
   .tecnica {
     font-size: 0.95rem;
@@ -481,14 +476,6 @@ a {
     padding: 0 8vw;
     margin: 0;
     text-indent: 0;
-  }
-
-  /* CUBO */
-  .cubo-marco {
-    width: 100vw;
-    height: 90vw;
-    margin-top: 15vw;
-    margin-bottom: 15vw;
   }
 
   /* DESCRIPCIÓN TÉCNICA */
