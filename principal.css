@@ -76,19 +76,14 @@ display: block; /* Botón ☰ se muestra en pantallas pequeñas */
 /*cursor: pointer; /*Para que el puntero del ratón sea como en un enlace*/
 /*}*/
 
-
-/* =====================
-   TITULOS
-   ===================== */
+/* ================= TITULOS ================= */
 .proyectos {
   text-align: center;
   margin: clamp(20px, 5vw, 50px);
   font-size: clamp(1.2rem, 3vw, 2rem);
 }
 
-/* =====================
-   MENU
-   ===================== */
+/* ================= MENU ================= */
 .menu {
   margin: clamp(15px, 4vw, 30px);
   text-align: center;
@@ -96,9 +91,7 @@ display: block; /* Botón ☰ se muestra en pantallas pequeñas */
   line-height: 1.6;
 }
 
-/* =====================
-   ITEMS
-   ===================== */
+/* ================= LINKS ================= */
 .menu_item {
   display: block;
   color: #111;
@@ -109,9 +102,7 @@ display: block; /* Botón ☰ se muestra en pantallas pequeñas */
   transition: padding-left 300ms ease, color 300ms ease;
 }
 
-/* =====================
-   HOVER SOLO DESKTOP
-   ===================== */
+/* ================= DESKTOP HOVER ================= */
 @media (hover: hover) and (pointer: fine) {
 
   .menu_item::after {
@@ -132,19 +123,15 @@ display: block; /* Botón ☰ se muestra en pantallas pequeñas */
   }
 }
 
-/* =====================
-   MINIATURAS
-   ===================== */
+/* ================= DESKTOP THUMB (HOVER SOURCE) ================= */
 .story-thumbnail-2 {
   width: 100%;
   height: clamp(160px, 30vw, 240px);
-  margin: 10px 0 30px;
   background-size: cover;
   background-position: center;
-  border-radius: 14px;
 }
 
-/* desktop: invisibles pero presentes */
+/* Oculta en desktop (se usa para hover JS) */
 @media (hover: hover) {
   .story-thumbnail-2 {
     opacity: 0;
@@ -154,9 +141,31 @@ display: block; /* Botón ☰ se muestra en pantallas pequeñas */
   }
 }
 
-/* =====================
-   CURSOR CUSTOM (desktop only)
-   ===================== */
+/* ================= MOBILE THUMB ================= */
+.thumb-mobile {
+  display: none;
+}
+
+/* ================= MOBILE ================= */
+@media (hover: none) and (pointer: coarse) {
+
+  .thumb-mobile {
+    display: block;
+    width: 160px;
+    aspect-ratio: 1 / 1;
+    margin: 20px auto 10px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    text-decoration: none;
+  }
+
+  .story-thumbnail-2 {
+    display: none;
+  }
+}
+
+/* ================= CURSOR CUSTOM ================= */
 .cursor {
   position: fixed;
   left: 0;
@@ -182,9 +191,7 @@ display: block; /* Botón ☰ se muestra en pantallas pequeñas */
 .cursor_visible { opacity: 1; }
 .cursor_grow { transform: translate(-50%, -50%) scale(1.06); }
 
-/* =====================
-   CAJAS
-   ===================== */
+/* ================= CAJAS ================= */
 .caja_proyectos,
 .caja_video,
 .caja_fpv,
