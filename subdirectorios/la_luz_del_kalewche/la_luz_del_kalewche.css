@@ -196,6 +196,16 @@ a {
 	text-align: center;
 	text-justify: auto;
 }
+/* Quitar puntos en descripción técnica */
+.tecnica ul {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.tecnica li {
+  margin-left: 0;
+}
 
 /*iphone*/
 .iphone-wrapper {
