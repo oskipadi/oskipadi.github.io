@@ -125,59 +125,129 @@ menu.style.display = 'flex'; // Mostrar el menú
   <!-- Swiper JS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-  <!-- Initialize Swiper -->
-  <script>
-    var swiper = new Swiper(".mySwiper", {
-      spaceBetween: 30,
-      centeredSlides: true,
-      autoplay: {
-        delay: 3500,
-        disableOnInteraction: false,
-      },
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-    });
-  </script>
-	
-	  
-	  
-	<div class="caja_proyectos">
-	<h4 class="proyectos">proyectos</h4>
-	
-	<div class="menu">
-		  <a class="menu_item" href="./subdirectorios/la_luz_del_kalewche/la_luz_del_kalewche.html">La luz del kalewche</a>
-		  <div class="story-thumbnail-2" style="background-image: url(./subdirectorios/la_luz_del_kalewche/la_luz_del_kalewche_7.jpg)"></div>
+<!-- SWIPER -->
+<script>
+var swiper = new Swiper(".mySwiper", {
+  spaceBetween: 20,
+  centeredSlides: true,
+  autoplay: {
+    delay: 3500,
+    disableOnInteraction: false,
+  },
+  pagination: {
+    el: ".swiper-pagination",
+    clickable: true,
+  },
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
+  breakpoints: {
+    0: { slidesPerView: 1 },
+    768: { slidesPerView: 2 },
+    1024: { slidesPerView: 3 }
+  }
+});
+</script>
 
-		  <a class="menu_item" href="./subdirectorios/el_cuerpo_necesita_un_ratito_de_sol/el_cuerpo_necesita_un_ratito_de_sol.html">El cuerpo necesita un ratito de sol</a>
-		  <div class="story-thumbnail-2" style="background-image: url(./subdirectorios/el_cuerpo_necesita_un_ratito_de_sol/el_cuerpo_necesita_un_ratito_de_sol_15.jpg)"></div>
-	</div>
-  </div>
-	
-	<div class="caja_video">
-	<h4 class="proyectos">diseño sonoro</h4>
-	
-	<div class="menu">
-		  <a class="menu_item" href="https://www.coloraofilms.com/ficcion">El Reparto</a>
-		  <div class="story-thumbnail-2" style="background-image: url(./el_reparto.jpeg)"></div>
+<!-- ================= PROYECTOS ================= -->
 
-	</div>
-  </div>
-	
-	<div class="caja_fpv">
-	<h4 class="proyectos">drones</h4>
-	
-	<div class="menu">
-		  <a class="menu_item" href="./subdirectorios/dron_fpv/dron_fpv.html">oscarpadilla_fpv</a>
-		  <div class="story-thumbnail-2" style="background-image: url(./subdirectorios/dron_fpv/pp_fpv.jpg)"></div>
+<div class="caja_proyectos">
+  <h4 class="proyectos">proyectos</h4>
 
-	</div>
+  <div class="menu">
+
+    <!-- MOBILE THUMB -->
+    <a class="thumb-mobile"
+       href="./subdirectorios/la_luz_del_kalewche/la_luz_del_kalewche.html"
+       style="background-image:url(./subdirectorios/la_luz_del_kalewche/la_luz_del_kalewche_7.jpg)">
+    </a>
+
+    <!-- TEXTO -->
+    <a class="menu_item"
+       href="./subdirectorios/la_luz_del_kalewche/la_luz_del_kalewche.html">
+       La luz del kalewche
+    </a>
+
+    <!-- DESKTOP THUMB -->
+    <div class="story-thumbnail-2"
+         style="background-image:url(./subdirectorios/la_luz_del_kalewche/la_luz_del_kalewche_7.jpg)">
+    </div>
+
   </div>
+</div>
+
+<!-- ================= VIDEO ================= -->
+
+<div class="caja_video">
+  <h4 class="proyectos">diseño sonoro</h4>
+
+  <div class="menu">
+
+    <a class="thumb-mobile"
+       href="https://www.coloraofilms.com/ficcion"
+       style="background-image:url(./el_reparto.jpeg)">
+    </a>
+
+    <a class="menu_item"
+       href="https://www.coloraofilms.com/ficcion">
+       El Reparto
+    </a>
+
+    <div class="story-thumbnail-2"
+         style="background-image:url(./el_reparto.jpeg)">
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= FPV ================= -->
+
+<div class="caja_fpv">
+  <h4 class="proyectos">drones</h4>
+
+  <div class="menu">
+
+    <a class="thumb-mobile"
+       href="./subdirectorios/dron_fpv/dron_fpv.html"
+       style="background-image:url(./subdirectorios/dron_fpv/pp_fpv.jpg)">
+    </a>
+
+    <a class="menu_item"
+       href="./subdirectorios/dron_fpv/dron_fpv.html">
+       oscarpadilla_fpv
+    </a>
+
+    <div class="story-thumbnail-2"
+         style="background-image:url(./subdirectorios/dron_fpv/pp_fpv.jpg)">
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= SOBRE MI ================= -->
+
+<div class="caja_Sobre mi">
+  <h4 class="proyectos">sobre mi</h4>
+
+  <div class="menu">
+
+    <a class="thumb-mobile"
+       href="./subdirectorios/bio/biografia.html"
+       style="background-image:url(./subdirectorios/bio/bio.jpg)">
+    </a>
+
+    <a class="menu_item"
+       href="./subdirectorios/bio/biografia.html">
+       Biografía
+    </a>
+
+    <div class="story-thumbnail-2"
+         style="background-image:url(./subdirectorios/bio/bio.jpg)">
+    </div>
+
+  </div>
+</div>
 	
 		<div class="caja_Sobre mi">
 	<h4 class="proyectos">sobre mi</h4>
