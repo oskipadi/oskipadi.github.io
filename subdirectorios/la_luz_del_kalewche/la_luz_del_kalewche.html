@@ -1,278 +1,155 @@
 <!doctype html>
 <html lang="es">
-
 <head>
-  <meta charset="UTF-8">
-  <title>LA LUZ DEL KALEWCHE</title>
+<meta charset="UTF-8">
+<title>La luz del Kalewche</title>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="la_luz_del_kalewche.css" rel="stylesheet" type="text/css">
-
-  <!-- Link Swiper's CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<link href="la_luz_del_kalewche.css" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 </head>
 
 <body>
 
-  <!-- HEADER -->
-  <header id="masthead" class="site-header">
-    <div class="site-brandign">
-      <a class="flecha_izq" href="https://oscarpadilla.eu">←</a>
-
-      <h1 class="site-title">
-        <a href="https://oscarpadilla.eu">Óscar Padilla</a>
-      </h1>
-
-      <div class="right-space"></div>
-    </div>
-  </header>
-
-  <!-- INTRO -->
-  <h4 class="proyectos">proyecto</h4>
-
-  <h1 class="titulo_proyecto">La luz del kalewche</h1>
-
-  <img class="foto_portada" src="portada_kalewche.jpg">
-
-  <h2 class="slogan">
-    En la isla de Chiloé el mar no es solo un recurso, sino también un espacio mágico, peligroso y sagrado.
-  </h2>
-
-  <!-- EFECTO APARICIÓN SLOGAN -->
-  <script>
-    const elements = document.querySelectorAll('.slogan');
-
-    function checkReveal() {
-      elements.forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 0.8) {
-          el.classList.add('visible');
-        }
-      });
-    }
-
-    window.addEventListener('scroll', checkReveal);
-    checkReveal();
-  </script>
-
-  <!-- VIDEO + TEXTO -->
-  <div class="video_texto">
-
-    <video class="video_kalewche"
-           controls
-           playsinline
-           preload="metadata"
-           poster="video_la_luz_del_kalewche_poster.png">
-      <source src="video_la_luz_del_kalewche.webm" type="video/webm" />
-      <source src="video_la_luz_del_kalewche.mp4" type="video/mp4" />
-    </video>
-
-    <div class="sinopsis">
-      <p>
-        Las aguas grises, la niebla densa y las luces deslumbrantes alimentan un delicado imaginario mitológico.
-        Este proyecto fotográfico captura esa atmósfera mística desapercibida, donde parece respirar un halo de
-        fantasía en lo cotidiano. La luz, a veces tenue y otras desbordante, actúa como un velo entre lo real y lo legendario.
-      </p>
-
-      <p id="parrafo">
-        Chiloé no solo se habita: se escucha, se teme y se cuenta.
-        Estas fotografías son fragmentos de ese profundo relato que el mar aún susurra.
-      </p>
-    </div>
-
+<header id="masthead">
+  <div class="site-brandign">
+    <a class="flecha_izq" href="https://oscarpadilla.eu">←</a>
+    <h1 class="site-title">
+      <a href="https://oscarpadilla.eu">Óscar Padilla</a>
+    </h1>
+    <div></div>
   </div>
+</header>
 
-  <!-- TEXTO LARGO (OCULTO)
+<h4 class="proyectos">proyecto</h4>
+<h1 class="titulo_proyecto">La luz del Kalewche</h1>
+
+<img class="foto_portada" src="portada_kalewche.jpg" alt="La luz del Kalewche">
+
+<h2 class="slogan">
+En la isla de Chiloé el mar no es solo un recurso, sino también un espacio mágico, peligroso y sagrado.
+</h2>
+
+<div class="video_texto">
+
+  <video class="video_kalewche"
+         controls
+         playsinline
+         preload="metadata"
+         poster="video_la_luz_del_kalewche_poster.png">
+    <source src="video_la_luz_del_kalewche.mp4" type="video/mp4">
+  </video>
+
   <div class="sinopsis">
-    ...
+    <p>
+      Las aguas grises, la niebla densa y las luces deslumbrantes alimentan un delicado imaginario mitológico.
+      Este proyecto fotográfico captura esa atmósfera mística desapercibida, donde parece respirar un halo de
+      fantasía en lo cotidiano.
+    </p>
+    <p id="parrafo">
+      Chiloé no solo se habita: se escucha, se teme y se cuenta.
+      Estas fotografías son fragmentos de ese profundo relato que el mar aún susurra.
+    </p>
   </div>
-  -->
 
-  <!-- PROPUESTA EXPOSITIVA -->
-  <h1 class="headline">Propuesta expositiva</h1>
+</div>
 
-  <div class="cubo-marco">
-    <div class="swiper-container mySwiper">
-      <div class="swiper-wrapper">
+<h1 class="headline">Propuesta expositiva</h1>
 
-        <div class="swiper-slide">
-          <img src="propuesta_expositiva_1.png">
-        </div>
-
-        <div class="swiper-slide">
-          <img src="propuesta_expositiva_2.png">
-        </div>
-
-        <div class="swiper-slide">
-          <img src="propuesta_expositiva_3.png">
-        </div>
-
-        <div class="swiper-slide">
-          <img src="propuesta_expositiva_4.png">
-        </div>
-
-      </div>
-
-      <div class="swiper-pagination"></div>
+<div class="cubo-marco">
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="propuesta_expositiva_1.png"></div>
+      <div class="swiper-slide"><img src="propuesta_expositiva_2.png"></div>
+      <div class="swiper-slide"><img src="propuesta_expositiva_3.png"></div>
+      <div class="swiper-slide"><img src="propuesta_expositiva_4.png"></div>
     </div>
+    <div class="swiper-pagination"></div>
   </div>
+</div>
 
-  <!-- Swiper JS -->
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<div class="tecnica">
+  <h4>descripción técnica</h4>
 
-  <!-- Initialize Swiper -->
-  <script>
-    var swiper = new Swiper(".mySwiper", {
-      effect: "cube",
-      grabCursor: true,
-      cubeEffect: {
-        shadow: true,
-        slideShadows: true,
-        shadowOffset: 20,
-        shadowScale: 0.94,
-      },
-      pagination: {
-        el: ".swiper-pagination",
-      },
-    });
+  <ul>
+    <li>Papel fotográfico algodón 260–300 g/m² mate</li>
+    <li>Tela Voilé poliéster 70–130 g/m²</li>
+  </ul>
 
-    // Animación de arranque
-    function animateCubeOnce(swiper) {
-      swiper.slideTo(1, 2000);
+  <ul>
+    <li>Foam</li>
+    <li>Riel de aluminio con sujeción superior</li>
+  </ul>
 
-      setTimeout(() => {
-        swiper.slideTo(2, 2000);
-      }, 4200);
+  <ul>
+    <li>2 fotos en tela translúcida 200×70 cm</li>
+    <li>Fotos 40×60 cm</li>
+    <li>Fotos 20×30 cm</li>
+  </ul>
+</div>
 
-      setTimeout(() => {
-        swiper.slideTo(3, 2000);
-      }, 8400);
+<h1 class="headline">Exposiciones</h1>
 
-      setTimeout(() => {
-        swiper.slideTo(0, 2000);
-      }, 12600);
-    }
+<p class="tecnica">
+Proyecto expuesto en la exposición colectiva del 7 de junio de 2025  
+en la escuela de fotografía Cámara Lúcida, Valparaíso (Chile).
+</p>
 
-    let cubeAnimated = false;
-    const cube = document.querySelector('.cubo-marco');
+<!-- IPHONE -->
+<div class="iphone-wrapper">
+  <img id="iphone" src="iphone.png" alt="iPhone frame">
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !cubeAnimated) {
-          cubeAnimated = true;
-          animateCubeOnce(swiper);
-        }
-      },
-      { threshold: 0.4 }
-    );
+  <video class="iphone-video"
+         autoplay
+         muted
+         loop
+         playsinline
+         preload="auto">
+    <source src="expo.mp4" type="video/mp4">
+  </video>
+</div>
 
-    observer.observe(cube);
-  </script>
+<h4 class="proyectos">proyectos</h4>
+<div class="menu">
+  <a class="menu_item"
+     href="https://oscarpadilla.eu/subdirectorios/el_cuerpo_necesita_un_ratito_de_sol/el_cuerpo_necesita_un_ratito_de_sol.html">
+    El cuerpo necesita un ratito de sol
+  </a>
+</div>
 
-  <!-- DESCRIPCIÓN TÉCNICA -->
-  <div class="tecnica">
-    <br>
-    <h4>descripción técnica</h4>
-    <br>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
-    <ul>
-      Materiales de impresión
-      <li>Papel fotográfico algodón 260–300 g/m² acabado en mate</li>
-      <li>Tela Voilé de poliester 70–130 g/m²</li>
-      <br>
-    </ul>
+<script>
+const swiper = new Swiper(".mySwiper", {
+  effect: "cube",
+  grabCursor: true,
+  pagination: { el: ".swiper-pagination" }
+});
+</script>
 
-    <ul>
-      Soportes:
-      <li>Foam</li>
-      <li>Riel de aluminio con sujeción superior</li>
-      <br>
-    </ul>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const video = document.querySelector(".iphone-video");
+  const wrapper = document.querySelector(".iphone-wrapper");
 
-    <ul>
-      Dimensiones:
-      <li>2 fotos tela translúcida: 200×70 cm 150 g</li>
-      <li>Fotos: 40×60 cm 80 g</li>
-      <li>Fotos: 20×30 cm 20 g</li>
-    </ul>
-  </div>
+  if (!video || !wrapper) return;
 
-  <!-- EXPOSICIONES -->
-  <h1 class="headline">Exposiciones</h1>
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        video.play().catch(()=>{});
+        wrapper.classList.add("visible");
+        observer.disconnect();
+      }
+    },
+    { threshold: 0.3 }
+  );
 
-  <p class="tecnica">
-    Este proyecto fue expuesto en la exposición colectiva del 07 de Junio de 2025
-  </p>
-  <br>
-  <p class="tecnica">
-    en la escuela de fotografía Cámara Lúcida en Valparaíso, Chile
-  </p>
-
-  <!-- IPHONE -->
-  <div class="iphone-wrapper">
-    <img id="iphone" src="iphone.png">
-
-    <video class="iphone-video"
-           muted
-           loop
-           playsinline
-           preload="auto">
-      <source src="expo.webm" type="video/webm">
-      <source src="expo.mp4" type="video/mp4">
-    </video>
-  </div>
-
-  <!-- AUTOPLAY IPHONE -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const video = document.querySelector(".iphone-video");
-      if (!video) return;
-
-      const tryPlay = () => {
-        video.play().catch(() => {});
-      };
-
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            tryPlay();
-            observer.disconnect();
-          }
-        },
-        { threshold: 0.3 }
-      );
-
-      observer.observe(video);
-    });
-  </script>
-
-  <!-- ANIMACIÓN IPHONE -->
-  <script>
-    const iphone = document.querySelector('.iphone-wrapper');
-
-    const iphoneObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          iphoneObserver.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.4 }
-    );
-
-    iphoneObserver.observe(iphone);
-  </script>
-
-  <!-- MENU FINAL -->
-  <h4 class="proyectos">proyectos</h4>
-
-  <div class="menu">
-    <a class="menu_item"
-       href="https://oscarpadilla.eu/subdirectorios/el_cuerpo_necesita_un_ratito_de_sol/el_cuerpo_necesita_un_ratito_de_sol.html">
-      El cuerpo necesita un ratito de sol
-    </a>
-  </div>
+  observer.observe(wrapper);
+});
+</script>
 
 </body>
 </html>
+
