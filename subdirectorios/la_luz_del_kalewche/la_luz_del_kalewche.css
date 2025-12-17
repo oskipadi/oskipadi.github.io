@@ -383,7 +383,8 @@ a {
   }
 
   .cubo-marco {
-    height: 90vw;
+	width: 100vw;  
+    height: 100vw;
     margin-bottom: 80px; /* 🔑 mantiene aire con técnica */
     overflow: hidden;
   }
