@@ -376,7 +376,10 @@ a {
     padding-bottom: 32px;
     font-size: 1.5rem;
   }
-
+  .swiper-container {
+  width: 100%;
+  aspect-ratio: 1 / 1; 
+  }
   .cubo-marco {
      position: relative;
      overflow: hidden;
