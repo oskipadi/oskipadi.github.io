@@ -378,8 +378,8 @@ a {
   }
 
   .cubo-marco {
-    width: 100vw;
-    height: 100vw;
+     position: relative;
+     overflow: hidden;
   }
 
   /* ---------------- TECNICA ---------------- */
