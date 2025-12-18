@@ -463,7 +463,7 @@ a {
   }
 
   .sinopsis {
-    max-width: none;
+    max-width: 100%;
     font-size: 4.5vw;
     padding: 0 8vw;
     margin: 0;
