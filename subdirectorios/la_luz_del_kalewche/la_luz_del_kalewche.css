@@ -470,7 +470,7 @@ a {
   }
 
   .sinopsis {
-    width: 100%;
+    width: 90%;
     max-width: 100%;
 
     font-size: clamp(16px, 4.2vw, 20px);
