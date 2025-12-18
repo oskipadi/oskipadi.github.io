@@ -163,8 +163,8 @@ a {
 
 /* Marco que recorta el cubo */
 .cubo-marco {
-  width: 70vw;          /* 50% del viewport */
-  height: 40vw;         /* mitad del cubo */
+  width: 50vw;          /* 50% del viewport */
+  height: 30vw;         /* mitad del cubo */
   margin: 0 auto;
   overflow: hidden;
 }
