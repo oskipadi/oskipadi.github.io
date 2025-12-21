@@ -507,6 +507,36 @@ a {
     margin-bottom: 20vw;
   }
 }
+/* =====================================================
+   AJUSTES SOLO MÓVIL
+   NO MODIFICA DESKTOP
+   ===================================================== */
+@media (max-width: 768px) {
+
+  /* =========================
+     QUITAR VIDEO IPHONE
+     ========================= */
+  .iphone-wrapper {
+    display: none !important;
+  }
+
+  /* =========================
+     AGRANDAR CUBO + MARCO
+     ========================= */
+
+  /* Marco exterior del cubo */
+  .cubo-marco {
+    width: 90vw;      /* antes 50vw */
+    height: 55vw;     /* antes 30vw */
+  }
+
+  /* Swiper interno */
+  .swiper-container {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+
+}
 
 
 
