@@ -406,163 +406,121 @@ a {
       opacity: 1;
       transform: translateX(20px);
     }
-/* =====================================================
-   MÓVIL – LIBRO VERTICAL COMPACTO
-   NO AFECTA A DESKTOP
-===================================================== */
+/* ==============================
+   ADAPTACIÓN MÓVIL
+   (no afecta a desktop)
+============================== */
 @media (max-width: 768px) {
 
-  /* RESET DE ESPACIADOS GENERALES */
-  body {
-    font-size: 16px;
+  /* HEADER */
+  #masthead {
+    padding: 30px 0;
   }
 
-  /* HEADER MÁS COMPACTO */
-  #masthead {
-    padding: 20px 0 10px;
+  .site-brandign {
+    grid-template-columns: auto 1fr auto;
   }
 
   .site-title {
-    font-size: 22px;
+    font-size: 26px;
+    max-width: none;
   }
 
   .flecha_izq {
-    font-size: 1.8em;
+    font-size: 2em;
+    padding-left: 0.5em;
   }
 
-  /* TÍTULOS */
+  /* TEXTOS PRINCIPALES */
   .proyectos {
-    margin: 10px 0;
-    padding: 0;
+    margin: 20px;
+    padding-left: 0;
     text-align: center;
-    font-size: 14px;
   }
 
   .titulo_proyecto {
-    margin: 10px 16px 20px;
-    padding: 0;
-    font-size: 42px;
-    line-height: 1;
-    text-align: left;
+    font-size: clamp(36px, 9vw, 60px);
+    margin: 20px;
+    padding-left: 0;
+    text-align: center;
   }
 
-  /* PORTADA CASI A SANGRE */
+  /* PORTADA */
   .foto_portada {
-    width: 100%;
-    margin: 0;
-    padding: 0;
+    width: 90%;
   }
 
-  /* SINOPSIS COMO PÁGINA DE LIBRO */
+  /* SINOPSIS */
   .sinopsis {
-    margin: 30px 16px;
-    padding: 0;
-    font-size: 15px;
-    line-height: 1.6;
-    text-indent: 1.5em;
+    font-size: 16px;
+    line-height: 1.6em;
+    padding: 0 20px;
+    text-indent: 1.2em;
   }
 
   #parrafo {
-    margin-top: 2em;
-    font-size: 14px;
+    font-size: 16px;
+    text-align: left;
   }
 
-  /* =================================================
-     LIBRO → SCROLL CONTINUO COMPACTO
-  ================================================= */
-  .libro {
-    scroll-snap-type: none;
-  }
-
+  /* LIBRO */
   .page {
-    min-height: auto;
-    padding: 20px 0;
-    margin: 0;
+    padding: 6vh 4vw;
   }
 
-  /* IMÁGENES → UNA COLUMNA, SIN DESPLAZAMIENTOS */
-  .img-full,
-  .img-medium,
+  .img-medium {
+    width: 90%;
+  }
+
   .page img.img-medium-right,
   .page img.img-medium-left {
-    width: 100%;
-    max-height: none;
-    transform: none !important;
+    width: 90%;
+    transform: translateX(0);
   }
 
-  /* DOBLES → SECUENCIA VERTICAL */
   .page.doble {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    grid-template-columns: 1fr;
+    gap: 5vh;
   }
 
-  /* =================================================
-     TOOLTIP → TÁCTIL, SIEMPRE VISIBLE
-  ================================================= */
+  /* TOOLTIP → comportamiento táctil */
   .tooltip {
-    width: 100%;
-    margin: 0;
-  }
-
-  .tooltip img.texto {
-    width: 100%;
+    width: 90%;
   }
 
   .tooltip-content {
-    position: relative;
-    bottom: auto;
-    left: auto;
+    position: static;
     transform: none;
     opacity: 1;
-    margin: 10px 16px 0;
-    padding: 14px 16px;
-    font-size: 15px;
+    margin-top: 12px;
     pointer-events: auto;
-    border-radius: 8px;
+    background: rgba(39, 39, 39, 0.9);
   }
 
   .tooltip-content::after {
     display: none;
   }
 
-  /* ANIMACIONES → MÁS SUTILES */
-  .page img,
-  .page .tooltip {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-
-  /* =================================================
-     EXPOSICIONES
-  ================================================= */
+  /* HEADLINES */
   .headline {
-    padding: 60px 16px 20px;
-    font-size: 26px;
+    padding-top: 20vw;
+    font-size: 28px;
   }
 
+  /* TEXTO EXPOSICIÓN */
   .photoalicante {
-    font-size: 15px;
-    padding: 0 16px;
+    font-size: 16px;
+    padding: 0 20px;
   }
 
-  /* IPHONE MÁS GRANDE Y CENTRADO */
+  /* IPHONE */
   .iphone-wrapper {
-    width: 90vw;
-    padding-top: 20px;
+    width: 85vw;
   }
 
-  /* =================================================
-     MENÚ FINAL
-  ================================================= */
+  /* MENÚ */
   .menu {
-    margin: 40px 0;
-    font-size: 160%;
-    line-height: 140%;
-  }
-
-  .menu_item {
-    padding-left: 0;
+    font-size: 180%;
+    line-height: 160%;
   }
 }
