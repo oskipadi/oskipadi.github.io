@@ -98,19 +98,37 @@ animate();
       <img src="pm_fpv.jpg">
     </div>
 	  
-	 <div class="video-texto"> 
-	  <div class="video-wrapper">
-        <video autoplay loop muted>
-          <source src="fpv_chile.webm" type="video/webm">
-          <source src="fpv_chile.mp4" type="video/mp4">
-        </video>
-      </div>
-		 <div class="texto-enlace">
-	  <h3>FPV EN CHILE! 🚁</h3>
-		 <a href="https://www.instagram.com/oscar.padiilla/">@oscar.padiilla</a>
-	    </div>
-	</div>
+	<div class="video-texto"> 
+  <div class="video-wrapper">
+
+    <!-- VIDEO FPV (DESKTOP / TABLET) -->
+    <video class="fpv-video" autoplay loop muted playsinline>
+      <source src="fpv_chile.webm" type="video/webm">
+      <source src="fpv_chile.mp4" type="video/mp4">
+    </video>
+
+    <!-- IMAGEN CLICABLE (SOLO MÓVIL) -->
+    <a
+      href="https://www.instagram.com/oscar.padiilla/"
+      class="fpv-link"
+      target="_blank"
+      rel="noopener"
+    >
+      <img
+        src="fpv_portada.jpg"
+        alt="FPV en Chile"
+        class="fpv-poster"
+      >
+    </a>
+
   </div>
+
+  <div class="texto-enlace">
+    <h3>FPV EN CHILE! 🚁</h3>
+    <a href="https://www.instagram.com/oscar.padiilla/">@oscar.padiilla</a>
+  </div>
+</div>
+
 </section>
 	
 </body>
