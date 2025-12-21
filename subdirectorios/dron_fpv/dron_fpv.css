@@ -223,118 +223,33 @@ a {
   
 }
 /* =====================================================
-   MÓVIL — OPTIMIZACIÓN PARA MUCHOS VÍDEOS
-   NO MODIFICA DESKTOP
+   FPV FINAL — ADAPTACIÓN MÓVIL
+   NO AFECTA DESKTOP
    ===================================================== */
+
+/* Desktop: solo vídeo */
+.fpv-link {
+  display: none;
+}
+
 @media (max-width: 768px) {
 
-  body {
-    overflow-x: hidden;
+  /* Oculta SOLO el vídeo FPV */
+  .fpv-video {
+    display: none;
   }
 
-  /* -------- HEADER -------- */
-  #masthead {
-    padding: 20px 0;
-  }
-
-  .site-title {
-    font-size: 26px;
-  }
-
-  .flecha_izq {
-    font-size: 1.8em;
-    padding-left: 0.6em;
-  }
-
-  /* -------- HERO VIDEO -------- */
-  .image-container2 video {
-    height: 70vh;
-    object-fit: cover;
-  }
-
-  .hover-content2 img {
-    width: 20vw;
-    max-width: 120px;
-  }
-
-  /* -------- TEXTOS -------- */
-  .content h2 {
-    font-size: clamp(28px, 7vw, 42px);
-    margin: 40px 16px;
-    padding-left: 0;
-    line-height: 1.1;
-  }
-
-  .content h4 {
-    font-size: 1rem;
-    margin: 20px 16px 40px;
-    line-height: 1.4;
-  }
-
-  /* -------- IMÁGENES -------- */
-  #certificado_piloto,
-  #inspire {
-    width: 90%;
-    margin: 20px auto;
+  /* Muestra imagen clicable */
+  .fpv-link {
     display: block;
-    border-radius: 24px;
-  }
-
-  /* -------- PARALLAX VIDEO -------- */
-  .parallax {
-    height: auto;
-  }
-
-  .parallax video {
-    position: static;
-    transform: none;
     width: 100%;
   }
 
-  /* -------- BLOQUES EN COLUMNA -------- */
-  .texto-foto,
-  .video-texto {
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  .texto-foto h4 {
-    font-size: 1rem;
-    max-width: none;
-    margin: 0 16px;
-    text-align: left;
-  }
-
-  .content2 img {
-    width: 85%;
-    margin: 0 auto;
-  }
-
-  /* -------- VIDEO FPV -------- */
-  .video-wrapper {
+  .fpv-poster {
     width: 100%;
-    margin-top: 20px;
-  }
-
-  .video-wrapper video {
-    margin-left: 0;
+    display: block;
     border-radius: 16px;
   }
 
-  /* -------- TEXTO ENLACE -------- */
-  .video-texto h3 {
-    font-size: 1.4rem;
-    margin: 0 16px;
-  }
-
-  .texto-enlace {
-    align-items: center;
-    margin: 0;
-  }
-
-  .texto-enlace a {
-    font-size: 1rem;
-    margin-top: 8px;
-  }
-
 }
+
