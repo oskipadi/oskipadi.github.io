@@ -527,7 +527,7 @@ a {
   /* Marco exterior del cubo */
   .cubo-marco {
     width: 90vw;      /* antes 50vw */
-    height: 55vw;     /* antes 30vw */
+    height: 90vw;     /* antes 30vw */
   }
 
   /* Swiper interno */
@@ -537,7 +537,6 @@ a {
   }
 
 }
-
 
 
 
