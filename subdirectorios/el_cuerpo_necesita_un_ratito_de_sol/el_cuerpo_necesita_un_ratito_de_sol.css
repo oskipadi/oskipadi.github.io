@@ -564,4 +564,56 @@ a {
     font-size: 180%;
     line-height: 160%;
   }
+/* ==============================
+   VIDEO – COMPORTAMIENTO FINAL
+============================== */
+
+/* Desktop: igual que ahora */
+.iphone-wrapper {
+  position: relative;
+  width: 40vw;
+  max-width: 420px;
+  min-width: 220px;
+  margin: 0 auto;
+  padding-top: 41px;
+}
+
+.iphone-video {
+  aspect-ratio: 9 / 19.5;
+  position: absolute;
+  top: -5%;
+  left: 8%;
+  width: 85%;
+  transform: scale(0.76);
+  border-radius: 22px;
+  z-index: 1;
+}
+
+/* ==============================
+   MÓVIL
+============================== */
+@media (max-width: 768px) {
+
+  /* Safari necesita el vídeo visible */
+  .iphone-wrapper {
+    width: 90vw;
+    opacity: 1 !important;
+    transform: none !important;
+    padding-top: 0;
+  }
+
+  .iphone-video {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    transform: none;
+    border-radius: 16px;
+  }
+
+  /* Ocultar marco en móvil */
+  #iphone {
+    display: none;
+  }
+}
+
 }
