@@ -406,4 +406,122 @@ a {
       opacity: 1;
       transform: translateX(20px);
     }
+/* ==============================
+   ADAPTACIÓN MÓVIL
+   (no afecta a desktop)
+============================== */
+@media (max-width: 768px) {
+
+  /* HEADER */
+  #masthead {
+    padding: 30px 0;
+  }
+
+  .site-brandign {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .site-title {
+    font-size: 26px;
+    max-width: none;
+  }
+
+  .flecha_izq {
+    font-size: 2em;
+    padding-left: 0.5em;
+  }
+
+  /* TEXTOS PRINCIPALES */
+  .proyectos {
+    margin: 20px;
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .titulo_proyecto {
+    font-size: clamp(36px, 9vw, 60px);
+    margin: 20px;
+    padding-left: 0;
+    text-align: center;
+  }
+
+  /* PORTADA */
+  .foto_portada {
+    width: 90%;
+  }
+
+  /* SINOPSIS */
+  .sinopsis {
+    font-size: 16px;
+    line-height: 1.6em;
+    padding: 0 20px;
+    text-indent: 1.2em;
+  }
+
+  #parrafo {
+    font-size: 16px;
+    text-align: left;
+  }
+
+  /* LIBRO */
+  .page {
+    padding: 6vh 4vw;
+  }
+
+  .img-medium {
+    width: 90%;
+  }
+
+  .page img.img-medium-right,
+  .page img.img-medium-left {
+    width: 90%;
+    transform: translateX(0);
+  }
+
+  .page.doble {
+    grid-template-columns: 1fr;
+    gap: 5vh;
+  }
+
+  /* TOOLTIP → comportamiento táctil */
+  .tooltip {
+    width: 90%;
+  }
+
+  .tooltip-content {
+    position: static;
+    transform: none;
+    opacity: 1;
+    margin-top: 12px;
+    pointer-events: auto;
+    background: rgba(39, 39, 39, 0.9);
+  }
+
+  .tooltip-content::after {
+    display: none;
+  }
+
+  /* HEADLINES */
+  .headline {
+    padding-top: 20vw;
+    font-size: 28px;
+  }
+
+  /* TEXTO EXPOSICIÓN */
+  .photoalicante {
+    font-size: 16px;
+    padding: 0 20px;
+  }
+
+  /* IPHONE */
+  .iphone-wrapper {
+    width: 85vw;
+  }
+
+  /* MENÚ */
+  .menu {
+    font-size: 180%;
+    line-height: 160%;
+  }
+}
 
