@@ -208,6 +208,16 @@ const iphoneObserver = new IntersectionObserver(
 );
 
 iphoneObserver.observe(iphone);
+
+/*para que se vea en safari*/
+if (entry.isIntersecting) {
+  const video = entry.target.querySelector('video');
+  if (video) {
+    video.play().catch(() => {});
+  }
+  entry.target.classList.add('visible');
+}
+
 </script>
 
 <!--menu el cuerpo necesita-->
