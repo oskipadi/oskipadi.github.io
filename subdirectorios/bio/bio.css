@@ -95,3 +95,70 @@ a {
   margin-right: 10vw;
   transform: translateY(-40%);
 }
+
+/* =====================================================
+   ADAPTACIÓN MÓVIL
+   NO MODIFICA DESKTOP
+   ===================================================== */
+@media (max-width: 768px) {
+
+  body {
+    overflow-x: hidden;
+  }
+
+  /* -------- CABECERA -------- */
+  #masthead {
+    padding: 20px 0;
+  }
+
+  .site-title {
+    font-size: 26px;
+    line-height: 1;
+  }
+
+  .flecha_izq {
+    font-size: 1.8em;
+    padding-left: 0.6em;
+  }
+
+  /* -------- ABOUT -------- */
+  .proyectos {
+    margin: 20px 0;
+    padding: 0;
+    text-align: center;
+  }
+
+  /* -------- TEXTO + IMAGEN -------- */
+  .texto-imagen {
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+
+  /* Texto */
+  .sinopsis {
+    font-size: clamp(16px, 4.2vw, 18px);
+    line-height: 1.6;
+    max-width: none;
+
+    padding: 0 20px;
+    margin: 0;
+
+    text-align: left;
+    text-indent: 1.5em;
+    letter-spacing: 0;
+    word-spacing: normal;
+  }
+
+  /* Imagen */
+  .texto-imagen img {
+    width: 85vw;
+    max-width: 420px;
+
+    margin: 0;
+    border-radius: 24px;
+
+    transform: none; /* elimina desplazamiento vertical */
+  }
+
+}
