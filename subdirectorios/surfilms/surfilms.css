@@ -399,6 +399,16 @@ button:hover {
   .menu-item {
     font-size: 9vw;
   }
+	.hover-panel {
+    width: 100% !important;
+    left: 0 !important;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .blur-overlay {
+    backdrop-filter: blur(8px);
+  }
 }
 
 
