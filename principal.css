@@ -199,6 +199,7 @@ display: block; /* Botón ☰ se muestra en pantallas pequeñas */
 .caja_Sobre\ mi {
   padding: clamp(10px, 3vw, 30px);
   margin-bottom: clamp(40px, 6vw, 80px);
+  overflow: hidden;
 }
 
 
