@@ -122,6 +122,10 @@ const iphoneObserver = new IntersectionObserver(
 );
 
 iphoneObserver.observe(iphone);
+document.addEventListener("touchstart", () => {
+  video.play();
+}, { once: true });
+
 </script>
 
 <div class="about">
