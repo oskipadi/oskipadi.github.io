@@ -29,11 +29,10 @@ a{
 /* Fondo medusa */
 #medusa{
   width: 100%;
-  height: 120%;
+  height: 110%;
   object-fit: cover;
   object-position: center;
   display: block;
-  padding-left:2em;
 }
 
 /* PANEL hover lateral (1/3 de ancho) */
