@@ -96,7 +96,7 @@ a{
   font-size: 80px;
   font-style: italic;
   text-decoration: none;
-  color: #FFD873;
+  color: #FFDB47;
   overflow: visible;
   padding-top: 1em;
    
@@ -164,7 +164,7 @@ a{
   font-size: 5vw;        /* grande como en el sitio de ref */
   font-style: italic;
   text-transform: uppercase;
-  color: #FFD873;
+  color: #FFDB47;
 }
 
 .menu-item:hover{
