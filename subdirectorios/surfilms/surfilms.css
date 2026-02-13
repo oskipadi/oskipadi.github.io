@@ -368,7 +368,8 @@ button:hover {
 	width: 80%;
 }
 	.middle p {
-		width: 120%;
+		width: 90%;
+		font-size:1em;
 		text-align: center;
 		padding-left:2em;
 	}
@@ -388,7 +389,7 @@ button:hover {
 
 	.formulario {
 		width: 90%;
-		padding-left:5em;
+		padding-left:4em;
 	}
 }
 
