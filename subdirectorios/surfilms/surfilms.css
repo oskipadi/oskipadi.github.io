@@ -413,7 +413,7 @@ button:hover {
     backdrop-filter: blur(8px);
   }
 	.menu-item.active {
-    color: black;
+    color: #F1E9D9;
   }
 
   /* Ocultar el marco del iPhone */
