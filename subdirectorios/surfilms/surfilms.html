@@ -45,25 +45,53 @@
   </header>
 
   <!-- JavaScript para mostrar la imagen al hover -->
-  <script>
-  const panel = document.querySelector('.hover-panel');
+<script>
+const panel = document.querySelector('.hover-panel');
 const blur = document.querySelector('.blur-overlay');
 const items = document.querySelectorAll('.menu-item');
 
-items.forEach(item => {
-  item.addEventListener('mouseenter', () => {
-    panel.style.left = item.dataset.pos + "%";
-    panel.style.backgroundImage = `url(${item.dataset.image})`;
-    panel.style.opacity = "1";
-    blur.style.opacity = "1";
-  });
+const isTouch = window.matchMedia("(hover: none)").matches;
 
-  item.addEventListener('mouseleave', () => {
-    panel.style.opacity = "0";
-    blur.style.opacity = "0";
-  });
+items.forEach(item => {
+
+  if (!isTouch) {
+    // ===== DESKTOP (hover normal) =====
+    item.addEventListener('mouseenter', () => {
+      panel.style.left = item.dataset.pos + "%";
+      panel.style.backgroundImage = `url(${item.dataset.image})`;
+      panel.style.opacity = "1";
+      blur.style.opacity = "1";
+    });
+
+    item.addEventListener('mouseleave', () => {
+      panel.style.opacity = "0";
+      blur.style.opacity = "0";
+    });
+
+  } else {
+    // ===== MÓVIL (tap) =====
+    item.addEventListener('click', function(e) {
+
+      // si ya está activo, dejamos navegar
+      if (item.classList.contains('active')) return;
+
+      e.preventDefault(); // evitamos que navegue en el primer toque
+
+      // quitamos estado activo a los demás
+      items.forEach(i => i.classList.remove('active'));
+
+      item.classList.add('active');
+
+      panel.style.left = item.dataset.pos + "%";
+      panel.style.backgroundImage = `url(${item.dataset.image})`;
+      panel.style.opacity = "1";
+      blur.style.opacity = "1";
+    });
+  }
+
 });
 </script>
+
 
 
 
@@ -144,4 +172,5 @@ El arte de la fotografía y la videografía de alto riesgo se refleja en cada un
 	
 </body>
 </html>
+
 
