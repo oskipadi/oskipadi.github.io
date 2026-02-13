@@ -412,12 +412,27 @@ button:hover {
     color: black;
   }
 
+  /* Ocultar el marco del iPhone */
+  #iphone {
+    display: none;
+  }
+
+  /* Hacer que el vídeo ocupe todo el contenedor */
+  .iphone-video {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    transform: none;
+    border-radius: 20px;
+  }
+
   .iphone-wrapper {
-    width: 80vw;
+    width: 90vw;
     opacity: 1;
     transform: none;
   }
-
 }
 
 
