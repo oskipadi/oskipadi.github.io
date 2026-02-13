@@ -164,12 +164,12 @@ a{
   font-size: 5vw;        /* grande como en el sitio de ref */
   font-style: italic;
   text-transform: uppercase;
-  color: #FFDB47;
+  color: black;
 }
 
 .menu-item:hover{
   opacity: 1;
-  color: black;
+  color: #FFDB47;
   transform: translateY(-6px); /* sutil movimiento hacia arriba */
 }
 
