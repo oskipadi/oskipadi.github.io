@@ -418,22 +418,10 @@ button:hover {
   }
 
  .iphone-wrapper {
-    width: 90vw;
-    max-width: 400px;
-    padding-top: 0;
-    opacity: 1;
-    transform: none;
-    position: relative;
+    display: none;
 }
-
-/* Hacer que el vídeo ocupe todo el wrapper */
 .iphone-video {
-    position: relative;
-    width: 100%;
-    height: auto;
-    display: block;
-    transform: none;
-    border-radius: 12px; /* opcional */
+   display: none;
 }
 }
 
