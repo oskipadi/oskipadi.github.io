@@ -190,17 +190,18 @@ a{
 
 /* Video detrás */
 .iphone-video {
+  aspect-ratio: 9 / 19.5;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 86%;
-  height: 92%;
-  transform: translate(-50%, -50%);
-  object-fit: cover;
-  border-radius: 28px;
+  top: -5%;
+  left: 8%;
+  width: 85%;
+  height: auto;
+  object-fit: contain;
+  transform: scale(0.76);
+  transform-origin: center;
+  border-radius: 22px;
   z-index: 1;
 }
-
 
 /* Marco del iPhone */
 #iphone {
@@ -209,6 +210,7 @@ a{
   position: relative;
   z-index: 2;
 }
+
 @media (max-width: 600px) {
   .iphone-wrapper {
     width: 80vw;
