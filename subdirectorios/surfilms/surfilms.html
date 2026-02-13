@@ -55,7 +55,7 @@ const isTouch = window.matchMedia("(hover: none)").matches;
 items.forEach(item => {
 
   if (!isTouch) {
-    // ===== DESKTOP (hover normal) =====
+    // ===== DESKTOP (hover lateral 1/3) =====
     item.addEventListener('mouseenter', () => {
       panel.style.left = item.dataset.pos + "%";
       panel.style.backgroundImage = `url(${item.dataset.image})`;
@@ -69,20 +69,16 @@ items.forEach(item => {
     });
 
   } else {
-    // ===== MÓVIL (tap) =====
+    // ===== MÓVIL (fullscreen tap) =====
     item.addEventListener('click', function(e) {
 
-      // si ya está activo, dejamos navegar
       if (item.classList.contains('active')) return;
 
-      e.preventDefault(); // evitamos que navegue en el primer toque
+      e.preventDefault();
 
-      // quitamos estado activo a los demás
       items.forEach(i => i.classList.remove('active'));
-
       item.classList.add('active');
 
-      panel.style.left = item.dataset.pos + "%";
       panel.style.backgroundImage = `url(${item.dataset.image})`;
       panel.style.opacity = "1";
       blur.style.opacity = "1";
@@ -91,6 +87,7 @@ items.forEach(item => {
 
 });
 </script>
+
 
 
 
