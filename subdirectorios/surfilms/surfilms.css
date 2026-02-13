@@ -391,6 +391,14 @@ button:hover {
 		width: 90%;
 		padding-left:3.5em;
 	}
+
+  .menu {
+    gap: 8vw;
+  }
+
+  .menu-item {
+    font-size: 9vw;
+  }
 }
 
 
