@@ -186,7 +186,7 @@ a {
 /* Imagen */
 .wacha img {
 	border-radius: 20px;
-	width: 40%;
+	width: 40vw;
 	max-width: 400px;
 	margin-top: 2em;
 }
@@ -194,7 +194,7 @@ a {
 /* Formulario */
 .formulario {
 	font-family: "Switzer", sans-serif;
-	width: 40%;
+	width: 30vw;
 	min-width: 300px;
 	color: white;
 }
