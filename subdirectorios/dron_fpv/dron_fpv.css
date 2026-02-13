@@ -180,7 +180,6 @@ a {
 	gap: 4em;
 	margin-top: 10vh;
 	padding: 4em 0;
-	background-color: #122226;
 	flex-wrap: wrap; /* importante para responsive */
 }
 
@@ -195,7 +194,7 @@ a {
 /* Formulario */
 .formulario {
 	font-family: "Switzer", sans-serif;
-	width: 40vw;
+	width: 30vw;
 	min-width: 300px;
 	color: white;
 }
