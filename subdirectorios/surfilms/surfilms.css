@@ -402,7 +402,15 @@ button:hover {
 
   .menu-item {
     font-size: 9vw;
+	background-color: rgba(0, 0, 0, 0.35); /* fondo semitransparente */
+    border-radius: 12px;                   /* esquinas redondeadas */
+    padding: 0.3em 0.6em;                  /* pequeño padding para que el fondo se note */
+    transition: background-color 0.3s ease;
   }
+	.menu-item:hover {
+    background-color: rgba(0, 0, 0, 0.5); /* un poco más visible al tocar */
+  }
+
 	.hover-panel {
     width: 100% !important;
     left: 0 !important;
