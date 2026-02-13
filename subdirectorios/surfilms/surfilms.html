@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>surfilms</title>
+  <link href="surfilms.css" rel="stylesheet" type="text/css">
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+</head>
+
+<body>
+
+  <header class="header">
+
+    <!-- Fondo medusa -->
+    <img id="medusa" src="medusa.jpg" alt="Medusa">
+	
+    <div class="blur-overlay"></div>
+
+    <!-- Panel que muestra la imagen al hover -->
+    <div class="hover-panel"></div>
+
+    <!-- Branding & Menú -->
+    <div class="site-branding">
+
+      <h1 class="site-title">
+        <a href="index.html">Óscar Padilla</a><br>
+       <a class="surfilms" href="index.html">
+  <span class="s izquierda">S</span>
+  <span class="texto">urfilm</span>
+  <span class="s derecha">S</span>
+</a>
+
+      </h1>
+
+      <!-- Menú principal abajo (inline como gimbalgod) -->
+     <nav class="menu">
+  <a class="menu-item" data-image="skate.jpg" data-pos="0" href="skate.html">SKATE</a>
+  <a class="menu-item" data-image="surf1.jpg" data-pos="33.333" href="surf.html">SURF</a>
+  <a class="menu-item" data-image="snow.png" data-pos="66.666" href="snowboard.html">SNOW</a>
+</nav>
+
+    </div>
+  </header>
+
+  <!-- JavaScript para mostrar la imagen al hover -->
+  <script>
+  const panel = document.querySelector('.hover-panel');
+const blur = document.querySelector('.blur-overlay');
+const items = document.querySelectorAll('.menu-item');
+
+items.forEach(item => {
+  item.addEventListener('mouseenter', () => {
+    panel.style.left = item.dataset.pos + "%";
+    panel.style.backgroundImage = `url(${item.dataset.image})`;
+    panel.style.opacity = "1";
+    blur.style.opacity = "1";
+  });
+
+  item.addEventListener('mouseleave', () => {
+    panel.style.opacity = "0";
+    blur.style.opacity = "0";
+  });
+});
+</script>
+
+
+
+<h1 class="eslogan">
+  <span class="destacado">Fotografía</span> y <span class="destacado">Vídeo</span> <span class="pro">Profesional</span> para Riders
+</h1>
+
+	<!-- <img src="expo.jpg">-->
+	<div class="iphone-wrapper">
+	<img id="iphone" src="iphone.png">
+    <video class="iphone-video" autoplay muted loop playsinline>
+		<source src="ilufin.webm" type="video/webm" />
+		<source src="ilufin.mp4" type="video/mp4" />
+		</video>
+	</div>
+		<script>
+const iphone = document.querySelector('.iphone-wrapper');
+const video = iphone.querySelector('video');
+
+const iphoneObserver = new IntersectionObserver(
+  ([entry]) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      video.play();
+      iphoneObserver.unobserve(entry.target); // solo una vez
+    }
+  },
+  {
+    threshold: 0.4
+  }
+);
+
+iphoneObserver.observe(iphone);
+</script>
+
+<div class="about">
+<div class="left">
+	<img src="lobos.jpg">
+	</div>
+	
+<div class="middle">
+<h2>Sobre mí</h2>
+<p>
+Con una amplia experiencia en surf, skate y snowboard, y tras formarse como técnico deportivo en surf y snowboard, Óscar decide emprender un nuevo viaje creativo fusionando su pasión por el surfing y el cine.<br>  
+El arte de la fotografía y la videografía de alto riesgo se refleja en cada sesión, combinando sus habilidades como surfista con técnicas fotográficas innovadoras y una mirada cinematográfica propia.
+</p>
+</div>
+
+<div class="right">
+	<img src="bio.jpg">
+	</div>
+</div>
+	
+<div class="contacto">
+	<div class="wacha">
+		<img src="wacha.jpg">
+	</div>
+	
+	<div class="formulario">
+		<h2>Qué pasa, cuéntame</h2>
+		<hr/>
+		<form action="/procesar-datos" method="post">
+<fieldset>
+<label for="nombre">Nombre:</label>
+<input type="text" id="nombre" name="nombre"><br>
+<label for="email">Correo Electrónico:</label>
+<input type="email" id="email" name="email"><br>
+<label for="mensaje">Mensaje</label>
+<input type="text" id="mensaje" name="mensaje">
+</fieldset>
+
+<div class="g-recaptcha" data-sitekey="6LdXYWosAAAAAHAhlMg2MhUMfh7LZ3sAYyBQlMka"></div>
+<button type="submit">Enviar</button>
+</form>
+		
+	</div>
+	
+	</div>
+	
+</body>
+</html>
+
