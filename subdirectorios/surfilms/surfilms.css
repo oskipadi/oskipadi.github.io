@@ -409,6 +409,9 @@ button:hover {
   .blur-overlay {
     backdrop-filter: blur(8px);
   }
+	.menu-item.active {
+    color: black;
+  }
 }
 
 
