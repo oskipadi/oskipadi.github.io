@@ -320,7 +320,7 @@ hr {
 }
 
 /* Inputs */
-input {
+input,textarea {
 	width: 100%;
 	background: none;
 	border: none;
