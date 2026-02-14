@@ -179,7 +179,6 @@ a {
 	align-items: flex-start;
 	gap: 4em;
 	margin-top: 10vh;
-	padding: 4em 0;
 	flex-wrap: wrap; /* importante para responsive */
 }
 
@@ -187,15 +186,15 @@ a {
 .wacha img {
 	border-radius: 20px;
 	width: 20vw;
-	max-width: 400px;
+	max-width: 300px;
 	margin-top: 2em;
 }
 
 /* Formulario */
 .formulario {
 	font-family: "Switzer", sans-serif;
-	width: 30vw;
-	min-width: 300px;
+	width: 20vw;
+	min-width: 200px;
 	color: white;
 }
 
