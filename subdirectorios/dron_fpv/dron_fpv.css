@@ -179,6 +179,7 @@ a {
 	align-content:start;
 	gap: 4em;
 	flex-wrap: wrap; /* importante para responsive */
+	padding-bottom:2vh;
 }
 
 /* Imagen */
