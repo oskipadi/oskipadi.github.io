@@ -219,7 +219,7 @@ hr {
 }
 
 /* Inputs */
-input {
+input,textarea {
 	width: 100%;
 	background: none;
 	border: none;
@@ -241,7 +241,6 @@ label {
 	font-size: 0.9em;
 	opacity: 0.8;
 }
-
 /* Botón */
 button {
 	background-color: #00c2ff;
