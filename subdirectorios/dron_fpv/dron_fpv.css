@@ -176,25 +176,25 @@ a {
 .contacto {
 	display: flex;
 	justify-content: center;
-	align-items: flex-start;
+	align-content:start;
 	gap: 4em;
-	margin-top: 10vh;
+	margin-top: 5vh;
 	flex-wrap: wrap; /* importante para responsive */
 }
 
 /* Imagen */
 .wacha img {
 	border-radius: 20px;
-	width: 30vw;
-	max-width: 300px;
+	width: 20vw;
+	max-width: 200px;
 	margin-top: 2em;
 }
 
 /* Formulario */
 .formulario {
 	font-family: "Switzer", sans-serif;
-	width: 40vw;
-	min-width: 200px;
+	width: 30vw;
+	min-width: 300px;
 	color: white;
 }
 
