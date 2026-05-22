@@ -401,18 +401,20 @@
 
     videosToLoad.forEach(vInfo => {
       const vElem = document.getElementById(vInfo.id);
-      vElem.muted = true;
-      vElem.src = vInfo.src;
-      vElem.preload = "auto";
+      if (!vElem) return;
 
-      loadingStatus.textContent = `Cargando: ${vInfo.src.split('/').pop()}...`;
-      vElem.load();
+      vElem.muted = true;
+      vElem.preload = "auto";
+      vElem.src = vInfo.src;
+
+      loadingStatus.textContent = `Conectando con ${vInfo.src}...`;
 
       vElem.oncanplay = () => {
         if (!vElem.dataset.loaded) {
           vElem.dataset.loaded = "true";
           loadedCount++;
           loadingBar.style.width = (loadedCount / videosToLoad.length * 100) + "%";
+          loadingStatus.textContent = `Cargado: ${vInfo.src}`;
           if (loadedCount === videosToLoad.length) {
             hideLoadingScreen();
           }
@@ -421,8 +423,8 @@
 
       vElem.onerror = () => {
         console.error("Error en:", vInfo.src);
-        loadingStatus.textContent = `Error en: ${vInfo.src.split('/').pop()}`;
-        vElem.oncanplay();
+        loadingStatus.textContent = `ERROR: No se encuentra ${vInfo.src}`;
+        vElem.oncanplay(); // Saltamos para no bloquear
       };
     });
 
