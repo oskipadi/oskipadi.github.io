@@ -297,7 +297,6 @@
         grupos.</p>
       <div class="botones-menu-carga">
         <button id="btn-relaciones" class="btn-premium">Relaciones y no monogamias</button>
-        <button id="btn-continuar-carga" class="btn-premium">Continuar</button>
       </div>
 
       <div class="swiper-container-wrapper" id="swiper-wrapper-mapeo">
@@ -338,6 +337,8 @@
           </div>
         </div>
       </div>
+
+      <button id="btn-continuar-carga" class="btn-premium" style="margin-top: 30px;">Continuar</button>
     </div>
 
     <div id="countdown-overlay"
@@ -376,10 +377,10 @@
 
     // Lógica de Pre-carga de Videos
     const videosToLoad = [
-      { id: 'video-background', src: '/subdirectorios/docuweb/intro.webm' },
-      { id: 'video-parte1', src: '/subdirectorios/docuweb/parte_1.webm' },
-      { id: 'video-parte2', src: '/subdirectorios/docuweb/parte_2.webm' },
-      { id: 'video-pantalla_carga_1', src: '/subdirectorios/docuweb/pantalla_carga_1.webm' }
+      { id: 'video-background', src: 'intro.webm' },
+      { id: 'video-parte1', src: 'parte_1.webm' },
+      { id: 'video-parte2', src: 'parte_2.webm' },
+      { id: 'video-pantalla_carga_1', src: 'pantalla_carga_1.webm' }
     ];
 
     let loadedCount = 0;
