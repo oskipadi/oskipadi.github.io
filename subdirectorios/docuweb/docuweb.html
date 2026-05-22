@@ -409,16 +409,17 @@
       if (!vElem) return;
 
       vElem.muted = true;
-      vElem.preload = "auto";
+      vElem.preload = "metadata"; // Solo metadatos para empezar rápido
 
-      loadingStatus.textContent = `Conectando con ${vInfo.id}...`;
+      loadingStatus.textContent = `Localizando ${vInfo.id}...`;
 
-      vElem.oncanplay = () => {
+      // Usamos loadedmetadata para entrar casi al instante
+      vElem.onloadedmetadata = () => {
         if (!vElem.dataset.loaded) {
           vElem.dataset.loaded = "true";
           loadedCount++;
           loadingBar.style.width = (loadedCount / videosToLoad.length * 100) + "%";
-          loadingStatus.textContent = `Cargado: ${vInfo.id}`;
+          loadingStatus.textContent = `Detectado: ${vInfo.id}`;
           if (loadedCount === videosToLoad.length) {
             hideLoadingScreen();
           }
@@ -428,11 +429,16 @@
       vElem.onerror = () => {
         console.error("Error en:", vInfo.id);
         loadingStatus.textContent = `ERROR: No se encuentra ${vInfo.id}`;
-        vElem.oncanplay(); // Saltamos para no bloquear
+        vElem.onloadedmetadata(); // Saltamos para no bloquear
       };
 
-      // Forzar carga de los source tags
+      // Forzar carga de los metadatos
       vElem.load();
+
+      // Indicador de buffering
+      vElem.addEventListener('waiting', () => {
+        console.log(`Buffering: ${vInfo.id}`);
+      });
     });
 
     setTimeout(() => {
