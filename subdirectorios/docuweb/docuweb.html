@@ -104,6 +104,10 @@
       style="position: absolute; bottom: 20px; right: 20px; padding: 12px 24px; background: rgba(255,255,255,0.9); border: 2px solid white; cursor: pointer; border-radius: 5px; font-size: 16px; font-weight: bold; z-index: 4;">Skip
       intro</button>
 
+    <video muted playsinline id="video-pantalla_carga_1"
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none;">
+    </video>
+
     <div id="countdown-overlay"
       style="position:absolute; top:20px; right:20px; z-index:10; padding:8px 12px; background:rgba(0,0,0,0.6); color:#ffffff; border-radius:15px; font-size:40px; display:none; pointer-events:none;">
       00</div>
@@ -203,8 +207,6 @@
     });
 
     startButton1.addEventListener('click', () => {
-      video.preload = "auto";
-      video.load();
       video.muted = false;
       video.play().catch(err => {
         video.muted = true;
@@ -217,7 +219,11 @@
     startButton2.addEventListener('click', () => {
       menuImage.classList.remove('visible');
       startButton2.style.display = 'none';
-      videoParte1.classList.add('video-visible');
+
+      // Hacer visible el video de la Parte 1
+      videoParte1.style.opacity = '1';
+      videoParte1.style.pointerEvents = 'auto';
+
       videoParte1.muted = false;
       videoParte1.play();
     });
