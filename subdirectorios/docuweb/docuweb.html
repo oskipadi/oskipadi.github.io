@@ -145,39 +145,51 @@
 
     let loadedCount = 0;
 
+    const hideLoadingScreen = () => {
+      loadingScreen.style.opacity = '0';
+      setTimeout(() => {
+        loadingScreen.style.display = 'none';
+        // Asegurar que el video de fondo esté en el inicio y pausado
+        video.pause();
+        video.currentTime = 0;
+      }, 1000);
+    };
+
     videosToLoad.forEach(vInfo => {
       const vElem = document.getElementById(vInfo.id);
       vElem.src = vInfo.src;
       vElem.preload = "auto";
 
-      // Intentar forzar la carga del primer fotograma para que se vea el poster/inicio
+      // Intentar forzar la carga del primer fotograma
       vElem.load();
 
-      vElem.oncanplaythrough = () => {
+      // Usamos oncanplay en lugar de oncanplaythrough para mayor rapidez
+      vElem.oncanplay = () => {
         if (!vElem.dataset.loaded) {
           vElem.dataset.loaded = "true";
           loadedCount++;
           loadingBar.style.width = (loadedCount / videosToLoad.length * 100) + "%";
 
           if (loadedCount === videosToLoad.length) {
-            loadingScreen.style.opacity = '0';
-            setTimeout(() => {
-              loadingScreen.style.display = 'none';
-              // Asegurar que el video de fondo esté en el inicio y pausado
-              video.pause();
-              video.currentTime = 0;
-            }, 1000);
+            hideLoadingScreen();
           }
         }
       };
 
-      // Fallback por si tarda demasiado o hay error
+      // Fallback por si hay error
       vElem.onerror = () => {
         console.error("Error cargando video:", vInfo.src);
-        // Continuamos de todos modos para no bloquear la app
-        vElem.oncanplaythrough();
+        vElem.oncanplay();
       };
     });
+
+    // Timeout de seguridad: 10 segundos máximo de espera
+    setTimeout(() => {
+      if (loadedCount < videosToLoad.length) {
+        console.warn("Timeout de carga alcanzado");
+        hideLoadingScreen();
+      }
+    }, 10000);
 
     video.addEventListener('ended', () => {
       menuImage.classList.add('visible');
