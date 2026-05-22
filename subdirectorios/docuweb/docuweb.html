@@ -265,22 +265,23 @@
 
   <div class="image-container2">
     <video playsinline id="video-background" poster="menu.png" muted
-      style="width: 100%; height: 100%; object-fit: cover;">
-      <!-- El src se asigna vía JS (Intro.webm) -->
+      style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1;">
     </video>
 
-    <img src="menu.png" alt="menu" class="menu-image">
+    <img src="menu.png" alt="menu" class="menu-image" style="z-index: 2;">
+
     <button id="start-button_1"
-      style="position:absolute; left:50%; top:70%; transform:translate(-50%,-50%); width:120px; height:60px; background:#fffdfd; color:#000000; border:none; border-radius:30px; font-size:20px; cursor:pointer; z-index:5; display:block;">Play</button>
+      style="position:absolute; left:50%; top:70%; transform:translate(-50%,-50%); width:120px; height:60px; background:#fffdfd; color:#000000; border:none; border-radius:30px; font-size:20px; cursor:pointer; z-index:10; display:block;">Play</button>
+
     <button id="start-button_2"
-      style="position:absolute; left:50%; top:55%; transform:translate(-400%,100%); width:80px; height:80px; background:#e53935; color:#fff; border:none; border-radius:50%; font-size:28px; cursor:pointer; z-index:5; display:none;">▶</button>
+      style="position:absolute; left:50%; top:55%; transform:translate(-400%,100%); width:80px; height:80px; background:#e53935; color:#fff; border:none; border-radius:50%; font-size:28px; cursor:pointer; z-index:10; display:none;">▶</button>
 
     <video muted playsinline id="video-parte1"
-      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none;">
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none; z-index: 3;">
     </video>
 
     <video muted playsinline id="video-parte2"
-      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none;">
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none; z-index: 3;">
     </video>
 
     <button id="skip-intro"
@@ -451,8 +452,13 @@
     });
 
     startButton1.addEventListener('click', () => {
-      video.muted = false;
-      video.play().catch(err => {
+      // Primero play silenciado (garantizado por el navegador)
+      video.muted = true;
+      video.play().then(() => {
+        // Una vez que el video corre, intentamos activar el audio
+        video.muted = false;
+      }).catch(err => {
+        console.warn("Autoplay bloqueado, reintentando muted...");
         video.muted = true;
         video.play();
       });
@@ -468,8 +474,10 @@
       videoParte1.style.opacity = '1';
       videoParte1.style.pointerEvents = 'auto';
 
-      videoParte1.muted = false;
-      videoParte1.play();
+      videoParte1.muted = true;
+      videoParte1.play().then(() => {
+        videoParte1.muted = false;
+      });
     });
 
 
