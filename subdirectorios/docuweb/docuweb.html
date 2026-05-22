@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>docuweb - Control Ocular</title>
+  <title>docuweb</title>
   <link href="docuweb.css" rel="stylesheet" type="text/css">
   <style>
     /* Small UI for the eye-transition overlay and helper classes */
@@ -57,10 +57,33 @@
 
 <body>
 
+  <!-- Pantalla de Carga -->
+  <div id="loading-screen"
+    style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #08070F; z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 1s ease-in-out;">
+    <div
+      style="width: 50px; height: 50px; border: 5px solid rgba(255,255,255,0.1); border-top-color: #ffffff; border-radius: 50%; animation: loading-spin 1s linear infinite;">
+    </div>
+    <p
+      style="margin-top: 20px; font-family: 'Segoe UI', sans-serif; color: white; letter-spacing: 2px; font-size: 12px;">
+      CARGANDO EXPERIENCIA...</p>
+    <div
+      style="width: 200px; height: 2px; background: rgba(255,255,255,0.1); margin-top: 15px; border-radius: 2px; overflow: hidden;">
+      <div id="loading-bar" style="width: 0%; height: 100%; background: white; transition: width 0.3s ease;"></div>
+    </div>
+  </div>
+
+  <style>
+    @keyframes loading-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+
   <div class="image-container2">
-    <video playsinline id="video-background" poster="menu.png" preload="none" muted
+    <video playsinline id="video-background" poster="menu.png" muted
       style="width: 100%; height: 100%; object-fit: cover;">
-      <source src="intro.webm" type="video/webm" />
+      <!-- El src se asigna vía JS (Intro.webm) -->
     </video>
 
     <img src="menu.png" alt="menu" class="menu-image">
@@ -69,12 +92,10 @@
     <button id="start-button_2"
       style="position:absolute; left:50%; top:55%; transform:translate(-400%,100%); width:80px; height:80px; background:#e53935; color:#fff; border:none; border-radius:50%; font-size:28px; cursor:pointer; z-index:5; display:none;">▶</button>
 
-    <video muted playsinline id="video-parte1" preload="none" style="display:none; width:100%; height:auto;">
-      <source src="parte_1.webm" type="video/webm" />
+    <video muted playsinline id="video-parte1" style="display:none; width:100%; height:100%; object-fit:cover;">
     </video>
 
-    <video muted playsinline id="video-parte2" preload="none" style="display:none; width:100%; height:auto;">
-      <source src="parte_2.webm" type="video/webm" />
+    <video muted playsinline id="video-parte2" style="display:none; width:100%; height:100%; object-fit:cover;">
     </video>
 
     <button id="skip-intro"
@@ -112,6 +133,51 @@
     const eyeOverlay = document.getElementById('eye-overlay');
     const eyeStatus = document.getElementById('eye-status');
     const eyeFallback = document.getElementById('eye-fallback');
+    const loadingScreen = document.getElementById('loading-screen');
+    const loadingBar = document.getElementById('loading-bar');
+
+    // Lógica de Pre-carga de Videos
+    const videosToLoad = [
+      { id: 'video-background', src: 'Intro.webm' },
+      { id: 'video-parte1', src: 'parte_1.webm' },
+      { id: 'video-parte2', src: 'parte_2.webm' }
+    ];
+
+    let loadedCount = 0;
+
+    videosToLoad.forEach(vInfo => {
+      const vElem = document.getElementById(vInfo.id);
+      vElem.src = vInfo.src;
+      vElem.preload = "auto";
+
+      // Intentar forzar la carga del primer fotograma para que se vea el poster/inicio
+      vElem.load();
+
+      vElem.oncanplaythrough = () => {
+        if (!vElem.dataset.loaded) {
+          vElem.dataset.loaded = "true";
+          loadedCount++;
+          loadingBar.style.width = (loadedCount / videosToLoad.length * 100) + "%";
+
+          if (loadedCount === videosToLoad.length) {
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+              loadingScreen.style.display = 'none';
+              // Asegurar que el video de fondo esté en el inicio y pausado
+              video.pause();
+              video.currentTime = 0;
+            }, 1000);
+          }
+        }
+      };
+
+      // Fallback por si tarda demasiado o hay error
+      vElem.onerror = () => {
+        console.error("Error cargando video:", vInfo.src);
+        // Continuamos de todos modos para no bloquear la app
+        vElem.oncanplaythrough();
+      };
+    });
 
     video.addEventListener('ended', () => {
       menuImage.classList.add('visible');
@@ -122,6 +188,7 @@
 
     skipIntro.addEventListener('click', () => {
       video.pause();
+      startButton1.style.display = 'none';
       menuImage.classList.add('visible');
       startButton2.style.display = 'block';
       video.classList.add('video-hidden');
