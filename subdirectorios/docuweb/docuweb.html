@@ -92,10 +92,12 @@
     <button id="start-button_2"
       style="position:absolute; left:50%; top:55%; transform:translate(-400%,100%); width:80px; height:80px; background:#e53935; color:#fff; border:none; border-radius:50%; font-size:28px; cursor:pointer; z-index:5; display:none;">▶</button>
 
-    <video muted playsinline id="video-parte1" style="display:none; width:100%; height:100%; object-fit:cover;">
+    <video muted playsinline id="video-parte1"
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none;">
     </video>
 
-    <video muted playsinline id="video-parte2" style="display:none; width:100%; height:100%; object-fit:cover;">
+    <video muted playsinline id="video-parte2"
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none;">
     </video>
 
     <button id="skip-intro"
@@ -138,7 +140,7 @@
 
     // Lógica de Pre-carga de Videos
     const videosToLoad = [
-      { id: 'video-background', src: 'Intro.webm' },
+      { id: 'video-background', src: 'intro.webm' },
       { id: 'video-parte1', src: 'parte_1.webm' },
       { id: 'video-parte2', src: 'parte_2.webm' }
     ];
@@ -149,7 +151,6 @@
       loadingScreen.style.opacity = '0';
       setTimeout(() => {
         loadingScreen.style.display = 'none';
-        // Asegurar que el video de fondo esté en el inicio y pausado
         video.pause();
         video.currentTime = 0;
       }, 1000);
@@ -159,34 +160,28 @@
       const vElem = document.getElementById(vInfo.id);
       vElem.src = vInfo.src;
       vElem.preload = "auto";
-
-      // Intentar forzar la carga del primer fotograma
       vElem.load();
 
-      // Usamos oncanplay en lugar de oncanplaythrough para mayor rapidez
       vElem.oncanplay = () => {
         if (!vElem.dataset.loaded) {
           vElem.dataset.loaded = "true";
           loadedCount++;
           loadingBar.style.width = (loadedCount / videosToLoad.length * 100) + "%";
-
           if (loadedCount === videosToLoad.length) {
             hideLoadingScreen();
           }
         }
       };
 
-      // Fallback por si hay error
       vElem.onerror = () => {
-        console.error("Error cargando video:", vInfo.src);
+        console.error("Error cargando:", vInfo.src);
         vElem.oncanplay();
       };
     });
 
-    // Timeout de seguridad: 10 segundos máximo de espera
     setTimeout(() => {
       if (loadedCount < videosToLoad.length) {
-        console.warn("Timeout de carga alcanzado");
+        console.warn("Timeout de carga");
         hideLoadingScreen();
       }
     }, 10000);
@@ -231,12 +226,11 @@
     // Cuando termine la parte 1, mostramos la superposición y arrancamos la detección ocular
     videoParte1.addEventListener('ended', async () => {
       // Ocultamos el vídeo 1 y mostramos la parte 2 pero congelada (pausada) detrás del overlay
-      videoParte1.style.display = 'none';
+      videoParte1.style.opacity = '0';
+      videoParte1.style.pointerEvents = 'none';
       // Preparar video-parte2 como fondo congelado
-      videoParte2.style.display = 'block';
-      videoParte2.style.width = "100%";
-      videoParte2.style.height = "100%";
-      videoParte2.style.objectFit = "cover";
+      videoParte2.style.opacity = '1';
+      videoParte2.style.pointerEvents = 'auto';
       videoParte2.muted = false;
       try { videoParte2.pause(); } catch (e) { }
       try { videoParte2.currentTime = 0; } catch (e) { }
@@ -268,8 +262,6 @@
       cerrarojosMod.iniciarDeteccionSalto('video-parte2').then(() => {
         eyeOverlay.style.display = 'none';
         try { videoParte2.currentTime = 0; } catch (e) { }
-        videoParte2.preload = "auto";
-        videoParte2.load();
         videoParte2.play();
       }).catch((err) => {
         console.error('Detección ocular cancelada o error:', err);
@@ -280,11 +272,8 @@
     eyeFallback.addEventListener('click', () => {
       // Fallback manual: reproducir parte 2
       eyeOverlay.style.display = 'none';
-      videoParte2.style.display = 'block';
-
-      // Forzar carga debido al preload="none"
-      videoParte2.preload = "auto";
-      videoParte2.load();
+      videoParte2.style.opacity = '1';
+      videoParte2.style.pointerEvents = 'auto';
 
       videoParte2.muted = false;
       videoParte2.play().catch(err => {
