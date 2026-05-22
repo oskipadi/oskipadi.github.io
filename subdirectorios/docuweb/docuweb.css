@@ -1,21 +1,26 @@
 @charset "UTF-8";
+
 /* CSS Document */
- body, html { scroll-behavior:smooth;
-              height: 100%;
-              margin: 0;
-              background-color: #08070F;
-              color: white;
-    } 
+body,
+html {
+    scroll-behavior: smooth;
+    height: 100%;
+    margin: 0;
+    background-color: #08070F;
+    color: white;
+}
+
 * {
     margin: 0;
     padding: 0;
 }
-a { 
+
+a {
     text-decoration: none;
     color: white;
-    }
+}
 
-#masthead{
+#masthead {
     padding: 65px 0;
 }
 
@@ -40,12 +45,14 @@ a {
     transition: opacity 1s ease-in-out;
 }
 
-.image-container2 video#video-parte1 {
+.image-container2 video#video-parte1,
+.image-container2 video#video-parte2 {
     opacity: 0;
     pointer-events: none;
 }
 
-.image-container2 video#video-parte1.video-visible {
+.image-container2 video#video-parte1.video-visible,
+.image-container2 video#video-parte2.video-visible {
     opacity: 1;
     pointer-events: auto;
 }
@@ -58,12 +65,14 @@ a {
 .menu-image {
     opacity: 0;
     transition: opacity 1s ease-in-out;
-    z-index: 1;
+    z-index: 2;
+    pointer-events: none;
 }
 
 .menu-image.visible {
     opacity: 1;
-    z-index: 2;
+    z-index: 3;
+    pointer-events: auto;
 }
 
 .hover-content2 {

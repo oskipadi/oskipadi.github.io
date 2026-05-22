@@ -1,171 +1,221 @@
 <!doctype html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>docuweb - Control Ocular</title>
-<link href="docuweb.css" rel="stylesheet" type="text/css">
-<style>
-  /* Small UI for the eye-transition overlay and helper classes */
-  .video-hidden { display: none !important; }
-  .video-visible { display: block !important; }
-  #eye-overlay {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 50;
-    background: rgba(255,255,255,0.95);
-    padding: 24px 28px;
-    border-radius: 12px;
-    box-shadow: 0 8px 30px rgba(2,6,23,0.3);
-    display: none;
-    width: min(520px, 92%);
-    text-align: center;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    color: #0f172a;
-  }
-  #eye-overlay h3 { margin: 0 0 8px 0; color:#1e3a8a }
-  #eye-overlay p { margin: 6px 0 14px 0; font-size:1rem }
-  #eye-overlay button { margin-top: 8px }
-  #eye-status { font-weight:700; color:#2563eb; margin-top:6px }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>docuweb - Control Ocular</title>
+  <link href="docuweb.css" rel="stylesheet" type="text/css">
+  <style>
+    /* Small UI for the eye-transition overlay and helper classes */
+    .video-hidden {
+      display: none !important;
+    }
+
+    .video-visible {
+      display: block !important;
+    }
+
+    #eye-overlay {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 24px 28px;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(2, 6, 23, 0.3);
+      display: none;
+      width: min(520px, 92%);
+      text-align: center;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      color: #0f172a;
+    }
+
+    #eye-overlay h3 {
+      margin: 0 0 8px 0;
+      color: #1e3a8a
+    }
+
+    #eye-overlay p {
+      margin: 6px 0 14px 0;
+      font-size: 1rem
+    }
+
+    #eye-overlay button {
+      margin-top: 8px
+    }
+
+    #eye-status {
+      font-weight: 700;
+      color: #2563eb;
+      margin-top: 6px
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="image-container2">
-    <video playsinline id="video-background">
-    <source src="intro.webm" type="video/webm" />
+  <div class="image-container2">
+    <video playsinline id="video-background" poster="menu.png" preload="none" muted
+      style="width: 100%; height: 100%; object-fit: cover;">
+      <source src="intro.webm" type="video/webm" />
     </video>
 
     <img src="menu.png" alt="menu" class="menu-image">
-    <button id="start-button_1" style="position:absolute; left:50%; top:70%; transform:translate(-50%,-50%); width:120px; height:60px; background:#fffdfd; color:#000000; border:none; border-radius:30px; font-size:20px; cursor:pointer; z-index:5; display:block;">Play</button>
-    <button id="start-button_2" style="position:absolute; left:50%; top:55%; transform:translate(-400%,100%); width:80px; height:80px; background:#e53935; color:#fff; border:none; border-radius:50%; font-size:28px; cursor:pointer; z-index:5; display:none;">▶</button>
+    <button id="start-button_1"
+      style="position:absolute; left:50%; top:70%; transform:translate(-50%,-50%); width:120px; height:60px; background:#fffdfd; color:#000000; border:none; border-radius:30px; font-size:20px; cursor:pointer; z-index:5; display:block;">Play</button>
+    <button id="start-button_2"
+      style="position:absolute; left:50%; top:55%; transform:translate(-400%,100%); width:80px; height:80px; background:#e53935; color:#fff; border:none; border-radius:50%; font-size:28px; cursor:pointer; z-index:5; display:none;">▶</button>
 
-    <video muted playsinline id="video-parte1" style="display:none; width:100%; height:auto;">
-    <source src="parte_1.webm" type="video/webm" />
+    <video muted playsinline id="video-parte1" preload="none" style="display:none; width:100%; height:auto;">
+      <source src="parte_1.webm" type="video/webm" />
     </video>
 
-     <video muted playsinline id="video-parte2" style="display:none; width:100%; height:auto;">
-    <source src="parte_2.webm" type="video/webm" />
+    <video muted playsinline id="video-parte2" preload="none" style="display:none; width:100%; height:auto;">
+      <source src="parte_2.webm" type="video/webm" />
     </video>
 
-  <button id="skip-intro" style="position: absolute; bottom: 20px; right: 20px; padding: 12px 24px; background: rgba(255,255,255,0.9); border: 2px solid white; cursor: pointer; border-radius: 5px; font-size: 16px; font-weight: bold; z-index: 4;">Skip intro</button>
- 
-  <div id="countdown-overlay" style="position:absolute; top:20px; right:20px; z-index:10; padding:8px 12px; background:rgba(0,0,0,0.6); color:#ffffff; border-radius:15px; font-size:40px; display:none; pointer-events:none;">00</div>
+    <button id="skip-intro"
+      style="position: absolute; bottom: 20px; right: 20px; padding: 12px 24px; background: rgba(255,255,255,0.9); border: 2px solid white; cursor: pointer; border-radius: 5px; font-size: 16px; font-weight: bold; z-index: 4;">Skip
+      intro</button>
 
-  <!-- Overlay used while waiting for eye-close to transition -->
-  <div id="eye-overlay" aria-hidden="true">
-    <h3>Transición con control ocular</h3>
-    <p id="eye-message">Cierra ambos ojos durante <strong>0.5 segundos</strong> para iniciar <strong>Parte 2</strong>.</p>
-    <div id="eye-status">Esperando vídeo...</div>
-    <div style="margin-top:12px">
-      <button id="eye-fallback">Continuar manualmente</button>
+    <div id="countdown-overlay"
+      style="position:absolute; top:20px; right:20px; z-index:10; padding:8px 12px; background:rgba(0,0,0,0.6); color:#ffffff; border-radius:15px; font-size:40px; display:none; pointer-events:none;">
+      00</div>
+
+    <!-- Overlay used while waiting for eye-close to transition -->
+    <div id="eye-overlay" aria-hidden="true">
+      <h3>Transición con control ocular</h3>
+      <p id="eye-message">Cierra ambos ojos durante <strong>0.5 segundos</strong> para iniciar <strong>Parte 2</strong>.
+      </p>
+      <div id="eye-status">Esperando vídeo...</div>
+      <div style="margin-top:12px">
+        <button id="eye-fallback">Continuar manualmente</button>
+      </div>
     </div>
+
   </div>
 
-</div>
+  <script type="module">
+    // Nota: la detección ocular se importará dinámicamente solo durante la transición
 
-<script type="module">
-// Nota: la detección ocular se importará dinámicamente solo durante la transición
+    const video = document.getElementById('video-background');
+    const videoParte1 = document.getElementById('video-parte1');
+    const videoParte2 = document.getElementById('video-parte2');
+    const countdownOverlay = document.getElementById('countdown-overlay');
+    const skipIntro = document.getElementById('skip-intro');
+    const menuImage = document.querySelector('.menu-image');
+    const startButton1 = document.getElementById('start-button_1');
+    const startButton2 = document.getElementById('start-button_2');
+    const eyeOverlay = document.getElementById('eye-overlay');
+    const eyeStatus = document.getElementById('eye-status');
+    const eyeFallback = document.getElementById('eye-fallback');
 
-const video = document.getElementById('video-background');
-const videoParte1 = document.getElementById('video-parte1');
-const videoParte2 = document.getElementById('video-parte2');
-const countdownOverlay = document.getElementById('countdown-overlay');
-const skipIntro = document.getElementById('skip-intro');
-const menuImage = document.querySelector('.menu-image');
-const startButton1 = document.getElementById('start-button_1');
-const startButton2 = document.getElementById('start-button_2');
-const eyeOverlay = document.getElementById('eye-overlay');
-const eyeStatus = document.getElementById('eye-status');
-const eyeFallback = document.getElementById('eye-fallback');
-
-video.addEventListener('ended', () => {
-    menuImage.classList.add('visible');
-    video.classList.add('video-hidden');
-    skipIntro.style.display = 'none';
-    startButton2.style.display = 'block';
-});
-
-skipIntro.addEventListener('click', () => {
-    video.pause();
-    menuImage.classList.add('visible');
-    startButton2.style.display = 'block';
-    video.classList.add('video-hidden');
-    skipIntro.style.display = 'none';
-});
-
-startButton1.addEventListener('click', () => {
-    video.muted = false;
-    video.play();
-    startButton1.style.display = 'none';
-    skipIntro.style.display = 'block';
-});
-
-startButton2.addEventListener('click', () => {
-    menuImage.classList.remove('visible');
-    startButton2.style.display = 'none';
-    videoParte1.classList.add('video-visible');
-    videoParte1.muted = false;
-    videoParte1.play();
-});
-
-
-// Cuando termine la parte 1, mostramos la superposición y arrancamos la detección ocular
-videoParte1.addEventListener('ended', async () => {
-    // Ocultamos el vídeo 1 y mostramos la parte 2 pero congelada (pausada) detrás del overlay
-    videoParte1.style.display = 'none';
-    // Preparar video-parte2 como fondo congelado
-    videoParte2.style.display = 'block';
-    videoParte2.muted = false;
-    try { videoParte2.pause(); } catch (e) {}
-    try { videoParte2.currentTime = 0; } catch (e) {}
-
-    // Mostrar overlay de control ocular sobre video-parte2
-    eyeOverlay.style.display = 'block';
-    eyeOverlay.setAttribute('aria-hidden', 'false');
-    eyeStatus.textContent = 'Comprobando cámara...';
-
-    // Import dinámico para no afectar a los botones iniciales
-    let cerrarojosMod;
-    try {
-      cerrarojosMod = await import(new URL('./cerrarojos.js', import.meta.url).href);
-    } catch (e) {
-      console.error('Error al cargar módulo de detección ocular:', e);
-      eyeStatus.textContent = 'No se pudo cargar la detección ocular. Abre el archivo desde un servidor local o revisa la ruta.';
-      return;
-    }
-
-    const webcamOk = await cerrarojosMod.comprobarWebcam().catch(() => false);
-    if (!webcamOk) {
-      eyeStatus.textContent = 'No se detectó webcam. Usa el botón para continuar manualmente.';
-      return;
-    }
-
-    eyeStatus.textContent = 'Escuchando cierre de ojos...';
-
-    // Iniciar la detección; al detectar, reproducimos video-parte2 desde el inicio
-    cerrarojosMod.iniciarDeteccionSalto('video-parte2').then(() => {
-      eyeOverlay.style.display = 'none';
-      try { videoParte2.currentTime = 0; } catch (e) {}
-      videoParte2.play();
-    }).catch((err) => {
-      console.error('Detección ocular cancelada o error:', err);
-      eyeStatus.textContent = 'Error en detección ocular. Usa el botón para continuar manualmente.';
+    video.addEventListener('ended', () => {
+      menuImage.classList.add('visible');
+      video.classList.add('video-hidden');
+      skipIntro.style.display = 'none';
+      startButton2.style.display = 'block';
     });
-});
 
-eyeFallback.addEventListener('click', () => {
-    // Fallback manual: reproducir parte 2
-    eyeOverlay.style.display = 'none';
-    videoParte2.style.display = 'block';
-    videoParte2.muted = false;
-    videoParte2.play();
-});
+    skipIntro.addEventListener('click', () => {
+      video.pause();
+      menuImage.classList.add('visible');
+      startButton2.style.display = 'block';
+      video.classList.add('video-hidden');
+      skipIntro.style.display = 'none';
+    });
 
-</script>
+    startButton1.addEventListener('click', () => {
+      video.preload = "auto";
+      video.load();
+      video.muted = false;
+      video.play().catch(err => {
+        video.muted = true;
+        video.play();
+      });
+      startButton1.style.display = 'none';
+      skipIntro.style.display = 'block';
+    });
+
+    startButton2.addEventListener('click', () => {
+      menuImage.classList.remove('visible');
+      startButton2.style.display = 'none';
+      videoParte1.classList.add('video-visible');
+      videoParte1.muted = false;
+      videoParte1.play();
+    });
+
+
+    // Cuando termine la parte 1, mostramos la superposición y arrancamos la detección ocular
+    videoParte1.addEventListener('ended', async () => {
+      // Ocultamos el vídeo 1 y mostramos la parte 2 pero congelada (pausada) detrás del overlay
+      videoParte1.style.display = 'none';
+      // Preparar video-parte2 como fondo congelado
+      videoParte2.style.display = 'block';
+      videoParte2.style.width = "100%";
+      videoParte2.style.height = "100%";
+      videoParte2.style.objectFit = "cover";
+      videoParte2.muted = false;
+      try { videoParte2.pause(); } catch (e) { }
+      try { videoParte2.currentTime = 0; } catch (e) { }
+
+      // Mostrar overlay de control ocular sobre video-parte2
+      eyeOverlay.style.display = 'block';
+      eyeOverlay.setAttribute('aria-hidden', 'false');
+      eyeStatus.textContent = 'Comprobando cámara...';
+
+      // Import dinámico para no afectar a los botones iniciales
+      let cerrarojosMod;
+      try {
+        cerrarojosMod = await import(new URL('./cerrarojos.js', import.meta.url).href);
+      } catch (e) {
+        console.error('Error al cargar módulo de detección ocular:', e);
+        eyeStatus.textContent = 'No se pudo cargar la detección ocular. Abre el archivo desde un servidor local o revisa la ruta.';
+        return;
+      }
+
+      const webcamOk = await cerrarojosMod.comprobarWebcam().catch(() => false);
+      if (!webcamOk) {
+        eyeStatus.textContent = 'No se detectó webcam. Usa el botón para continuar manualmente.';
+        return;
+      }
+
+      eyeStatus.textContent = 'Escuchando cierre de ojos...';
+
+      // Iniciar la detección; al detectar, reproducimos video-parte2 desde el inicio
+      cerrarojosMod.iniciarDeteccionSalto('video-parte2').then(() => {
+        eyeOverlay.style.display = 'none';
+        try { videoParte2.currentTime = 0; } catch (e) { }
+        videoParte2.preload = "auto";
+        videoParte2.load();
+        videoParte2.play();
+      }).catch((err) => {
+        console.error('Detección ocular cancelada o error:', err);
+        eyeStatus.textContent = 'Error en detección ocular. Usa el botón para continuar manualmente.';
+      });
+    });
+
+    eyeFallback.addEventListener('click', () => {
+      // Fallback manual: reproducir parte 2
+      eyeOverlay.style.display = 'none';
+      videoParte2.style.display = 'block';
+
+      // Forzar carga debido al preload="none"
+      videoParte2.preload = "auto";
+      videoParte2.load();
+
+      videoParte2.muted = false;
+      videoParte2.play().catch(err => {
+        videoParte2.muted = true;
+        videoParte2.play();
+      });
+    });
+
+  </script>
 
 </body>
+
 </html>
