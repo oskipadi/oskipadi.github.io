@@ -93,34 +93,81 @@
 
     .botones-menu-carga {
       display: flex;
+      flex-direction: column;
       gap: 20px;
       z-index: 210;
+      align-items: center;
     }
 
     .btn-premium {
-      padding: 15px 30px;
-      background: #fffdfd;
-      color: #000000;
       border: none;
-      border-radius: 30px;
-      font-size: 18px;
-      font-weight: 500;
+      border-radius: 40px;
+      font-weight: 600;
       cursor: pointer;
-      transition: transform 0.2s, background 0.2s;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    #btn-relaciones {
+      padding: 25px 50px;
+      background: #000000;
+      color: #ffffff;
+      font-size: 22px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    #btn-continuar-carga {
+      padding: 12px 30px;
+      background: #ffffff;
+      color: #000000;
+      font-size: 14px;
+      opacity: 0.9;
     }
 
     .btn-premium:hover {
-      transform: scale(1.05);
-      background: #f0f0f0;
+      opacity: 0.7;
+      transform: translateY(-2px);
     }
 
     .swiper-container-wrapper {
-      width: 95%;
-      height: 70%;
+      width: 110%;
+      height: 75%;
       display: none;
       flex-direction: column;
-      gap: 10px;
+      gap: 15px;
       margin-top: 30px;
+      position: relative;
+    }
+
+    /* Controles de Zoom */
+    .zoom-controls {
+      position: absolute;
+      right: 10%;
+      top: 10px;
+      display: flex;
+      gap: 10px;
+      z-index: 300;
+    }
+
+    .btn-zoom {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-zoom:hover {
+      background: #ffffff;
+      transform: scale(1.1);
     }
 
     .swiper {
@@ -201,6 +248,11 @@
       style="width: 200px; height: 2px; background: rgba(255,255,255,0.1); margin-top: 15px; border-radius: 2px; overflow: hidden;">
       <div id="loading-bar" style="width: 0%; height: 100%; background: white; transition: width 0.3s ease;"></div>
     </div>
+    <p id="loading-status"
+      style="margin-top: 10px; font-family: sans-serif; color: rgba(255,255,255,0.5); font-size: 10px;"></p>
+    <button id="btn-emergencia"
+      style="display: none; margin-top: 20px; padding: 10px 20px; background: white; color: black; border: none; border-radius: 20px; cursor: pointer; font-weight: bold;">ENTRAR
+      DE TODOS MODOS</button>
   </div>
 
   <style>
@@ -249,12 +301,29 @@
       </div>
 
       <div class="swiper-container-wrapper" id="swiper-wrapper-mapeo">
+        <div class="zoom-controls">
+          <button class="btn-zoom" id="zoom-in">+</button>
+          <button class="btn-zoom" id="zoom-out">-</button>
+        </div>
+
         <!-- Main Swiper -->
         <div class="swiper mySwiper2">
           <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="mapeo_1.png" /></div>
-            <div class="swiper-slide"><img src="mapeo_2.png" /></div>
-            <div class="swiper-slide"><img src="mapeo_3.png" /></div>
+            <div class="swiper-slide">
+              <div class="swiper-zoom-container">
+                <img src="mapeo_1.png" />
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="swiper-zoom-container">
+                <img src="mapeo_2.png" />
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="swiper-zoom-container">
+                <img src="mapeo_3.png" />
+              </div>
+            </div>
           </div>
           <div class="swiper-button-next"></div>
           <div class="swiper-button-prev"></div>
@@ -277,7 +346,8 @@
 
     <!-- Overlay used while waiting for eye-close to transition -->
     <div id="eye-overlay" aria-hidden="true">
-      <h3>Cierra los ojos para empezar la dinámica</h3>
+      <h3>CIERRA LOS OJOS PARA ENTRAR EN LA DINÁMICA</h3>
+      <h1>👁️</h1>
       <div id="eye-status">Esperando vídeo...</div>
       <div style="margin-top:12px">
         <button id="eye-fallback">Continuar manualmente</button>
@@ -306,10 +376,10 @@
 
     // Lógica de Pre-carga de Videos
     const videosToLoad = [
-      { id: 'video-background', src: 'intro.webm' },
-      { id: 'video-parte1', src: 'parte_1.webm' },
-      { id: 'video-parte2', src: 'parte_2.webm' },
-      { id: 'video-pantalla_carga_1', src: 'pantalla_carga_1.webm' }
+      { id: 'video-background', src: '/subdirectorios/docuweb/intro.webm' },
+      { id: 'video-parte1', src: '/subdirectorios/docuweb/parte_1.webm' },
+      { id: 'video-parte2', src: '/subdirectorios/docuweb/parte_2.webm' },
+      { id: 'video-pantalla_carga_1', src: '/subdirectorios/docuweb/pantalla_carga_1.webm' }
     ];
 
     let loadedCount = 0;
@@ -323,10 +393,18 @@
       }, 1000);
     };
 
+    const loadingStatus = document.getElementById('loading-status');
+    const btnEmergencia = document.getElementById('btn-emergencia');
+
+    btnEmergencia.addEventListener('click', hideLoadingScreen);
+
     videosToLoad.forEach(vInfo => {
       const vElem = document.getElementById(vInfo.id);
+      vElem.muted = true;
       vElem.src = vInfo.src;
       vElem.preload = "auto";
+
+      loadingStatus.textContent = `Cargando: ${vInfo.src.split('/').pop()}...`;
       vElem.load();
 
       vElem.oncanplay = () => {
@@ -341,17 +419,17 @@
       };
 
       vElem.onerror = () => {
-        console.error("Error cargando:", vInfo.src);
+        console.error("Error en:", vInfo.src);
+        loadingStatus.textContent = `Error en: ${vInfo.src.split('/').pop()}`;
         vElem.oncanplay();
       };
     });
 
     setTimeout(() => {
       if (loadedCount < videosToLoad.length) {
-        console.warn("Timeout de carga");
-        hideLoadingScreen();
+        btnEmergencia.style.display = 'block';
       }
-    }, 10000);
+    }, 5000);
 
     video.addEventListener('ended', () => {
       menuImage.classList.add('visible');
@@ -488,6 +566,10 @@
 
         swiperInstance = new Swiper(".mySwiper2", {
           spaceBetween: 10,
+          zoom: {
+            maxRatio: 3,
+            minRatio: 1,
+          },
           navigation: {
             nextEl: ".swiper-button-next",
             prevEl: ".swiper-button-prev",
@@ -495,6 +577,14 @@
           thumbs: {
             swiper: swiperThumbs,
           },
+        });
+
+        // Lógica de botones de zoom
+        document.getElementById('zoom-in').addEventListener('click', () => {
+          swiperInstance.zoom.in();
+        });
+        document.getElementById('zoom-out').addEventListener('click', () => {
+          swiperInstance.zoom.out();
         });
       }
     });
