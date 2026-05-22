@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>docuweb</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
   <link href="docuweb.css" rel="stylesheet" type="text/css">
   <style>
     /* Small UI for the eye-transition overlay and helper classes */
@@ -21,36 +22,166 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      z-index: 50;
-      background: rgba(255, 255, 255, 0.95);
-      padding: 24px 28px;
-      border-radius: 12px;
-      box-shadow: 0 8px 30px rgba(2, 6, 23, 0.3);
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      padding: 40px;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
       display: none;
-      width: min(520px, 92%);
+      width: min(450px, 90%);
       text-align: center;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      color: #0f172a;
+      font-family: 'Segoe UI', sans-serif;
+      color: #000000;
     }
 
     #eye-overlay h3 {
-      margin: 0 0 8px 0;
-      color: #1e3a8a
+      margin: 0 0 15px 0;
+      font-size: 22px;
+      font-weight: 600;
+      color: #000000;
     }
 
     #eye-overlay p {
-      margin: 6px 0 14px 0;
-      font-size: 1rem
-    }
-
-    #eye-overlay button {
-      margin-top: 8px
+      margin: 0 0 20px 0;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #333333;
     }
 
     #eye-status {
-      font-weight: 700;
-      color: #2563eb;
-      margin-top: 6px
+      font-weight: 600;
+      color: #000000;
+      margin-bottom: 25px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    #eye-fallback {
+      padding: 15px 35px;
+      background: #fffdfd;
+      color: #000000;
+      border: none;
+      border-radius: 30px;
+      font-size: 18px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    #eye-fallback:hover {
+      transform: scale(1.05);
+    }
+
+    /* Estilos para el nuevo menú de carga */
+    #menu-carga-1 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 200;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .botones-menu-carga {
+      display: flex;
+      gap: 20px;
+      z-index: 210;
+    }
+
+    .btn-premium {
+      padding: 15px 30px;
+      background: #fffdfd;
+      color: #000000;
+      border: none;
+      border-radius: 30px;
+      font-size: 18px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .btn-premium:hover {
+      transform: scale(1.05);
+      background: #f0f0f0;
+    }
+
+    .swiper-container-wrapper {
+      width: 95%;
+      height: 70%;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .swiper {
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .swiper-slide {
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .swiper-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 15px;
+    }
+
+    .mySwiper2 {
+      height: 80%;
+      width: 100%;
+    }
+
+    .mySwiper {
+      height: 20%;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 0;
+    }
+
+    .mySwiper .swiper-slide {
+      width: 25%;
+      height: 100%;
+      opacity: 0.4;
+      cursor: pointer;
+    }
+
+    .mySwiper .swiper-slide-thumb-active {
+      opacity: 1;
+    }
+
+    .swiper-slide img {
+      border-radius: 8px;
+    }
+
+    .texto-mapeo {
+      color: white;
+      font-size: 18px;
+      margin-bottom: 30px;
+      text-align: center;
+      max-width: 800px;
+      line-height: 1.6;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      font-family: 'Segoe UI', sans-serif;
+      display: none;
     }
   </style>
 </head>
@@ -104,9 +235,41 @@
       style="position: absolute; bottom: 20px; right: 20px; padding: 12px 24px; background: rgba(255,255,255,0.9); border: 2px solid white; cursor: pointer; border-radius: 5px; font-size: 16px; font-weight: bold; z-index: 4;">Skip
       intro</button>
 
-    <video muted playsinline id="video-pantalla_carga_1"
+    <video muted playsinline id="video-pantalla_carga_1" loop
       style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none;">
     </video>
+
+    <!-- Nuevo Menú Interactivo sobre Pantalla de Carga 1 -->
+    <div id="menu-carga-1">
+      <p class="texto-mapeo">Estos mapeos son fruto de una sesión sobre relaciones en la que se trabajó dividiendo en 3
+        grupos.</p>
+      <div class="botones-menu-carga">
+        <button id="btn-relaciones" class="btn-premium">Relaciones y no monogamias</button>
+        <button id="btn-continuar-carga" class="btn-premium">Continuar</button>
+      </div>
+
+      <div class="swiper-container-wrapper" id="swiper-wrapper-mapeo">
+        <!-- Main Swiper -->
+        <div class="swiper mySwiper2">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="mapeo_1.png" /></div>
+            <div class="swiper-slide"><img src="mapeo_2.png" /></div>
+            <div class="swiper-slide"><img src="mapeo_3.png" /></div>
+          </div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+        </div>
+
+        <!-- Thumbs Swiper -->
+        <div class="swiper mySwiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="mapeo_1.png" /></div>
+            <div class="swiper-slide"><img src="mapeo_2.png" /></div>
+            <div class="swiper-slide"><img src="mapeo_3.png" /></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div id="countdown-overlay"
       style="position:absolute; top:20px; right:20px; z-index:10; padding:8px 12px; background:rgba(0,0,0,0.6); color:#ffffff; border-radius:15px; font-size:40px; display:none; pointer-events:none;">
@@ -114,9 +277,7 @@
 
     <!-- Overlay used while waiting for eye-close to transition -->
     <div id="eye-overlay" aria-hidden="true">
-      <h3>Transición con control ocular</h3>
-      <p id="eye-message">Cierra ambos ojos durante <strong>0.5 segundos</strong> para iniciar <strong>Parte 2</strong>.
-      </p>
+      <h3>Cierra los ojos para empezar la dinámica</h3>
       <div id="eye-status">Esperando vídeo...</div>
       <div style="margin-top:12px">
         <button id="eye-fallback">Continuar manualmente</button>
@@ -141,12 +302,14 @@
     const eyeFallback = document.getElementById('eye-fallback');
     const loadingScreen = document.getElementById('loading-screen');
     const loadingBar = document.getElementById('loading-bar');
+    const videoPantallaCarga1 = document.getElementById('video-pantalla_carga_1');
 
     // Lógica de Pre-carga de Videos
     const videosToLoad = [
       { id: 'video-background', src: 'intro.webm' },
       { id: 'video-parte1', src: 'parte_1.webm' },
-      { id: 'video-parte2', src: 'parte_2.webm' }
+      { id: 'video-parte2', src: 'parte_2.webm' },
+      { id: 'video-pantalla_carga_1', src: 'pantalla_carga_1.webm' }
     ];
 
     let loadedCount = 0;
@@ -288,7 +451,64 @@
       });
     });
 
+    videoParte2.addEventListener('ended', () => {
+      // Ocultar Parte 2 y mostrar Pantalla de Carga 1 en Loop
+      videoParte2.style.opacity = '0';
+      videoParte2.style.pointerEvents = 'none';
+
+      videoPantallaCarga1.style.opacity = '1';
+      videoPantallaCarga1.style.pointerEvents = 'auto';
+      videoPantallaCarga1.muted = false;
+      videoPantallaCarga1.loop = true;
+      videoPantallaCarga1.play();
+
+      // Mostrar el menú interactivo
+      document.getElementById('menu-carga-1').style.display = 'flex';
+    });
+
+    // Lógica del nuevo menú
+    const btnRelaciones = document.getElementById('btn-relaciones');
+    const btnContinuarCarga = document.getElementById('btn-continuar-carga');
+    const swiperWrapper = document.getElementById('swiper-wrapper-mapeo');
+    let swiperInstance = null;
+
+    btnRelaciones.addEventListener('click', () => {
+      swiperWrapper.style.display = 'flex';
+      document.querySelector('.texto-mapeo').style.display = 'block';
+      btnRelaciones.style.display = 'none';
+
+      // Inicializar Swiper si no existe
+      if (!swiperInstance) {
+        const swiperThumbs = new Swiper(".mySwiper", {
+          spaceBetween: 10,
+          slidesPerView: 3,
+          freeMode: true,
+          watchSlidesProgress: true,
+        });
+
+        swiperInstance = new Swiper(".mySwiper2", {
+          spaceBetween: 10,
+          navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          },
+          thumbs: {
+            swiper: swiperThumbs,
+          },
+        });
+      }
+    });
+
+    btnContinuarCarga.addEventListener('click', () => {
+      // Aquí puedes definir qué pasa al continuar
+      document.getElementById('menu-carga-1').style.display = 'none';
+      videoPantallaCarga1.style.opacity = '0';
+      videoPantallaCarga1.pause();
+      // Por ahora lo ocultamos, puedes añadir aquí la siguiente transición
+    });
+
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
 
 </body>
 
