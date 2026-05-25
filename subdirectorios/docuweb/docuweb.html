@@ -1527,13 +1527,13 @@
     }
 
     if (consentAlertClose) {
-      consentAlertClose.addEventListener('click', proceedFromPantallaCarga3);
+      consentAlertClose.addEventListener('click', hideConsentAlert);
     }
 
     if (consentAlertOverlay) {
       consentAlertOverlay.addEventListener('click', (event) => {
         if (event.target === consentAlertOverlay) {
-          proceedFromPantallaCarga3();
+          hideConsentAlert();
         }
       });
     }
