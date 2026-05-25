@@ -1297,6 +1297,7 @@
       if (videoPantallaCarga3) {
         videoPantallaCarga3.style.opacity = '0';
         videoPantallaCarga3.style.pointerEvents = 'none';
+        videoPantallaCarga3.pause();
       }
       if (skipOrigen) skipOrigen.style.display = 'block';
       if (videoOrigenObservatorio) {
@@ -1816,8 +1817,11 @@
         videoPc3Overlay.style.display = 'none';
         videoPc3Overlay.style.background = 'rgba(0,0,0,0.0)';
       }
-      videoPantallaCarga3.style.opacity = '0';
-      videoPantallaCarga3.style.pointerEvents = 'none';
+      if (videoPantallaCarga3) {
+        videoPantallaCarga3.style.opacity = '0';
+        videoPantallaCarga3.style.pointerEvents = 'none';
+        videoPantallaCarga3.pause();
+      }
       if (skipOrigen) skipOrigen.style.display = 'block';
       // Play origen_observatorio video
       videoOrigenObservatorio.style.opacity = '1';
