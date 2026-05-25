@@ -216,7 +216,7 @@
     #consent-overlay {
       position: fixed;
       inset: 0;
-      z-index: 900;
+      z-index: 1100;
       display: none;
       justify-content: center;
       align-items: center;
@@ -254,6 +254,7 @@
       padding: 30px 28px;
       background: rgba(255, 255, 255, 0.08);
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+      display: none;
     }
 
     #consent-overlay .consent-text p {
@@ -263,6 +264,67 @@
       letter-spacing: 0.01em;
       font-weight: 500;
       color: #f7f7f7;
+    }
+
+    #consent-paragraph-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 950;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 24px;
+    }
+
+    #consent-paragraph-modal-content {
+      width: min(1100px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 36px;
+      background: rgba(0, 0, 0, 0.94);
+      border-radius: 26px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+      color: #f4f4f4;
+      font-family: 'Segoe UI', sans-serif;
+      line-height: 1.8;
+      font-size: 18px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+
+    #consent-paragraph-modal-content h2 {
+      margin-top: 0;
+      margin-bottom: 18px;
+      font-size: clamp(28px, 3vw, 42px);
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+    }
+
+    #consent-paragraph-modal-content p {
+      margin: 0 0 18px 0;
+      color: #e8e8e8;
+      font-size: clamp(16px, 1.05vw, 20px);
+    }
+
+    #consent-paragraph-modal-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      border: none;
+      background: transparent;
+      color: #ffffff;
+      font-size: 28px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      opacity: 1;
     }
 
     #consent-overlay .consent-title {
@@ -291,8 +353,8 @@
 
     #consent-overlay .consent-video iframe {
       width: 100%;
-      max-width: 454px;
-      aspect-ratio: 4 / 3;
+      max-width: 1362px;
+      aspect-ratio: 16 / 9;
       border: none;
       border-radius: 22px;
     }
@@ -334,10 +396,11 @@
       opacity: 1;
     }
 
-    #intro-alert-overlay {
+    #intro-alert-overlay,
+    #consent-alert-overlay {
       position: fixed;
       inset: 0;
-      z-index: 1100;
+      z-index: 1300;
       display: none;
       justify-content: center;
       align-items: center;
@@ -345,7 +408,8 @@
       padding: 24px;
     }
 
-    #intro-alert-content {
+    #intro-alert-content,
+    #consent-alert-content {
       width: min(1100px, 100%);
       max-height: 90vh;
       overflow-y: auto;
@@ -361,7 +425,14 @@
       position: relative;
     }
 
-    #intro-alert-content h2 {
+    /* Make the consent alert narrower (approximately half width) */
+    #consent-alert-content {
+      width: min(550px, 50%);
+      max-width: 550px;
+    }
+
+    #intro-alert-content h2,
+    #consent-alert-content h2 {
       margin-top: 0;
       margin-bottom: 18px;
       font-size: clamp(28px, 3vw, 42px);
@@ -369,13 +440,15 @@
       line-height: 1.1;
     }
 
-    #intro-alert-content p {
+    #intro-alert-content p,
+    #consent-alert-content p {
       margin: 0 0 18px 0;
       color: #e8e8e8;
       font-size: clamp(16px, 1.05vw, 20px);
     }
 
-    #intro-alert-close {
+    #intro-alert-close,
+    #consent-alert-close {
       position: absolute;
       top: 18px;
       right: 18px;
@@ -704,13 +777,24 @@
     </div>
   </div>
 
+  <div id="consent-alert-overlay" role="dialog" aria-modal="true" aria-labelledby="consent-alert-title">
+    <div id="consent-alert-content">
+      <button id="consent-alert-close" type="button" aria-label="Cerrar aviso">×</button>
+      <div id="consent-alert-wrapper">
+        <h4 id="consent-alert-title">CONSENTIMIENTO Y AGRESIONES</h4>
+        <p>Este tema, si bien, ha sido revisionado en el observatorio, con la intención de procurar la intimidad compartida por las personas involucradas se ha optado por no registrar esta vez.
+        A continuación os compartimos un proyecto realizado por Sergi —miembro del observatorio— junto con Ana Apausa sobre el consentimiento a dos voces.</p>
+      </div>
+    </div>
+  </div>
+
   <div class="image-container2">
     <div id="mini-progress" style="position:absolute; top:0; left:0; width:100%; height:6px; background: rgba(255,255,255,0.08); z-index:500; display:none;">
       <div id="mini-progress-bar" style="width:0%; height:100%; background: #ffffff; transition: width 0.1s linear; opacity:0.95;"></div>
     </div>
     <video playsinline id="video-background" poster="intro.jpg" muted
       style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1;">
-      <source src="https://customer-rkin2iztax47x9b5.cloudflarestream.com/7212b697c55368b9018b4c4e82aaed6b/manifest/video.m3u8" type="application/x-mpegURL">
+      <source src="https://customer-rkin2iztax47x9b5.cloudflarestream.com/45e184b32013cbe381fd33a05931a48b/manifest/video.m3u8" type="application/x-mpegURL">
       <source src="intro.mp4" type="video/mp4">
       <source src="intro.webm" type="video/webm">
       <source src="intro.mov" type="video/mov">
@@ -905,6 +989,18 @@
       </div>
     </div>
 
+    <div id="consent-paragraph-modal" role="dialog" aria-modal="true">
+      <div id="consent-paragraph-modal-content">
+        <button id="consent-paragraph-modal-close" type="button" aria-label="Cerrar">×</button>
+        <div id="consent-paragraph-modal-wrapper">
+          <h2>CONSENTIMIENTO A DOS VOCES</h2>
+          <p id="consent-paragraph-text">Este tema, si bien, ha sido revisionado en el observatorio, con la intención de procurar la intimidad compartida por las personas involucradas se ha optado por no registrar esta vez.
+
+            A continuación os compartimos un proyecto realizado por Sergi —miembro del observatorio— junto con Ana Apausa sobre el consentimiento a dos voces.</p>
+        </div>
+      </div>
+    </div>
+
     <div id="consent-overlay">
       <div class="consent-panel">
         <div class="consent-block consent-text">
@@ -1018,6 +1114,8 @@
     const consentTitle = document.getElementById('consent-title');
     const consentParagraph = document.getElementById('consent-paragraph');
     const consentVideoFrame = document.getElementById('consent-video-frame');
+    const consentParagraphModal = document.getElementById('consent-paragraph-modal');
+    const consentParagraphModalClose = document.getElementById('consent-paragraph-modal-close');
     const videoParte3 = document.getElementById('video-parte3');
     const skipVideo = document.getElementById('skip-video');
     const videoPc3Overlay = document.getElementById('video-pc3-overlay');
@@ -1026,6 +1124,8 @@
     const introAlertOverlay = document.getElementById('intro-alert-overlay');
     const introAlertToggle = document.getElementById('intro-alert-toggle');
     const introAlertClose = document.getElementById('intro-alert-close');
+    const consentAlertOverlay = document.getElementById('consent-alert-overlay');
+    const consentAlertClose = document.getElementById('consent-alert-close');
     let currentStage = null;
     
     // Lógica de Pre-carga de Videos
@@ -1178,6 +1278,40 @@
       introAlertOverlay.style.display = 'none';
     };
 
+    const showConsentAlert = () => {
+      if (!consentAlertOverlay) return;
+      consentAlertOverlay.style.display = 'flex';
+    };
+
+    const hideConsentAlert = () => {
+      if (!consentAlertOverlay) return;
+      consentAlertOverlay.style.display = 'none';
+    };
+
+    const proceedFromPantallaCarga3 = () => {
+      hideConsentAlert();
+      if (videoPc3Overlay) {
+        videoPc3Overlay.style.display = 'none';
+        videoPc3Overlay.style.background = 'rgba(0,0,0,0.0)';
+      }
+      if (videoPantallaCarga3) {
+        videoPantallaCarga3.style.opacity = '0';
+        videoPantallaCarga3.style.pointerEvents = 'none';
+      }
+      if (skipOrigen) skipOrigen.style.display = 'block';
+      if (videoOrigenObservatorio) {
+        videoOrigenObservatorio.style.opacity = '1';
+        videoOrigenObservatorio.style.pointerEvents = 'auto';
+        videoOrigenObservatorio.muted = false;
+        videoOrigenObservatorio.play().catch(err => {
+          console.warn('Autoplay bloqueado, reintentando...');
+          videoOrigenObservatorio.muted = true;
+          videoOrigenObservatorio.play();
+        });
+      }
+      currentStage = 'origen_observatorio';
+    };
+
     const loadingStatus = document.getElementById('loading-status');
     const btnEmergencia = document.getElementById('btn-emergencia');
 
@@ -1244,9 +1378,9 @@
           videoPantallaCarga3.muted = false;
           videoPantallaCarga3.loop = true;
           videoPantallaCarga3.play();
-          menuCarga3.style.display = 'flex';
-          startCountdown(10, continueFromCarga3);
-          currentStage = null;
+          if (menuCarga3) menuCarga3.style.display = 'flex';
+          if (btnConsentimiento) btnConsentimiento.style.display = 'inline-block';
+          if (btnContinuarCarga3) btnContinuarCarga3.style.display = 'inline-block';
           hideSkipVideoButton();
           return;
         case 'origen_observatorio':
@@ -1392,6 +1526,52 @@
       });
     }
 
+    if (consentAlertClose) {
+      consentAlertClose.addEventListener('click', proceedFromPantallaCarga3);
+    }
+
+    if (consentAlertOverlay) {
+      consentAlertOverlay.addEventListener('click', (event) => {
+        if (event.target === consentAlertOverlay) {
+          proceedFromPantallaCarga3();
+        }
+      });
+    }
+
+    // Modal del párrafo de consentimiento
+    function showConsentParagraphModal() {
+      if (consentParagraphModal) {
+        consentParagraphModal.style.display = 'flex';
+      }
+    }
+
+    function hideConsentParagraphModal() {
+      if (consentParagraphModal) {
+        consentParagraphModal.style.display = 'none';
+      }
+    }
+
+    if (consentParagraph) {
+      consentParagraph.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showConsentParagraphModal();
+      });
+      consentParagraph.style.cursor = 'pointer';
+      consentParagraph.style.textDecoration = 'underline';
+    }
+
+    if (consentParagraphModalClose) {
+      consentParagraphModalClose.addEventListener('click', hideConsentParagraphModal);
+    }
+
+    if (consentParagraphModal) {
+      consentParagraphModal.addEventListener('click', (event) => {
+        if (event.target === consentParagraphModal) {
+          hideConsentParagraphModal();
+        }
+      });
+    }
+
     // Controls to hide intro branding when user starts or skips the intro
     const introBranding = document.getElementById('intro-branding');
     function hideIntroBranding() {
@@ -1468,21 +1648,18 @@
     });
 
     videoParte2.addEventListener('ended', () => {
-      // Ocultar Parte 2 y mostrar Pantalla de Carga 1 en Loop
+      // Saltar directamente a parte_3 sin mostrar mapeos
       videoParte2.style.opacity = '0';
       videoParte2.style.pointerEvents = 'none';
 
-      videoPantallaCarga1.style.opacity = '1';
-      videoPantallaCarga1.style.pointerEvents = 'auto';
-      videoPantallaCarga1.muted = false;
-      videoPantallaCarga1.loop = true;
-      videoPantallaCarga1.play();
-
-      // Mostrar el menú interactivo
-      document.getElementById('menu-carga-1').style.display = 'flex';
-      stopCountdown();
-      hideSkipVideoButton();
-      startCountdown(10, continueFromCarga1);
+      if (videoParte3) {
+        videoParte3.style.opacity = '1';
+        videoParte3.style.pointerEvents = 'auto';
+        videoParte3.muted = false;
+        videoParte3.play().catch(() => { videoParte3.muted = true; videoParte3.play(); });
+        currentStage = 'parte3';
+        showSkipVideoButton();
+      }
     });
 
     videoParte3.addEventListener('ended', () => {
@@ -1510,10 +1687,10 @@
       videoPantallaCarga3.muted = false;
       videoPantallaCarga3.loop = true;
       videoPantallaCarga3.play();
-      menuCarga3.style.display = 'flex';
-      stopCountdown();
+      if (menuCarga3) menuCarga3.style.display = 'flex';
+      if (btnConsentimiento) btnConsentimiento.style.display = 'inline-block';
+      if (btnContinuarCarga3) btnContinuarCarga3.style.display = 'inline-block';
       hideSkipVideoButton();
-      startCountdown(10, continueFromCarga3);
     });
 
     btnDinamica.addEventListener('click', () => {
@@ -1575,21 +1752,36 @@
     });
 
     btnConsentimiento.addEventListener('click', () => {
-      menuCarga3.style.display = 'none';
-      // Mostrar la pantalla de carga 3 detrás del overlay y reproducir en loop
-      videoPantallaCarga3.style.opacity = '1';
-      videoPantallaCarga3.style.pointerEvents = 'auto';
-      videoPantallaCarga3.muted = false;
-      videoPantallaCarga3.loop = true;
-      videoPantallaCarga3.play().catch(() => { videoPantallaCarga3.muted = true; videoPantallaCarga3.play(); });
+      // Hide the menu buttons first
+      if (menuCarga3) menuCarga3.style.display = 'none';
+
+      // Ensure pantalla_carga_3 is visible behind the consent content
+      if (videoPantallaCarga3) {
+        videoPantallaCarga3.style.opacity = '1';
+        videoPantallaCarga3.style.pointerEvents = 'auto';
+        videoPantallaCarga3.muted = false;
+        videoPantallaCarga3.loop = true;
+        videoPantallaCarga3.play().catch(() => { videoPantallaCarga3.muted = true; videoPantallaCarga3.play(); });
+      }
+
       // Darken the pantalla_carga_3 video with a semi-opaque black overlay
       if (videoPc3Overlay) {
         videoPc3Overlay.style.background = 'rgba(0,0,0,0.5)';
         videoPc3Overlay.style.display = 'block';
       }
-      showConsentContent();
-      consentOverlay.style.display = 'flex';
-      startCountdown(10, continueFromCarga3);
+
+      // Show the consent iframe panel beneath the alert
+      if (consentOverlay) {
+        showConsentContent();
+        consentOverlay.style.display = 'flex';
+        // ensure it's behind the alert by setting a slightly lower z-index
+        consentOverlay.style.zIndex = '1200';
+      }
+
+      // small delay to guarantee stacking order, then show the alert on top
+      setTimeout(() => {
+        showConsentAlert();
+      }, 60);
     });
 
     btnContinuarCarga3.addEventListener('click', () => {
