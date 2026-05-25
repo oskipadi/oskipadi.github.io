@@ -710,10 +710,10 @@
     </div>
     <video playsinline id="video-background" poster="intro.jpg" muted
       style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1;">
+      <source src="https://customer-rkin2iztax47x9b5.cloudflarestream.com/7212b697c55368b9018b4c4e82aaed6b/manifest/video.m3u8" type="application/x-mpegURL">
       <source src="intro.mp4" type="video/mp4">
       <source src="intro.webm" type="video/webm">
       <source src="intro.mov" type="video/mov">
-      <source src="https://customer-rkin2iztax47x9b5.cloudflarestream.com/7212b697c55368b9018b4c4e82aaed6b/manifest/video.m3u8" type="application/x-mpegURL">
     </video>
     <div id="video-poster-overlay"
       style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('intro.jpg') center/cover no-repeat; z-index: 2; pointer-events: none;"></div>
@@ -742,8 +742,8 @@
 
     <video muted playsinline id="video-parte2"
       style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none; z-index: 3;">
-      <source src="parte_2.webm" type="video/webm">
       <source src="https://customer-rkin2iztax47x9b5.cloudflarestream.com/89f21e2568c7b1b2d553459bed5f2ae9/manifest/video.m3u8" type="application/x-mpegURL">
+      <source src="parte_2.webm" type="video/webm">
     </video>
 
     <button id="skip-intro"
@@ -970,8 +970,10 @@
 
     const attachHls = (videoEl, url, HlsClass) => {
       const hls = new HlsClass();
-      hls.loadSource(url);
       hls.attachMedia(videoEl);
+      hls.loadSource(url);
+      videoEl.preload = 'auto';
+      try { videoEl.load(); } catch (e) { }
     };
 
     const initializeHls = () => {
