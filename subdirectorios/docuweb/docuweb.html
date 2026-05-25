@@ -76,8 +76,63 @@
       transform: scale(1.05);
     }
 
+    /* Intro branding (hidden until loading finishes) */
+    #intro-branding {
+      display: none;
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      z-index: 1005;
+      align-items: center;
+      gap: 8px;
+      color:#ccfc86;
+      padding: 6px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+  
+
+    .site-title {
+     font-family: "Zodiak";
+      font-size: 40px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 90%;
+      letter-spacing: -1px;
+      max-width: 120px;
+      margin: 0 auto;
+      color:#ccfc86;
+    }
+
+    /* Flecha alineada a la izquierda */
+    .flecha_izq {
+      font-size: 3.5em;
+      font-weight: 900;
+      justify-self: start;
+      padding-left: 1em;
+      transition: padding-left 900ms ease;
+      display: inline-block;
+      position: relative;
+      z-index: 10;
+      cursor: pointer;
+      color:#ccfc86;
+      text-shadow: 0 0 2px rgba(204, 252, 134, 0.5);
+    }
+
+    @keyframes moverFlecha {
+      0%   { transform: translateX(0); }
+      50%  { transform: translateX(-20px); }
+      100% { transform: translateX(0); }
+    }
+
+    .flecha_izq:hover {
+      animation: moverFlecha 1s ease-in-out infinite;
+    }
+    
     /* Estilos para el nuevo menú de carga */
-    #menu-carga-1 {
+    #menu-carga-1,
+    #menu-carga-2,
+    #menu-carga-3 {
       position: absolute;
       top: 0;
       left: 0;
@@ -117,12 +172,231 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
 
-    #btn-continuar-carga {
+    /* Styling shared with #btn-relaciones for other buttons (larger, opposite color to continuar) */
+    .btn-relaciones-style {
+      padding: 24px 60px; /* roughly double the continuar buttons */
+      background: #000000;
+      color: #ffffff;
+      font-size: 22px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Hover reduces opacity to 0.5 as requested */
+    .btn-relaciones-style:hover {
+      opacity: 0.5;
+    }
+
+    /* Continuar buttons (smaller, light) */
+    #btn-continuar-carga,
+    #btn-continuar-carga-2,
+    #btn-continuar-carga-3 {
       padding: 12px 30px;
       background: #ffffff;
       color: #000000;
       font-size: 14px;
-      opacity: 0.9;
+      opacity: 0.95;
+    }
+
+    /* Ensure dinámica and consentimiento keep the relaciones-style (larger, dark)
+       and reduce opacity on hover specifically to 0.5 (overrides .btn-premium:hover) */
+    .btn-relaciones-style {
+      padding: 24px 60px;
+      background: #000000;
+      color: #ffffff;
+      font-size: 22px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+
+    .btn-relaciones-style:hover {
+      opacity: 0.5 !important;
+      transform: translateY(-2px);
+    }
+
+    #consent-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 900;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+    }
+
+    #consent-overlay .consent-panel {
+      width: min(1000px, 100%);
+      max-width: 1000px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      align-items: stretch;
+      justify-content: center;
+      color: #ffffff;
+    }
+
+    #consent-overlay .consent-block {
+      width: 100%;
+      flex: 1 1 auto;
+      box-sizing: border-box;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+    }
+
+    #consent-overlay .consent-text {
+      font-family: 'Segoe UI', 'Arial Rounded MT Bold', 'Helvetica Neue', sans-serif;
+      border-radius: 28px;
+      padding: 30px 28px;
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    }
+
+    #consent-overlay .consent-text p {
+      margin: 0;
+      line-height: 1.75;
+      font-size: 19px;
+      letter-spacing: 0.01em;
+      font-weight: 500;
+      color: #f7f7f7;
+    }
+
+    #consent-overlay .consent-title {
+      margin: 0 0 16px 0;
+      font-size: 34px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: 0.02em;
+    }
+
+    #consent-overlay .consent-video {
+      border-radius: 28px;
+      overflow: hidden;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: transparent;
+      padding: 12px;
+    }
+
+    #consent-overlay .consent-block.consent-video {
+      background: transparent;
+      backdrop-filter: none;
+    }
+
+    #consent-overlay .consent-video iframe {
+      width: 100%;
+      max-width: 454px;
+      aspect-ratio: 4 / 3;
+      border: none;
+      border-radius: 22px;
+    }
+
+    #consent-overlay .consent-block p {
+      margin: 0;
+      line-height: 1.7;
+      font-size: 20px;
+    }
+
+    #consent-overlay .consent-title {
+      margin: 0 0 14px 0;
+      font-size: 26px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    #intro-alert-toggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 1105;
+      width: auto;
+      min-width: 48px;
+      max-width: 180px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: none;
+      background: #000000;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+      opacity: 0.95;
+    }
+
+    #intro-alert-toggle:hover {
+      opacity: 1;
+    }
+
+    #intro-alert-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1100;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 24px;
+    }
+
+    #intro-alert-content {
+      width: min(1100px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 36px;
+      background: rgba(0, 0, 0, 0.94);
+      border-radius: 26px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+      color: #f4f4f4;
+      font-family: 'Segoe UI', sans-serif;
+      line-height: 1.8;
+      font-size: 18px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+
+    #intro-alert-content h2 {
+      margin-top: 0;
+      margin-bottom: 18px;
+      font-size: clamp(28px, 3vw, 42px);
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+    }
+
+    #intro-alert-content p {
+      margin: 0 0 18px 0;
+      color: #e8e8e8;
+      font-size: clamp(16px, 1.05vw, 20px);
+    }
+
+    #intro-alert-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      border: none;
+      background: transparent;
+      color: #ffffff;
+      font-size: 28px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      opacity: 1;
+    }
+
+    #intro-alert-wrapper {
+      position: relative;
     }
 
     .btn-premium:hover {
@@ -219,6 +493,136 @@
       border-radius: 8px;
     }
 
+    /* Autorretatos tab repurposed to sit next to the left swiper as a compact arrow toggle */
+    #autoretratos-title {
+      position: absolute;
+      top: 8%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 25;
+      display: none;
+      width: min(90%, 760px);
+      text-align: center;
+      color: #ccfc86; /* match intro.jpg text color */
+      font-family: Impact, 'Arial Black', sans-serif;
+      font-size: clamp(32px, 4vw, 54px);
+      letter-spacing: 0.08em;
+      line-height: 1.05;
+      text-transform: uppercase;
+      text-shadow: 0 24px 55px rgba(0, 0, 0, 0.7);
+      padding: 0 1rem;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    /* Toggle button that sits at the top-right corner of the left swiper */
+    .fondo-autoretratos-toggle {
+      position: absolute;
+      top: 10px;
+      right: -3em;
+      width: 44px;
+      height: 44px;
+      border-radius: 22px;
+      background: #000000; /* pestaña negra */
+      color: #ffffff; /* flecha blanca */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+      cursor: pointer;
+      z-index: 40;
+      transition: transform 0.18s ease, background 0.18s ease;
+      user-select: none;
+      backdrop-filter: none;
+      border: none;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+    }
+
+    .fondo-autoretratos-toggle:hover {
+      background: rgba(255,255,255,0.12);
+      transform: translateY(-2px);
+    }
+
+    .fondo-autoretratos-toggle.open {
+      transform: rotate(90deg);
+    }
+
+    /* Panel that appears to the right of the left swiper, does not cover the images */
+    #autoretratos-tab-container {
+      position: absolute;
+      top: 8px;
+      left: calc(100% + 12px);
+      z-index: 35;
+      display: none;
+      width: 320px;
+      max-width: 40vw;
+      box-sizing: border-box;
+      padding: 0;
+      pointer-events: auto;
+    }
+
+    #autoretratos-tab-container .info-panel {
+      background: #ffffff; /* caja desplegable blanca */
+      border: 1px solid rgba(0,0,0,0.08);
+      padding: 18px;
+      padding-left: calc(18px + 3em); /* desplazar contenido 3em a la derecha */
+      padding-bottom: calc(18px + 2em); /* alargar 2em por abajo */
+      border-radius: 14px;
+      color: #000000; /* texto negro */
+      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+      max-height: calc(360px + 2em); /* aumentar la altura máxima en 2em */
+      overflow: auto;
+      backdrop-filter: none;
+    }
+
+    #autoretratos-tab-container .info-panel p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #000000;
+    }
+
+    /* Nuevo swiper centrado para fondo_autoretratos */
+    #fondo-swiper-left {
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(34%, 420px);
+      aspect-ratio: 3 / 4;
+      z-index: 15;
+      display: none;
+      overflow: visible;
+      padding: 18px;
+      box-sizing: border-box;
+      border-radius: 22px;
+      background: transparent; /* removed residual background */
+      backdrop-filter: none;
+      border: none;
+    }
+
+    #fondo-swiper-left .swiper {
+      width: 100%;
+      height: 100%;
+    }
+
+    #fondo-swiper-left .swiper-slide {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      aspect-ratio: 3 / 4;
+    }
+
+    #fondo-swiper-left .swiper-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 18px;
+      display: block;
+    }
+
+   
     .texto-mapeo {
       color: white;
       font-size: 18px;
@@ -229,6 +633,27 @@
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
       font-family: 'Segoe UI', sans-serif;
       display: none;
+    }
+    /* Continuar button below the left fondo swiper */
+    .btn-continuar {
+      position: absolute;
+      left: 50%;
+      bottom: -56px; /* sit below the swiper */
+      transform: translateX(-50%);
+      z-index: 45;
+      background: #000000;
+      color: #ffffff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      display: none;
+    }
+
+    .btn-continuar.show {
+      display: block;
     }
   </style>
 </head>
@@ -263,11 +688,39 @@
     }
   </style>
 
+  <button id="intro-alert-toggle" type="button">Info</button>
+  <div id="intro-alert-overlay" role="dialog" aria-modal="true" aria-labelledby="intro-alert-title">
+    <div id="intro-alert-content">
+      <button id="intro-alert-close" type="button" aria-label="Cerrar aviso">×</button>
+      <div id="intro-alert-wrapper">
+        <h2 id="intro-alert-title">Observatorio de Masculinidades 2025-26</h2>
+        <p>Una urgencia comienza a brotar entre las cuevas del Sacromonte, a orillas de la Alhambra y al margen de la civilización delimitada por la muralla nazarí de Granada…</p>
+        <p>Nos encontramos ante un registro vía documental experimental que busca responder a este llamado: La masculinidad. Es una pregunta sin una respuesta determinante; es más bien un proceso de observación colectiva y un viaje de introspección para intentar descifrar y visibilizar las posibilidades dentro de este paradigma social.</p>
+        <p>Nuestra intención es crear y fomentar entornos donde los hombres cis, trans y homosexuales puedan relacionarse desde la vulnerabilidad, cuestionando y visibilizando las posiciones de poder que atraviesan sus vínculos.</p>
+        <p>Este abanico de todo lo que implica (o no) la identidad masculina despierta numerosos interrogantes, como si de un caleidoscopio se tratara. Este documental busca ser una ventana de lo que fue vivir y compartir el inicio de este transitar de lo que significa ser hombre para nosotros hoy en día.</p>
+        <p>“No podemos cambiar a los hombres, pero podemos promover, demandar y reafirmar su deseo de cambiar. Podemos respetar la verdad de su ser interior [...] que desean conectar, amar, ser amados”.</p>
+        <p><em>-hooks (2021, p. 23)</em></p>
+      </div>
+    </div>
+  </div>
+
   <div class="image-container2">
-    <video playsinline id="video-background" poster="menu.png" muted
+    <div id="mini-progress" style="position:absolute; top:0; left:0; width:100%; height:6px; background: rgba(255,255,255,0.08); z-index:500; display:none;">
+      <div id="mini-progress-bar" style="width:0%; height:100%; background: #ffffff; transition: width 0.1s linear; opacity:0.95;"></div>
+    </div>
+    <video playsinline id="video-background" poster="intro.jpg" muted
       style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1;">
+      <source src="intro.mp4" type="video/mp4">
       <source src="intro.webm" type="video/webm">
     </video>
+    <div id="video-poster-overlay"
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('intro.jpg') center/cover no-repeat; z-index: 2; pointer-events: none;"></div>
+
+    <!-- Intro branding: appears top-left after loading finishes -->
+    <div id="intro-branding" aria-hidden="true">
+      <a class="flecha_izq" href="https://oscarpadilla.eu/">←</a>
+      <a class="site-title" href="https://oscarpadilla.eu/">Óscar Padilla</a>
+    </div>
 
     <img src="menu.png" alt="menu" class="menu-image" style="z-index: 2;">
 
@@ -288,17 +741,97 @@
     </video>
 
     <button id="skip-intro"
-      style="position: absolute; bottom: 20px; right: 20px; padding: 12px 24px; background: rgba(255,255,255,0.9); border: 2px solid white; cursor: pointer; border-radius: 5px; font-size: 16px; font-weight: bold; z-index: 4;">Skip
+      style="position: absolute; bottom: 12px; right: 12px; padding: 14px 28px; background: rgba(255,255,255,0.95); border: 2px solid white; cursor: pointer; border-radius: 8px; font-size: 18px; font-weight: 700; z-index: 1001;">Skip
       intro</button>
+    <button id="skip-video"
+      style="position: absolute; bottom: 64px; right: 2em; padding: 14px 28px; background: rgba(255,255,255,0.95); border: 2px solid white; cursor: pointer; border-radius: 8px; font-size: 18px; font-weight: 700; z-index: 1001; display:none;">Skip</button>
+    <button id="skip-origen"
+      style="position: absolute; bottom: 12px; right: 2em; padding: 14px 28px; background: rgba(255,255,255,0.95); border: 2px solid white; cursor: pointer; border-radius: 8px; font-size: 18px; font-weight: 700; z-index: 1001; display:none;">Skip Origen</button>
 
     <video muted playsinline id="video-pantalla_carga_1" loop
       style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none; z-index: 3;">
       <source src="pantalla_carga_1.webm" type="video/webm">
     </video>
 
+    <video muted playsinline id="video-parte3"
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none; z-index: 3;">
+      <source src="parte_3.webm" type="video/webm">
+    </video>
+
+    <video muted playsinline id="video-pantalla_carga_2" loop
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none; z-index: 3;">
+      <source src="pantalla_carga_2.webm" type="video/webm">
+    </video>
+
+    <video muted playsinline id="video-pantalla_carga_3" loop
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none; z-index: 3;">
+      <source src="pantalla_carga_3.webm" type="video/webm">
+    </video>
+    <!-- Overlay that darkens video-pantalla_carga_3 when consent is active -->
+    <div id="video-pc3-overlay" style="position:absolute; inset:0; z-index:400; background: rgba(0,0,0,0.0); display:none; pointer-events:none;"></div>
+
+    <video muted playsinline id="video-touch_me"
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none; z-index: 3;">
+      <source src="touch_me.webm" type="video/webm">
+    </video>
+
+    <video muted playsinline id="video-parte4"
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none; z-index: 3;">
+      <source src="parte_4.webm" type="video/webm">
+    </video>
+
+    <video muted playsinline id="video-origen_observatorio"
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none; z-index: 3;">
+      <source src="origen_observatorio.webm" type="video/webm">
+    </video>
+
+    <img id="fondo_autoretratos_img" src="fondo_autoretratos.jpg" alt="Fondo autoretratos"
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none; z-index: 3;" />
+    <video id="video-creditos" muted playsinline preload="auto"
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none; z-index: 46;">
+      <source src="creditos.mp4" type="video/mp4">
+      <source src="creditos.mov" type="video/quicktime">
+    </video>
+
+    <div id="autoretratos-overlay">
+      <h4 id="autoretratos-title">¿CÓMO PERFORMAMOS CÓMO HOMBRES?</h4>
+
+    <div id="fondo-swiper-left" class="swiper swiper-fondo-left">
+      <!-- Toggle placed at the top-right corner of this swiper -->
+      <div class="fondo-autoretratos-toggle" id="fondo-autoretratos-toggle" role="button" aria-expanded="false" title="Descripción autoretratos">›</div>
+      <!-- Inline panel that sits to the right of the swiper (hidden by default) -->
+      <div id="autoretratos-tab-container">
+        <div class="info-panel">
+          <button id="autoretratos-tab-toggle" type="button" aria-expanded="false" style="display:none">Abrir descripción</button>
+          <div id="autoretratos-tab-content" aria-hidden="true">
+            <p>
+              Estas fotos nacen de un taller de autoretratos colectivos como herramienta de exploración identitaria y autorepresentación.
+              En este espacio de creación colectiva, exploramos nuestra identidad a través de la lente, fomentando la autoaceptación y la diversidad de expresiones masculinas.
+              ¿Cómo representamos la valentía frente al cuidado? ¿La vulnerabilidad frente al éxito? ¿La fuerza frente a la ternura? ¿Cómo performamos el ser hombres? Estas imágenes son un reflejo de nuestras múltiples facetas, desafiando estereotipos y celebrando la autenticidad en todas sus formas.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="fotos/2.jpg" alt="Foto 2"></div>
+        <div class="swiper-slide"><img src="fotos/3.jpg" alt="Foto 3"></div>
+        <div class="swiper-slide"><img src="fotos/4.jpg" alt="Foto 4"></div>
+        <div class="swiper-slide"><img src="fotos/5.jpg" alt="Foto 5"></div>
+        <div class="swiper-slide"><img src="fotos/7.jpg" alt="Foto 7"></div>
+        <div class="swiper-slide"><img src="fotos/8.jpg" alt="Foto 8"></div>
+        <div class="swiper-slide"><img src="fotos/9.jpg" alt="Foto 9"></div>
+        <div class="swiper-slide"><img src="fotos/11.jpg" alt="Foto 11"></div>
+        <div class="swiper-slide"><img src="fotos/12.jpg" alt="Foto 12"></div>
+        <div class="swiper-slide"><img src="fotos/18.jpg" alt="Foto 18"></div>
+      </div>
+      <div class="swiper-scrollbar swiper-scrollbar-fondo-left"></div>
+      <button id="btn-continuar-autoretratos" class="btn-continuar" type="button">Continuar</button>
+    </div>
+    </div>
+
     <!-- Nuevo Menú Interactivo sobre Pantalla de Carga 1 -->
     <div id="menu-carga-1">
-      <p class="texto-mapeo">Estos mapeos son fruto de una sesión sobre relaciones en la que se trabajó dividiendo en 3
+      <p class="texto-mapeo">Mapeos relacionales fruto de una de las sesiones dentro del observatorio de masculinidades 
         grupos.</p>
       <div class="botones-menu-carga">
         <button id="btn-relaciones" class="btn-premium">Relaciones y no monogamias</button>
@@ -346,9 +879,38 @@
       <button id="btn-continuar-carga" class="btn-premium" style="margin-top: 30px;">Continuar</button>
     </div>
 
-    <div id="countdown-overlay"
-      style="position:absolute; top:20px; right:20px; z-index:10; padding:8px 12px; background:rgba(0,0,0,0.6); color:#ffffff; border-radius:15px; font-size:40px; display:none; pointer-events:none;">
-      00</div>
+    <div id="menu-carga-2" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 200; display: none; flex-direction: column; justify-content: center; align-items: center; background: rgba(0, 0, 0, 0.3);">
+      <div class="botones-menu-carga">
+        <button id="btn-dinamica" class="btn-premium btn-relaciones-style">Dinámica</button>
+        <button id="btn-continuar-carga-2" class="btn-premium">Continuar</button>
+      </div>
+    </div>
+
+    <div id="menu-carga-3" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 200; display: none; flex-direction: column; justify-content: center; align-items: center; background: rgba(0, 0, 0, 0.3);">
+      <div class="botones-menu-carga">
+        <button id="btn-consentimiento" class="btn-premium btn-relaciones-style">Consentimiento</button>
+        <button id="btn-continuar-carga-3" class="btn-premium">Continuar</button>
+      </div>
+    </div>
+
+    <div id="consent-overlay">
+      <div class="consent-panel">
+        <div class="consent-block consent-text">
+          <h1 id="consent-title" class="consent-title">CONSENTIMIENTO A DOS VOCES</h1>
+          <p id="consent-paragraph">Este tema, si bien, ha sido revisionado en el observatorio, con la intención de procurar la intimidad compartida por las personas involucradas se ha optado por no registrar esta vez.
+
+            A continuación os compartimos un proyecto realizado por Sergi —miembro del observatorio— junto con Ana Apausa sobre el consentimiento a dos voces.</p>
+        </div>
+        <div class="consent-block consent-video">
+          <iframe id="consent-video-frame" src="https://www.youtube.com/embed/VDaw7iowP90" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture"></iframe>
+        </div>
+        <div style="text-align: center; margin-top: 16px;">
+          <button id="btn-consent-continuar" class="btn-premium" style="padding: 14px 40px; background: #ffffff; color: #000000; font-size: 16px; opacity: 0.95;">Continuar</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="countdown-overlay" style="display:none;">00</div>
 
     <!-- Overlay used while waiting for eye-close to transition -->
     <div id="eye-overlay" aria-hidden="true">
@@ -366,6 +928,7 @@
     // Nota: la detección ocular se importará dinámicamente solo durante la transición
 
     const video = document.getElementById('video-background');
+    const videoPosterOverlay = document.getElementById('video-poster-overlay');
     const videoParte1 = document.getElementById('video-parte1');
     const videoParte2 = document.getElementById('video-parte2');
     const countdownOverlay = document.getElementById('countdown-overlay');
@@ -379,16 +942,155 @@
     const loadingScreen = document.getElementById('loading-screen');
     const loadingBar = document.getElementById('loading-bar');
     const videoPantallaCarga1 = document.getElementById('video-pantalla_carga_1');
-
+    const videoPantallaCarga2 = document.getElementById('video-pantalla_carga_2');
+    const videoPantallaCarga3 = document.getElementById('video-pantalla_carga_3');
+    const videoTouchMe = document.getElementById('video-touch_me');
+    const videoParte4 = document.getElementById('video-parte4');
+    const videoOrigenObservatorio = document.getElementById('video-origen_observatorio');
+    const fondoAutoretratosImg = document.getElementById('fondo_autoretratos_img');
+    const videoCreditos = document.getElementById('video-creditos');
+    const btnContinuarAutoretratos = document.getElementById('btn-continuar-autoretratos');
+    const skipOrigen = document.getElementById('skip-origen');
+    const menuCarga2 = document.getElementById('menu-carga-2');
+    const menuCarga3 = document.getElementById('menu-carga-3');
+    const btnDinamica = document.getElementById('btn-dinamica');
+    const btnConsentimiento = document.getElementById('btn-consentimiento');
+    const btnContinuarCarga2 = document.getElementById('btn-continuar-carga-2');
+    const btnContinuarCarga3 = document.getElementById('btn-continuar-carga-3');
+    const consentOverlay = document.getElementById('consent-overlay');
+    const consentTitle = document.getElementById('consent-title');
+    const consentParagraph = document.getElementById('consent-paragraph');
+    const consentVideoFrame = document.getElementById('consent-video-frame');
+    const videoParte3 = document.getElementById('video-parte3');
+    const skipVideo = document.getElementById('skip-video');
+    const videoPc3Overlay = document.getElementById('video-pc3-overlay');
+    const miniProgress = document.getElementById('mini-progress');
+    const miniProgressBar = document.getElementById('mini-progress-bar');
+    const introAlertOverlay = document.getElementById('intro-alert-overlay');
+    const introAlertToggle = document.getElementById('intro-alert-toggle');
+    const introAlertClose = document.getElementById('intro-alert-close');
+    let currentStage = null;
+    
     // Lógica de Pre-carga de Videos
     const videosToLoad = [
       { id: 'video-background' },
       { id: 'video-parte1' },
       { id: 'video-parte2' },
-      { id: 'video-pantalla_carga_1' }
+      { id: 'video-pantalla_carga_1' },
+      { id: 'video-parte3' },
+      { id: 'video-pantalla_carga_2' },
+      { id: 'video-pantalla_carga_3' },
+      { id: 'video-touch_me' },
+      { id: 'video-parte4' },
+      { id: 'video-origen_observatorio' }
     ];
 
     let loadedCount = 0;
+    let countdownTimer = null;
+
+    const startCountdown = (seconds, onComplete) => {
+      if (countdownTimer) {
+        clearInterval(countdownTimer);
+      }
+      let remaining = seconds;
+      // Minimalist, filled style applied inline for reliability
+      countdownOverlay.textContent = String(remaining).padStart(2, '0');
+      countdownOverlay.style.display = 'block';
+      countdownOverlay.style.position = 'fixed';
+      countdownOverlay.style.top = '2em';
+      countdownOverlay.style.right = '2em';
+      countdownOverlay.style.zIndex = '1200';
+      countdownOverlay.style.background = 'rgba(255,255,255,0.5)';
+      countdownOverlay.style.color = '#000000';
+      countdownOverlay.style.padding = '16px 24px';
+      countdownOverlay.style.borderRadius = '999px';
+      countdownOverlay.style.fontSize = '36px';
+      countdownOverlay.style.fontWeight = '800';
+      countdownOverlay.style.pointerEvents = 'none';
+
+      countdownTimer = setInterval(() => {
+        remaining -= 1;
+        if (remaining <= 0) {
+          clearInterval(countdownTimer);
+          countdownTimer = null;
+          countdownOverlay.textContent = '00';
+          countdownOverlay.style.display = 'none';
+          if (typeof onComplete === 'function') {
+            try { onComplete(); } catch (e) { console.error(e); }
+          }
+          return;
+        }
+        countdownOverlay.textContent = String(remaining).padStart(2, '0');
+      }, 1000);
+    };
+
+    const stopCountdown = () => {
+      if (countdownTimer) {
+        clearInterval(countdownTimer);
+        countdownTimer = null;
+      }
+      if (countdownOverlay) countdownOverlay.style.display = 'none';
+    };
+
+    const showConsentContent = () => {
+      if (consentTitle) consentTitle.style.display = '';
+      if (consentParagraph) consentParagraph.style.display = '';
+      if (consentVideoFrame) consentVideoFrame.style.display = '';
+    };
+
+    const hideConsentContent = () => {
+      if (consentTitle) consentTitle.style.display = 'none';
+      if (consentParagraph) consentParagraph.style.display = 'none';
+      if (consentVideoFrame) consentVideoFrame.style.display = 'none';
+    };
+
+    // Continuation helpers for each pantalla
+    function continueFromCarga1() {
+      stopCountdown();
+      const menu = document.getElementById('menu-carga-1');
+      if (menu) menu.style.display = 'none';
+      if (videoPantallaCarga1) { videoPantallaCarga1.style.opacity = '0'; videoPantallaCarga1.pause(); }
+      if (videoParte3) {
+        videoParte3.style.opacity = '1';
+        videoParte3.style.pointerEvents = 'auto';
+        videoParte3.muted = false;
+        videoParte3.play().catch(() => { videoParte3.muted = true; videoParte3.play(); });
+        currentStage = 'parte3';
+        showSkipVideoButton();
+      }
+    }
+
+    function continueFromCarga2() {
+      stopCountdown();
+      const menu = document.getElementById('menu-carga-2');
+      if (menu) menu.style.display = 'none';
+      if (videoPantallaCarga2) { videoPantallaCarga2.style.opacity = '0'; videoPantallaCarga2.pause(); }
+      if (videoParte4) {
+        videoParte4.style.opacity = '1';
+        videoParte4.style.pointerEvents = 'auto';
+        videoParte4.muted = false;
+        videoParte4.play().catch(() => { videoParte4.muted = true; videoParte4.play(); });
+        currentStage = 'parte4';
+        showSkipVideoButton();
+      }
+    }
+
+    function continueFromCarga3() {
+      stopCountdown();
+      const menu = document.getElementById('menu-carga-3');
+      if (menu) menu.style.display = 'none';
+      if (videoPantallaCarga3) { videoPantallaCarga3.style.opacity = '0'; videoPantallaCarga3.pause(); }
+      if (consentOverlay) consentOverlay.style.display = 'none';
+      hideConsentContent();
+      if (videoOrigenObservatorio) {
+        videoOrigenObservatorio.style.opacity = '1';
+        videoOrigenObservatorio.style.pointerEvents = 'auto';
+        videoOrigenObservatorio.muted = false;
+        videoOrigenObservatorio.play().catch(() => { videoOrigenObservatorio.muted = true; videoOrigenObservatorio.play(); });
+        currentStage = 'origen_observatorio';
+        if (skipOrigen) skipOrigen.style.display = 'block';
+      }
+    }
 
     const hideLoadingScreen = () => {
       loadingScreen.style.opacity = '0';
@@ -396,13 +1098,133 @@
         loadingScreen.style.display = 'none';
         video.pause();
         video.currentTime = 0;
+        // show intro branding when the loading screen is fully hidden
+        const introBrandingEl = document.getElementById('intro-branding');
+        if (introBrandingEl) {
+          introBrandingEl.style.display = 'flex';
+          introBrandingEl.setAttribute('aria-hidden', 'false');
+        }
+        showIntroAlert();
       }, 1000);
+    };
+
+    const showIntroAlert = () => {
+      if (!introAlertOverlay) return;
+      introAlertOverlay.style.display = 'flex';
+    };
+
+    const hideIntroAlert = () => {
+      if (!introAlertOverlay) return;
+      introAlertOverlay.style.display = 'none';
     };
 
     const loadingStatus = document.getElementById('loading-status');
     const btnEmergencia = document.getElementById('btn-emergencia');
 
+    const showSkipVideoButton = () => {
+      if (skipVideo) skipVideo.style.display = 'block';
+    };
+
+    const hideSkipVideoButton = () => {
+      if (skipVideo) skipVideo.style.display = 'none';
+    };
+
+    const skipCurrentVideo = () => {
+      if (!currentStage) return;
+      switch (currentStage) {
+        case 'parte1':
+          videoParte1.pause();
+          videoParte1.style.opacity = '0';
+          videoParte1.style.pointerEvents = 'none';
+          eyeOverlay.style.display = 'none';
+          videoParte2.style.opacity = '1';
+          videoParte2.style.pointerEvents = 'auto';
+          videoParte2.muted = false;
+          videoParte2.play().catch(() => { videoParte2.muted = true; videoParte2.play(); });
+          currentStage = 'parte2';
+          return;
+        case 'parte2':
+          videoParte2.pause();
+          videoParte2.style.opacity = '0';
+          videoParte2.style.pointerEvents = 'none';
+          videoPantallaCarga1.style.opacity = '1';
+          videoPantallaCarga1.style.pointerEvents = 'auto';
+          videoPantallaCarga1.muted = false;
+          videoPantallaCarga1.loop = true;
+          videoPantallaCarga1.play();
+          document.getElementById('menu-carga-1').style.display = 'flex';
+          startCountdown(10, continueFromCarga1);
+          currentStage = null;
+          hideSkipVideoButton();
+          return;
+        case 'parte3':
+          videoParte3.pause();
+          videoParte3.style.opacity = '0';
+          videoParte3.style.pointerEvents = 'none';
+          videoPantallaCarga2.style.opacity = '1';
+          videoPantallaCarga2.style.pointerEvents = 'auto';
+          videoPantallaCarga2.muted = false;
+          videoPantallaCarga2.loop = true;
+          videoPantallaCarga2.play();
+          menuCarga2.style.display = 'flex';
+          startCountdown(10, continueFromCarga2);
+          currentStage = null;
+          hideSkipVideoButton();
+          return;
+        case 'touch_me':
+          videoTouchMe.pause();
+          videoTouchMe.style.opacity = '0';
+          videoTouchMe.style.pointerEvents = 'none';
+          menuCarga2.style.display = 'none';
+          videoParte4.style.opacity = '1';
+          videoParte4.style.pointerEvents = 'auto';
+          videoParte4.muted = false;
+          videoParte4.play().catch(() => { videoParte4.muted = true; videoParte4.play(); });
+          currentStage = 'parte4';
+          return;
+        case 'parte4':
+          videoParte4.pause();
+          videoParte4.style.opacity = '0';
+          videoParte4.style.pointerEvents = 'none';
+          videoPantallaCarga3.style.opacity = '1';
+          videoPantallaCarga3.style.pointerEvents = 'auto';
+          videoPantallaCarga3.muted = false;
+          videoPantallaCarga3.loop = true;
+          videoPantallaCarga3.play();
+          menuCarga3.style.display = 'flex';
+          startCountdown(10, continueFromCarga3);
+          currentStage = null;
+          hideSkipVideoButton();
+          return;
+        case 'origen_observatorio':
+          playFondoAutoretratos();
+          return;
+      }
+    };
+
     btnEmergencia.addEventListener('click', hideLoadingScreen);
+    skipVideo.addEventListener('click', skipCurrentVideo);
+
+    // Mini progress bar logic for non-interactive top bar
+    const progressiveVideos = [videoParte1, videoParte2, videoParte3, videoParte4, videoTouchMe];
+
+    progressiveVideos.forEach(v => {
+      if (!v) return;
+      v.addEventListener('play', () => {
+        if (miniProgress) miniProgress.style.display = 'block';
+      });
+      v.addEventListener('pause', () => {
+        if (miniProgress) miniProgress.style.display = 'none';
+      });
+      v.addEventListener('ended', () => {
+        if (miniProgress) miniProgress.style.display = 'none';
+      });
+      v.addEventListener('timeupdate', () => {
+        if (!v.duration || !miniProgressBar) return;
+        const pct = Math.min(100, Math.max(0, (v.currentTime / v.duration) * 100));
+        miniProgressBar.style.width = pct + '%';
+      });
+    });
 
     videosToLoad.forEach(vInfo => {
       const vElem = document.getElementById(vInfo.id);
@@ -455,6 +1277,8 @@
     });
 
     skipIntro.addEventListener('click', () => {
+      if (videoPosterOverlay) videoPosterOverlay.style.display = 'none';
+      hideIntroAlert();
       video.pause();
       startButton1.style.display = 'none';
       menuImage.classList.add('visible');
@@ -464,6 +1288,8 @@
     });
 
     startButton1.addEventListener('click', () => {
+      if (videoPosterOverlay) videoPosterOverlay.style.display = 'none';
+      hideIntroAlert();
       // Primero play silenciado (garantizado por el navegador)
       video.muted = true;
       video.play().then(() => {
@@ -479,6 +1305,8 @@
     });
 
     startButton2.addEventListener('click', () => {
+      if (videoPosterOverlay) videoPosterOverlay.style.display = 'none';
+      hideIntroAlert();
       menuImage.classList.remove('visible');
       startButton2.style.display = 'none';
 
@@ -490,7 +1318,36 @@
       videoParte1.play().then(() => {
         videoParte1.muted = false;
       });
+      currentStage = 'parte1';
+      showSkipVideoButton();
     });
+
+    if (introAlertToggle) {
+      introAlertToggle.addEventListener('click', showIntroAlert);
+    }
+
+    if (introAlertClose) {
+      introAlertClose.addEventListener('click', hideIntroAlert);
+    }
+
+    if (introAlertOverlay) {
+      introAlertOverlay.addEventListener('click', (event) => {
+        if (event.target === introAlertOverlay) {
+          hideIntroAlert();
+        }
+      });
+    }
+
+    // Controls to hide intro branding when user starts or skips the intro
+    const introBranding = document.getElementById('intro-branding');
+    function hideIntroBranding() {
+      if (introBranding) {
+        introBranding.style.display = 'none';
+        introBranding.setAttribute('aria-hidden', 'true');
+      }
+    }
+    if (startButton1) startButton1.addEventListener('click', hideIntroBranding);
+    if (skipIntro) skipIntro.addEventListener('click', hideIntroBranding);
 
 
     // Cuando termine la parte 1, mostramos la superposición y arrancamos la detección ocular
@@ -504,6 +1361,8 @@
       videoParte2.muted = false;
       try { videoParte2.pause(); } catch (e) { }
       try { videoParte2.currentTime = 0; } catch (e) { }
+      currentStage = 'parte2';
+      showSkipVideoButton();
 
       // Mostrar overlay de control ocular sobre video-parte2
       eyeOverlay.style.display = 'block';
@@ -565,15 +1424,364 @@
 
       // Mostrar el menú interactivo
       document.getElementById('menu-carga-1').style.display = 'flex';
+      stopCountdown();
+      hideSkipVideoButton();
+      startCountdown(10, continueFromCarga1);
     });
+
+    videoParte3.addEventListener('ended', () => {
+      videoParte3.style.opacity = '0';
+      videoParte3.style.pointerEvents = 'none';
+      videoPantallaCarga2.style.opacity = '1';
+      videoPantallaCarga2.style.pointerEvents = 'auto';
+      videoPantallaCarga2.muted = false;
+      videoPantallaCarga2.loop = true;
+      videoPantallaCarga2.play();
+      menuCarga2.style.display = 'flex';
+      btnContinuarCarga2.style.display = 'inline-block';
+      btnDinamica.style.display = 'inline-block';
+      btnDinamica.disabled = false;
+      stopCountdown();
+      hideSkipVideoButton();
+      startCountdown(10, continueFromCarga2);
+    });
+
+    videoParte4.addEventListener('ended', () => {
+      videoParte4.style.opacity = '0';
+      videoParte4.style.pointerEvents = 'none';
+      videoPantallaCarga3.style.opacity = '1';
+      videoPantallaCarga3.style.pointerEvents = 'auto';
+      videoPantallaCarga3.muted = false;
+      videoPantallaCarga3.loop = true;
+      videoPantallaCarga3.play();
+      menuCarga3.style.display = 'flex';
+      stopCountdown();
+      hideSkipVideoButton();
+      startCountdown(10, continueFromCarga3);
+    });
+
+    btnDinamica.addEventListener('click', () => {
+      stopCountdown();
+      btnContinuarCarga2.style.display = 'none';
+      btnDinamica.disabled = true;
+      // Ocultar el botón Dinámica al pulsarlo
+      btnDinamica.style.display = 'none';
+      videoPantallaCarga2.style.opacity = '0';
+      videoPantallaCarga2.style.pointerEvents = 'none';
+      videoPantallaCarga2.pause();
+
+      videoTouchMe.style.opacity = '1';
+      videoTouchMe.style.pointerEvents = 'auto';
+      videoTouchMe.muted = false;
+      videoTouchMe.play().catch(err => {
+        console.warn('Autoplay de touch_me bloqueado, intentando con mute...');
+        videoTouchMe.muted = true;
+        videoTouchMe.play();
+      });
+      currentStage = 'touch_me';
+      showSkipVideoButton();
+    });
+
+    videoTouchMe.addEventListener('ended', () => {
+      videoTouchMe.style.opacity = '0';
+      videoTouchMe.style.pointerEvents = 'none';
+      videoTouchMe.pause();
+      menuCarga2.style.display = 'none';
+
+      videoParte4.style.opacity = '1';
+      videoParte4.style.pointerEvents = 'auto';
+      videoParte4.muted = false;
+      videoParte4.play().catch(err => {
+        console.warn('Autoplay de videoParte4 bloqueado, intentando con mute...');
+        videoParte4.muted = true;
+        videoParte4.play();
+      });
+      currentStage = 'parte4';
+      showSkipVideoButton();
+    });
+
+    btnContinuarCarga2.addEventListener('click', () => {
+      stopCountdown();
+      menuCarga2.style.display = 'none';
+      videoPantallaCarga2.style.opacity = '0';
+      videoPantallaCarga2.pause();
+
+      videoParte4.style.opacity = '1';
+      videoParte4.style.pointerEvents = 'auto';
+      videoParte4.muted = false;
+      videoParte4.play().catch(err => {
+        console.warn('Autoplay de videoParte4 bloqueado, intentando con mute...');
+        videoParte4.muted = true;
+        videoParte4.play();
+      });
+      currentStage = 'parte4';
+      showSkipVideoButton();
+    });
+
+    btnConsentimiento.addEventListener('click', () => {
+      menuCarga3.style.display = 'none';
+      // Mostrar la pantalla de carga 3 detrás del overlay y reproducir en loop
+      videoPantallaCarga3.style.opacity = '1';
+      videoPantallaCarga3.style.pointerEvents = 'auto';
+      videoPantallaCarga3.muted = false;
+      videoPantallaCarga3.loop = true;
+      videoPantallaCarga3.play().catch(() => { videoPantallaCarga3.muted = true; videoPantallaCarga3.play(); });
+      // Darken the pantalla_carga_3 video with a semi-opaque black overlay
+      if (videoPc3Overlay) {
+        videoPc3Overlay.style.background = 'rgba(0,0,0,0.5)';
+        videoPc3Overlay.style.display = 'block';
+      }
+      showConsentContent();
+      consentOverlay.style.display = 'flex';
+      startCountdown(10, continueFromCarga3);
+    });
+
+    btnContinuarCarga3.addEventListener('click', () => {
+      stopCountdown();
+      menuCarga3.style.display = 'none';
+      // Hide consent overlay and the darkening overlay
+      consentOverlay.style.display = 'none';
+      if (videoPc3Overlay) {
+        videoPc3Overlay.style.display = 'none';
+        videoPc3Overlay.style.background = 'rgba(0,0,0,0.0)';
+      }
+      videoPantallaCarga3.style.opacity = '0';
+      videoPantallaCarga3.style.pointerEvents = 'none';
+      // Play origen_observatorio video
+      if (skipOrigen) skipOrigen.style.display = 'block';
+      videoOrigenObservatorio.style.opacity = '1';
+      videoOrigenObservatorio.style.pointerEvents = 'auto';
+      videoOrigenObservatorio.muted = false;
+      videoOrigenObservatorio.play().catch(err => {
+        console.warn('Autoplay bloqueado, reintentando...');
+        videoOrigenObservatorio.muted = true;
+        videoOrigenObservatorio.play();
+      });
+      currentStage = 'origen_observatorio';
+    });
+
+    document.getElementById('btn-consent-continuar').addEventListener('click', () => {
+      // Close consent overlay and play origen_observatorio
+      stopCountdown();
+      consentOverlay.style.display = 'none';
+      if (videoPc3Overlay) {
+        videoPc3Overlay.style.display = 'none';
+        videoPc3Overlay.style.background = 'rgba(0,0,0,0.0)';
+      }
+      videoPantallaCarga3.style.opacity = '0';
+      videoPantallaCarga3.style.pointerEvents = 'none';
+      if (skipOrigen) skipOrigen.style.display = 'block';
+      // Play origen_observatorio video
+      videoOrigenObservatorio.style.opacity = '1';
+      videoOrigenObservatorio.style.pointerEvents = 'auto';
+      videoOrigenObservatorio.muted = false;
+      videoOrigenObservatorio.play().catch(err => {
+        console.warn('Autoplay bloqueado, reintentando...');
+        videoOrigenObservatorio.muted = true;
+        videoOrigenObservatorio.play();
+      });
+      currentStage = 'origen_observatorio';
+    });
+
+    if (videoOrigenObservatorio) {
+      videoOrigenObservatorio.addEventListener('ended', playFondoAutoretratos);
+    }
+
+    if (skipOrigen) {
+      skipOrigen.addEventListener('click', playFondoAutoretratos);
+    }
+
+    function playFondoAutoretratos() {
+      if (skipOrigen) skipOrigen.style.display = 'none';
+      if (videoOrigenObservatorio) {
+        videoOrigenObservatorio.pause();
+        videoOrigenObservatorio.style.opacity = '0';
+        videoOrigenObservatorio.style.pointerEvents = 'none';
+      }
+      if (fondoAutoretratosImg) {
+        fondoAutoretratosImg.style.opacity = '1';
+        fondoAutoretratosImg.style.pointerEvents = 'auto';
+        // show continuar button when fondo is active
+        if (btnContinuarAutoretratos) btnContinuarAutoretratos.classList.add('show');
+      }
+      currentStage = null;
+      hideSkipVideoButton();
+      showAutoretratosInfo();
+      showFondoLeftSwiper();
+      showAutoretratosTitle();
+    }
 
     // Lógica del nuevo menú
     const btnRelaciones = document.getElementById('btn-relaciones');
     const btnContinuarCarga = document.getElementById('btn-continuar-carga');
     const swiperWrapper = document.getElementById('swiper-wrapper-mapeo');
+    const autoretratosTitle = document.getElementById('autoretratos-title');
+    const autoretratosTabContainer = document.getElementById('autoretratos-tab-container');
+    const autoretratosTabToggle = document.getElementById('autoretratos-tab-toggle');
+    const autoretratosTabContent = document.getElementById('autoretratos-tab-content');
+    const fondoSwiperLeft = document.getElementById('fondo-swiper-left');
+    const fondoAutoretratosToggle = document.getElementById('fondo-autoretratos-toggle');
     let swiperInstance = null;
+    let swiperFondoLeft = null;
+
+    if (autoretratosTabToggle) {
+      autoretratosTabToggle.addEventListener('click', () => {
+        if (!autoretratosTabContent) return;
+        const isOpen = autoretratosTabContent.style.display === 'block';
+        autoretratosTabContent.style.display = isOpen ? 'none' : 'block';
+        autoretratosTabContent.setAttribute('aria-hidden', String(isOpen));
+        autoretratosTabToggle.classList.toggle('active', !isOpen);
+        autoretratosTabToggle.textContent = isOpen ? 'Abrir descripción' : 'Cerrar descripción';
+      });
+    }
+
+    if (fondoAutoretratosToggle) {
+      fondoAutoretratosToggle.addEventListener('click', () => {
+        if (!autoretratosTabContainer) return;
+        const isOpen = autoretratosTabContainer.style.display === 'block';
+        autoretratosTabContainer.style.display = isOpen ? 'none' : 'block';
+        fondoAutoretratosToggle.classList.toggle('open', !isOpen);
+        fondoAutoretratosToggle.setAttribute('aria-expanded', String(!isOpen));
+        // Ensure internal content aria states
+        if (autoretratosTabContent) {
+          autoretratosTabContent.style.display = !isOpen ? 'block' : 'none';
+          autoretratosTabContent.setAttribute('aria-hidden', String(isOpen));
+        }
+      });
+    }
+
+    function initializeFondoLeftSwiper() {
+      if (swiperFondoLeft) return;
+
+      swiperFondoLeft = new Swiper('.swiper-fondo-left', {
+        effect: 'cards',
+        grabCursor: true,
+        scrollbar: {
+          el: '.swiper-scrollbar-fondo-left',
+          draggable: true,
+        },
+      });
+    }
+
+    function showAutoretratosInfo() {
+      if (!autoretratosTabContainer) return;
+      // Keep the panel folded by default; show only the arrow toggle
+      autoretratosTabContainer.style.display = 'none';
+      if (fondoAutoretratosToggle) {
+        fondoAutoretratosToggle.classList.remove('open');
+        fondoAutoretratosToggle.setAttribute('aria-expanded', 'false');
+      }
+      if (autoretratosTabContent) {
+        autoretratosTabContent.style.display = 'none';
+        autoretratosTabContent.setAttribute('aria-hidden', 'true');
+      }
+      if (autoretratosTabToggle) {
+        autoretratosTabToggle.classList.remove('active');
+        autoretratosTabToggle.textContent = 'Abrir descripción';
+      }
+    }
+
+    function showFondoLeftSwiper() {
+      if (!fondoSwiperLeft) return;
+      // Ensure the swiper appears only when requested and starts folded
+      fondoSwiperLeft.style.display = 'block';
+      fondoSwiperLeft.style.opacity = '1';
+      fondoSwiperLeft.style.pointerEvents = 'auto';
+      initializeFondoLeftSwiper();
+    }
+
+    function showAutoretratosTitle() {
+      if (!autoretratosTitle) return;
+      autoretratosTitle.style.display = 'block';
+    }
+
+    function hideAutoretratosTitle() {
+      if (!autoretratosTitle) return;
+      autoretratosTitle.style.display = 'none';
+    }
+
+    // Continuar button: play credits video and hide fondo while playing
+    if (btnContinuarAutoretratos) {
+      btnContinuarAutoretratos.addEventListener('click', async () => {
+        if (!videoCreditos) return;
+        // hide fondo image and button
+        if (fondoAutoretratosImg) {
+          fondoAutoretratosImg.style.opacity = '0';
+          fondoAutoretratosImg.style.pointerEvents = 'none';
+        }
+        // hide the left swiper, toggle and title while credits play
+        if (fondoSwiperLeft) { fondoSwiperLeft.style.display = 'none'; fondoSwiperLeft.style.pointerEvents = 'none'; }
+        if (fondoAutoretratosToggle) { fondoAutoretratosToggle.style.display = 'none'; }
+        if (autoretratosTitle) { autoretratosTitle.style.display = 'none'; }
+        btnContinuarAutoretratos.classList.remove('show');
+        // show credits video element and ensure it's ready
+        videoCreditos.style.opacity = '1';
+        videoCreditos.style.pointerEvents = 'auto';
+        try {
+          // try playing unmuted first (user gesture should allow this)
+          videoCreditos.muted = false;
+          videoCreditos.currentTime = 0;
+          await videoCreditos.play();
+        } catch (err) {
+          // fallback: mute and try again
+          try {
+            videoCreditos.muted = true;
+            await videoCreditos.play();
+          } catch (err2) {
+            // final fallback: load and play (may help if source wasn't ready)
+            try {
+              videoCreditos.load();
+              videoCreditos.muted = true;
+              await videoCreditos.play();
+            } catch (err3) {
+              console.warn('No se pudo reproducir creditos.mp4:', err3);
+            }
+          }
+        }
+      });
+    }
+
+    if (videoCreditos) {
+      videoCreditos.addEventListener('ended', () => {
+        // hide credits video
+        videoCreditos.pause();
+        videoCreditos.style.opacity = '0';
+        videoCreditos.style.pointerEvents = 'none';
+        
+        // hide all fondo autoretratos elements
+        if (fondoAutoretratosImg) {
+          fondoAutoretratosImg.style.opacity = '0';
+          fondoAutoretratosImg.style.pointerEvents = 'none';
+        }
+        if (fondoSwiperLeft) { fondoSwiperLeft.style.display = 'none'; fondoSwiperLeft.style.pointerEvents = 'none'; }
+        if (fondoAutoretratosToggle) { fondoAutoretratosToggle.style.display = 'none'; }
+        if (autoretratosTitle) { autoretratosTitle.style.display = 'none'; }
+        if (btnContinuarAutoretratos) btnContinuarAutoretratos.classList.remove('show');
+        
+        // return to beginning: show video-background and reset state
+        video.classList.remove('video-hidden');
+        video.style.opacity = '1';
+        video.style.pointerEvents = 'auto';
+        video.currentTime = 0;
+        video.pause();
+        
+        // show poster overlay to display intro.jpg
+        if (videoPosterOverlay) videoPosterOverlay.style.display = 'block';
+        
+        // reset menu image to initial state (hidden)
+        menuImage.classList.remove('visible');
+        
+        // show initial buttons
+        startButton1.style.display = 'block';
+        startButton2.style.display = 'none';
+        skipIntro.style.display = 'none';
+        
+        currentStage = null;
+      });
+    }
 
     btnRelaciones.addEventListener('click', () => {
+      stopCountdown();
       swiperWrapper.style.display = 'flex';
       document.querySelector('.texto-mapeo').style.display = 'block';
       btnRelaciones.style.display = 'none';
@@ -612,13 +1820,31 @@
       }
     });
 
-    btnContinuarCarga.addEventListener('click', () => {
-      // Aquí puedes definir qué pasa al continuar
-      document.getElementById('menu-carga-1').style.display = 'none';
-      videoPantallaCarga1.style.opacity = '0';
-      videoPantallaCarga1.pause();
-      // Por ahora lo ocultamos, puedes añadir aquí la siguiente transición
-    });
+    if (btnContinuarCarga) {
+      btnContinuarCarga.addEventListener('click', () => {
+        stopCountdown();
+        // Aquí puedes definir qué pasa al continuar
+        const menuCarga1 = document.getElementById('menu-carga-1');
+        if (menuCarga1) menuCarga1.style.display = 'none';
+        if (videoPantallaCarga1) {
+          videoPantallaCarga1.style.opacity = '0';
+          videoPantallaCarga1.pause();
+        }
+
+        if (videoParte3) {
+          videoParte3.style.opacity = '1';
+          videoParte3.style.pointerEvents = 'auto';
+          videoParte3.muted = false;
+          videoParte3.play().catch(err => {
+            console.warn("Autoplay de videoParte3 bloqueado, intentando con mute...");
+            videoParte3.muted = true;
+            videoParte3.play();
+          });
+          currentStage = 'parte3';
+          showSkipVideoButton();
+        }
+      });
+    }
 
   </script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>

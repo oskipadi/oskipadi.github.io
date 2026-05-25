@@ -42,7 +42,7 @@ a {
 }
 
 .image-container2 video {
-    transition: opacity 1s ease-in-out;
+    transition: none;
 }
 
 .image-container2 video#video-parte1,
