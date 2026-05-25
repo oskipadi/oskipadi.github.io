@@ -1132,14 +1132,17 @@
         loadingScreen.style.display = 'none';
         video.pause();
         video.currentTime = 0;
-        // show intro branding when the loading screen is fully hidden
-        const introBrandingEl = document.getElementById('intro-branding');
-        if (introBrandingEl) {
-          introBrandingEl.style.display = 'flex';
-          introBrandingEl.setAttribute('aria-hidden', 'false');
-        }
+        showIntroBranding();
         showIntroAlert();
       }, 1000);
+    };
+
+    const showIntroBranding = () => {
+      const introBrandingEl = document.getElementById('intro-branding');
+      if (!introBrandingEl) return;
+      if (videoPosterOverlay && videoPosterOverlay.style.display === 'none') return;
+      introBrandingEl.style.display = 'flex';
+      introBrandingEl.setAttribute('aria-hidden', 'false');
     };
 
     const showIntroAlert = () => {
@@ -1341,6 +1344,7 @@
     startButton2.addEventListener('click', () => {
       if (videoPosterOverlay) videoPosterOverlay.style.display = 'none';
       hideIntroAlert();
+      hideIntroBranding();
       menuImage.classList.remove('visible');
       startButton2.style.display = 'none';
 
@@ -1809,6 +1813,8 @@
         startButton1.style.display = 'block';
         startButton2.style.display = 'none';
         skipIntro.style.display = 'none';
+        
+        showIntroBranding();
         
         currentStage = null;
       });
