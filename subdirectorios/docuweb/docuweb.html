@@ -743,6 +743,7 @@
     <video muted playsinline id="video-parte2"
       style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none; z-index: 3;">
       <source src="parte_2.webm" type="video/webm">
+      <source src="https://customer-rkin2iztax47x9b5.cloudflarestream.com/89f21e2568c7b1b2d553459bed5f2ae9/manifest/video.m3u8" type="application/x-mpegURL">
     </video>
 
     <button id="skip-intro"
@@ -1171,14 +1172,7 @@
       switch (currentStage) {
         case 'parte1':
           videoParte1.pause();
-          videoParte1.style.opacity = '0';
-          videoParte1.style.pointerEvents = 'none';
-          eyeOverlay.style.display = 'none';
-          videoParte2.style.opacity = '1';
-          videoParte2.style.pointerEvents = 'auto';
-          videoParte2.muted = false;
-          videoParte2.play().catch(() => { videoParte2.muted = true; videoParte2.play(); });
-          currentStage = 'parte2';
+          startEyeTransitionForParte2();
           return;
         case 'parte2':
           videoParte2.pause();
@@ -1388,12 +1382,10 @@
     if (skipIntro) skipIntro.addEventListener('click', hideIntroBranding);
 
 
-    // Cuando termine la parte 1, mostramos la superposición y arrancamos la detección ocular
-    videoParte1.addEventListener('ended', async () => {
-      // Ocultamos el vídeo 1 y mostramos la parte 2 pero congelada (pausada) detrás del overlay
+    async function startEyeTransitionForParte2() {
+      // Ocultamos el vídeo 1 y mostramos la parte 2 congelada detrás del overlay
       videoParte1.style.opacity = '0';
       videoParte1.style.pointerEvents = 'none';
-      // Preparar video-parte2 como fondo congelado
       videoParte2.style.opacity = '1';
       videoParte2.style.pointerEvents = 'auto';
       videoParte2.muted = false;
@@ -1425,7 +1417,6 @@
 
       eyeStatus.textContent = 'Escuchando cierre de ojos...';
 
-      // Iniciar la detección; al detectar, reproducimos video-parte2 desde el inicio
       cerrarojosMod.iniciarDeteccionSalto('video-parte2').then(() => {
         eyeOverlay.style.display = 'none';
         try { videoParte2.currentTime = 0; } catch (e) { }
@@ -1434,6 +1425,11 @@
         console.error('Detección ocular cancelada o error:', err);
         eyeStatus.textContent = 'Error en detección ocular. Usa el botón para continuar manualmente.';
       });
+    }
+
+    // Cuando termine la parte 1, mostramos la superposición y arrancamos la detección ocular
+    videoParte1.addEventListener('ended', () => {
+      startEyeTransitionForParte2();
     });
 
     eyeFallback.addEventListener('click', () => {
