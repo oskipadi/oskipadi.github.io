@@ -713,6 +713,7 @@
       <source src="intro.mp4" type="video/mp4">
       <source src="intro.webm" type="video/webm">
       <source src="intro.mov" type="video/mov">
+      <source src="https://customer-rkin2iztax47x9b5.cloudflarestream.com/7212b697c55368b9018b4c4e82aaed6b/manifest/video.m3u8" type="application/x-mpegURL">
     </video>
     <div id="video-poster-overlay"
       style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('intro.jpg') center/cover no-repeat; z-index: 2; pointer-events: none;"></div>
@@ -736,6 +737,7 @@
       <source src="parte_1.mp4" type="video/mp4">
       <source src="parte_1.webm" type="video/webm">
       <source src="parte_1.mov" type="video/mov">
+      <source src="https://customer-rkin2iztax47x9b5.cloudflarestream.com/1d78e9c4e841236947dd7bda8f89bd7b/manifest/video.m3u8" type="application/x-mpegURL">
     </video>
 
     <video muted playsinline id="video-parte2"
@@ -953,6 +955,35 @@
     const fondoAutoretratosImg = document.getElementById('fondo_autoretratos_img');
     const videoCreditos = document.getElementById('video-creditos');
     const btnContinuarAutoretratos = document.getElementById('btn-continuar-autoretratos');
+
+    // Asegúrate de que esta constante apunte bien a tu video
+    const videoBackground = document.getElementById('video-background');
+    const streamUrl = "https://customer-rkin2iztax47x9b5.cloudflarestream.com/95bf4349ecd002839300dd3cf974cad1/manifest/video.m3u8";
+
+    const conectarHls = (videoEl, url) => {
+      if (typeof Hls !== 'undefined') {
+        const hls = new Hls();
+        hls.loadSource(url);
+        hls.attachMedia(videoEl);
+      }
+    };
+
+    // Importamos dinámicamente el motor HLS para navegadores que no lo soportan de forma nativa (Chrome, Firefox, etc.)
+    if (typeof Hls !== 'undefined') {
+      conectarHls(videoBackground, streamUrl);
+    } else {
+      import('https://cdn.jsdelivr.net/npm/hls.js@1.5.11/+esm').then((ModuloHls) => {
+        const HlsClass = ModuloHls.default;
+        if (HlsClass.isSupported()) {
+          const hls = new HlsClass();
+          hls.loadSource(streamUrl);
+          hls.attachMedia(videoBackground);
+        } else if (videoBackground.canPlayType('application/x-mpegURL') || videoBackground.canPlayType('application/vnd.apple.mpegurl')) {
+          // Si el navegador soporta HLS de forma nativa (como Safari)
+          videoBackground.src = streamUrl;
+        }
+      });
+    }
     const skipOrigen = document.getElementById('skip-origen');
     const menuCarga2 = document.getElementById('menu-carga-2');
     const menuCarga3 = document.getElementById('menu-carga-3');
