@@ -762,6 +762,7 @@
     <video muted playsinline id="video-parte3"
       style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none; z-index: 3;">
       <source src="parte_3.webm" type="video/webm">
+      <source src="https://customer-rkin2iztax47x9b5.cloudflarestream.com/f528281d4e5ead7bcf6189978749bcde/manifest/video.m3u8" type="application/x-mpegURL">
     </video>
 
     <video muted playsinline id="video-pantalla_carga_2" loop
@@ -957,34 +958,48 @@
     const videoCreditos = document.getElementById('video-creditos');
     const btnContinuarAutoretratos = document.getElementById('btn-continuar-autoretratos');
 
-    // Asegúrate de que esta constante apunte bien a tu video
     const videoBackground = document.getElementById('video-background');
-    const streamUrl = "https://customer-rkin2iztax47x9b5.cloudflarestream.com/95bf4349ecd002839300dd3cf974cad1/manifest/video.m3u8";
+    const hlsVideos = Array.from(document.querySelectorAll('video')).map(videoEl => {
+      const hlsSource = Array.from(videoEl.querySelectorAll('source')).find(source => {
+        const type = source.type || '';
+        const src = source.src || '';
+        return /application\/(x-mpegURL|vnd\.apple\.mpegurl)/i.test(type) || /\.m3u8(\?|$)/i.test(src);
+      });
+      return hlsSource ? { videoEl, url: hlsSource.src } : null;
+    }).filter(Boolean);
 
-    const conectarHls = (videoEl, url) => {
-      if (typeof Hls !== 'undefined') {
-        const hls = new Hls();
-        hls.loadSource(url);
-        hls.attachMedia(videoEl);
-      }
+    const attachHls = (videoEl, url, HlsClass) => {
+      const hls = new HlsClass();
+      hls.loadSource(url);
+      hls.attachMedia(videoEl);
     };
 
-    // Importamos dinámicamente el motor HLS para navegadores que no lo soportan de forma nativa (Chrome, Firefox, etc.)
-    if (typeof Hls !== 'undefined') {
-      conectarHls(videoBackground, streamUrl);
-    } else {
+    const initializeHls = () => {
+      if (!hlsVideos.length) return;
+
+      if (typeof Hls !== 'undefined') {
+        hlsVideos.forEach(({ videoEl, url }) => attachHls(videoEl, url, Hls));
+        return;
+      }
+
       import('https://cdn.jsdelivr.net/npm/hls.js@1.5.11/+esm').then((ModuloHls) => {
         const HlsClass = ModuloHls.default;
         if (HlsClass.isSupported()) {
-          const hls = new HlsClass();
-          hls.loadSource(streamUrl);
-          hls.attachMedia(videoBackground);
-        } else if (videoBackground.canPlayType('application/x-mpegURL') || videoBackground.canPlayType('application/vnd.apple.mpegurl')) {
-          // Si el navegador soporta HLS de forma nativa (como Safari)
-          videoBackground.src = streamUrl;
+          hlsVideos.forEach(({ videoEl, url }) => attachHls(videoEl, url, HlsClass));
+          return;
         }
+
+        hlsVideos.forEach(({ videoEl, url }) => {
+          if (videoEl.canPlayType('application/x-mpegURL') || videoEl.canPlayType('application/vnd.apple.mpegurl')) {
+            videoEl.src = url;
+          }
+        });
+      }).catch((err) => {
+        console.warn('No se pudo cargar hls.js:', err);
       });
-    }
+    };
+
+    initializeHls();
     const skipOrigen = document.getElementById('skip-origen');
     const menuCarga2 = document.getElementById('menu-carga-2');
     const menuCarga3 = document.getElementById('menu-carga-3');
