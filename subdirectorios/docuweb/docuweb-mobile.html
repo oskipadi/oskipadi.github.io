@@ -19,13 +19,12 @@
 <body>
   <div id="loading-screen">Cargando…</div>
   <div id="overlay" class="hidden" aria-hidden="false">
-    <video id="phoneVideo" playsinline muted preload="auto" controls>
+    <video id="phoneVideo" playsinline muted autoplay preload="auto">
       <source src="https://customer-rkin2iztax47x9b5.cloudflarestream.com/88adbd8510319eed50482b7f6b311a42/manifest/video.m3u8" type="application/x-mpegURL">
-      Tu navegador no soporta este video.
     </video>
     <div id="prompt">Gira tu móvil a horizontal para ir al contenido. Mientras tanto, mira este avance.</div>
     <div id="rotateHint">Cuando el móvil esté en horizontal, se abrirá el contenido.</div>
-    <button id="enterButton" type="button">Entrar</button>
+    <button id="enterButton" type="button">Entrar de todos modos</button>
 
   </div>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
@@ -37,33 +36,37 @@
     let hlsInstance = null;
 
     function attachHls(url){
-      if(window.Hls && Hls.isSupported()){
-        const hls = new Hls();
-        hls.loadSource(url);
-        hls.attachMedia(video);
-        hls.on(Hls.Events.MANIFEST_PARSED, function() {
-          video.play().catch(()=>{});
-        });
-        return hls;
-      } else {
-        video.src = url;
-        video.load();
-        video.addEventListener('loadedmetadata', ()=>{ video.play().catch(()=>{}); });
-        return null;
+      try {
+        if(window.Hls && Hls.isSupported()){
+          const hls = new Hls();
+          hls.loadSource(url);
+          hls.attachMedia(video);
+          hls.on(Hls.Events.MANIFEST_PARSED, function() {
+            video.play().catch(()=>{});
+          });
+          return hls;
+        }
+      } catch(e) {
+        console.error('hls.js error:', e);
       }
+      // Fallback: intentar reproducción nativa (Safari, etc)
+      return null;
     }
 
     function finishLoading(){
       loading.classList.add('hidden');
       overlay.classList.remove('hidden');
-      hlsInstance = attachHls(STREAM_URL.trim());
+      // Esperar a que el DOM esté listo para la reproducción
+      setTimeout(() => {
+        hlsInstance = attachHls(STREAM_URL);
+        // En navegadores que soportan HLS nativo, el video ya debe reproducirse
+        video.play().catch(err => console.log('Autoplay necesita interacción:', err));
+      }, 100);
     }
     function playVideoOnInteraction(){
-      if(!hlsInstance){
-        hlsInstance = attachHls(STREAM_URL);
-      }
-      video.muted = true;
-      video.play().catch(()=>{});
+      // Forzar reproducción tras interacción del usuario
+      hlsInstance = attachHls(STREAM_URL);
+      video.play().catch(err => console.log('Error al reproducir:', err));
     }
     function redirectToContent(){
       try{ video.pause(); }catch(e){}
