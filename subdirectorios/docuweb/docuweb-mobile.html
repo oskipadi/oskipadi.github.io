@@ -11,6 +11,8 @@
     #phoneVideo{width:100%;max-height:60vh;background:#000;border-radius:16px;overflow:hidden}
     #prompt{margin-top:1rem;font-size:1.05rem;line-height:1.4;max-width:92%}
     #rotateHint{margin-top:0.75rem;color:#ddd;font-size:0.95rem}
+    #enterButton{margin-top:1rem;padding:0.9rem 1.4rem;border:none;border-radius:999px;background:#fff;color:#000;font-size:1rem;font-weight:700;cursor:pointer}
+    #enterButton:active{transform:scale(0.98)}
   </style>
   <meta name="robots" content="noindex">
 </head>
@@ -23,6 +25,7 @@
     </video>
     <div id="prompt">Gira tu móvil a horizontal para ir al contenido. Mientras tanto, mira este avance.</div>
     <div id="rotateHint">Cuando el móvil esté en horizontal, se abrirá el contenido.</div>
+    <button id="enterButton" type="button">Entrar</button>
 
   </div>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
@@ -55,7 +58,13 @@
       overlay.classList.remove('hidden');
       hlsInstance = attachHls(STREAM_URL.trim());
     }
-
+    function playVideoOnInteraction(){
+      if(!hlsInstance){
+        hlsInstance = attachHls(STREAM_URL);
+      }
+      video.muted = true;
+      video.play().catch(()=>{});
+    }
     function redirectToContent(){
       try{ video.pause(); }catch(e){}
       if(hlsInstance && hlsInstance.destroy) try{ hlsInstance.destroy(); }catch(e){}
@@ -67,6 +76,14 @@
       if(isLandscape){
         redirectToContent();
       }
+    }
+
+    const enterButton = document.getElementById('enterButton');
+    if(enterButton){
+      enterButton.addEventListener('click', ()=>{
+        playVideoOnInteraction();
+        checkOrientation();
+      });
     }
 
     window.addEventListener('load', ()=>{ setTimeout(finishLoading, 300); });
