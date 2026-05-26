@@ -621,7 +621,7 @@
       font-weight: 800;
       cursor: pointer;
       z-index: 40;
-      transition: transform 0.18s ease, background 0.18s ease, right 0.3s ease;
+      transition: transform 0.18s ease, background 0.18s ease, right 0.3s ease, position 0.3s ease, top 0.3s ease;
       user-select: none;
       backdrop-filter: none;
       border: none;
@@ -630,8 +630,10 @@
 
     @media (orientation: landscape) and (max-height: 500px) {
       .fondo-autoretratos-toggle {
+        position: fixed;
         top: 50%;
-        right: -2.2em;
+        right: auto;
+        left: 20px;
         transform: translateY(-50%);
       }
     }
@@ -777,7 +779,7 @@
     @media (orientation: landscape) and (max-height: 500px) {
       .btn-mobile-arrow {
         position: fixed;
-        right: 20px;
+        right: calc(18px + 5em);
         top: 50%;
         bottom: auto;
         transform: translateY(-50%);
