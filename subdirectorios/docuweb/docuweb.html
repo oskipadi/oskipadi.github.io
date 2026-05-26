@@ -658,10 +658,9 @@
 
     /* Toggle button at the maximum left of fondo_autoretratos */
     .fondo-autoretratos-toggle {
-      position: fixed;
-      top: 50%;
+      position: absolute;
+      top: 8%;
       left: 20px;
-      transform: translateY(-50%);
       width: 44px;
       height: 44px;
       border-radius: 22px;
@@ -681,11 +680,14 @@
       box-shadow: 0 6px 18px rgba(0,0,0,0.45);
     }
 
-    @media (max-width: 768px) and (orientation: landscape) {
-      .fondo-autoretratos-toggle {
-        top: 80px;
-        left: 20px;
-        transform: none;
+    @media (max-width: 768px) {
+      @media (orientation: landscape) {
+        .fondo-autoretratos-toggle {
+          position: fixed;
+          top: 20px;
+          left: 20px;
+          transform: none;
+        }
       }
     }
 
@@ -827,31 +829,22 @@
       display: flex;
     }
 
-    /* Specific positioning for autoretratos button: 5em to the right of swiper */
+    /* Specific positioning for autoretratos button: at bottom right */
     #btn-mobile-autoretratos-next {
-      position: fixed;
-      right: calc(33% - 5em);
-      top: 50%;
-      bottom: auto;
-      transform: translateY(-50%);
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
     }
 
-    @media (max-width: 768px) and (orientation: landscape) {
-      #btn-mobile-autoretratos-next {
-        right: 20px;
-        bottom: 20px;
-        top: auto;
-        transform: none;
-      }
-    }
-
-    @media (orientation: landscape) and (max-height: 500px) {
-      .btn-mobile-arrow {
-        position: fixed;
-        right: calc(18px + 5em);
-        top: 50%;
-        bottom: auto;
-        transform: translateY(-50%);
+    @media (max-width: 768px) {
+      @media (orientation: landscape) {
+        #btn-mobile-autoretratos-next {
+          position: fixed;
+          right: 20px;
+          bottom: 20px;
+          top: auto;
+          transform: none;
+        }
       }
     }
 
@@ -906,9 +899,9 @@
     </div>
     <p id="loading-status"
       style="margin-top: 10px; font-family: sans-serif; color: rgba(255,255,255,0.5); font-size: 10px;"></p>
-    <!-- <button id="btn-emergencia"
+    <button id="btn-emergencia"
       style="display: none; margin-top: 20px; padding: 10px 20px; background: white; color: black; border: none; border-radius: 20px; cursor: pointer; font-weight: bold;">ENTRAR
-      DE TODOS MODOS</button> -->
+      DE TODOS MODOS</button>
   </div>
 
   <style>
@@ -1418,19 +1411,6 @@
         video.currentTime = 0;
         showIntroBranding();
         showIntroAlert();
-        
-        // Auto-play video en móvil
-        const isMobile = window.innerWidth <= 768 || window.matchMedia('(max-width: 768px)').matches;
-        if (isMobile) {
-          video.muted = true;
-          video.play().then(() => {
-            video.muted = false;
-          }).catch(err => {
-            console.warn('Autoplay bloqueado, reintentando...');
-            video.muted = true;
-            video.play();
-          });
-        }
       }, 1000);
     };
 
@@ -1445,11 +1425,30 @@
     const showIntroAlert = () => {
       if (!introAlertOverlay) return;
       introAlertOverlay.style.display = 'flex';
+      
+      // Play video only on mobile
+      const isMobile = window.innerWidth <= 768 || window.matchMedia('(max-width: 768px)').matches;
+      if (isMobile && video) {
+        video.muted = true;
+        video.play().then(() => {
+          video.muted = false;
+        }).catch(err => {
+          console.warn('Autoplay bloqueado, reintentando...');
+          video.muted = true;
+          video.play();
+        });
+      }
     };
 
     const hideIntroAlert = () => {
       if (!introAlertOverlay) return;
       introAlertOverlay.style.display = 'none';
+      
+      // Pause video on mobile
+      const isMobile = window.innerWidth <= 768 || window.matchMedia('(max-width: 768px)').matches;
+      if (isMobile && video) {
+        video.pause();
+      }
     };
 
     const showConsentAlert = () => {
