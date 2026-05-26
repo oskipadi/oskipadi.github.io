@@ -17,9 +17,13 @@
 <body>
   <div id="loading-screen">Cargando…</div>
   <div id="overlay" class="hidden" aria-hidden="false">
-    <video id="phoneVideo" playsinline muted preload="auto"></video>
+    <video id="phoneVideo" playsinline muted preload="auto" controls>
+      <source src="https://customer-rkin2iztax47x9b5.cloudflarestream.com/88adbd8510319eed50482b7f6b311a42/manifest/video.m3u8" type="application/x-mpegURL">
+      Tu navegador no soporta este video.
+    </video>
     <div id="prompt">Gira tu móvil a horizontal para ir al contenido. Mientras tanto, mira este avance.</div>
     <div id="rotateHint">Cuando el móvil esté en horizontal, se abrirá el contenido.</div>
+
   </div>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script>
@@ -40,6 +44,7 @@
         return hls;
       } else {
         video.src = url;
+        video.load();
         video.addEventListener('loadedmetadata', ()=>{ video.play().catch(()=>{}); });
         return null;
       }
@@ -48,7 +53,7 @@
     function finishLoading(){
       loading.classList.add('hidden');
       overlay.classList.remove('hidden');
-      hlsInstance = attachHls(STREAM_URL);
+      hlsInstance = attachHls(STREAM_URL.trim());
     }
 
     function redirectToContent(){
