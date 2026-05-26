@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <title>DocuWeb - Versión móvil</title>
+  <style>
+    html,body{height:100%;margin:0;font-family:system-ui,Arial,Helvetica,sans-serif;background:#000;color:#fff}
+    #loading-screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;color:#fff;z-index:30;font-size:1.1rem}
+    #overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;background:#000;z-index:40;padding:1rem;box-sizing:border-box;text-align:center}
+    #phoneVideo{width:100%;max-height:60vh;background:#000;border-radius:16px;overflow:hidden}
+    #prompt{margin-top:1rem;font-size:1.05rem;line-height:1.4;max-width:92%}
+    #rotateHint{margin-top:0.75rem;color:#ddd;font-size:0.95rem}
+  </style>
+  <meta name="robots" content="noindex">
+</head>
+<body>
+  <div id="loading-screen">Cargando…</div>
+  <div id="overlay" class="hidden" aria-hidden="false">
+    <video id="phoneVideo" playsinline muted preload="auto"></video>
+    <div id="prompt">Gira tu móvil a horizontal para ir al contenido. Mientras tanto, mira este avance.</div>
+    <div id="rotateHint">Cuando el móvil esté en horizontal, se abrirá el contenido.</div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script>
+    const STREAM_URL = 'https://customer-rkin2iztax47x9b5.cloudflarestream.com/88adbd8510319eed50482b7f6b311a42/manifest/video.m3u8';
+    const loading = document.getElementById('loading-screen');
+    const overlay = document.getElementById('overlay');
+    const video = document.getElementById('phoneVideo');
+    let hlsInstance = null;
+
+    function attachHls(url){
+      if(window.Hls && Hls.isSupported()){
+        const hls = new Hls();
+        hls.loadSource(url);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, function() {
+          video.play().catch(()=>{});
+        });
+        return hls;
+      } else {
+        video.src = url;
+        video.addEventListener('loadedmetadata', ()=>{ video.play().catch(()=>{}); });
+        return null;
+      }
+    }
+
+    function finishLoading(){
+      loading.classList.add('hidden');
+      overlay.classList.remove('hidden');
+      hlsInstance = attachHls(STREAM_URL);
+    }
+
+    function redirectToContent(){
+      try{ video.pause(); }catch(e){}
+      if(hlsInstance && hlsInstance.destroy) try{ hlsInstance.destroy(); }catch(e){}
+      window.location.replace('docuweb.html');
+    }
+
+    function checkOrientation(){
+      const isLandscape = window.matchMedia('(orientation: landscape)').matches || window.innerWidth > window.innerHeight;
+      if(isLandscape){
+        redirectToContent();
+      }
+    }
+
+    window.addEventListener('load', ()=>{ setTimeout(finishLoading, 300); });
+    window.addEventListener('orientationchange', ()=>{ setTimeout(checkOrientation, 250); });
+    window.addEventListener('resize', ()=>{ setTimeout(checkOrientation, 150); });
+    document.addEventListener('DOMContentLoaded', ()=>{ setTimeout(checkOrientation, 100); });
+
+    video.addEventListener('ended', ()=>{});
+  </script>
+</body>
+</html>
