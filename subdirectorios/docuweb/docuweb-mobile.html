@@ -6,9 +6,9 @@
   <title>DocuWeb - Versión móvil</title>
   <style>
     html,body{height:100%;margin:0;font-family:system-ui,Arial,Helvetica,sans-serif;background:#000;color:#fff}
-    #loading-screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;color:#fff;z-index:50;font-size:1.1rem}
+    #loading-screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;color:#fff;z-index:30;font-size:1.1rem}
     #overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;background:#000;z-index:40;padding:1rem;box-sizing:border-box;text-align:center}
-    #phoneVideo{width:100%;max-height:60vh;background:#000;border-radius:16px;overflow:hidden;display:block}
+    #phoneVideo{width:100%;max-height:60vh;background:#000;border-radius:16px;overflow:hidden}
     #prompt{margin-top:1rem;font-size:1.05rem;line-height:1.4;max-width:92%}
     #rotateHint{margin-top:0.75rem;color:#ddd;font-size:0.95rem}
   </style>
@@ -16,61 +16,44 @@
 </head>
 <body>
   <div id="loading-screen">Cargando…</div>
-  <div id="overlay" class="hidden">
-    <video id="phoneVideo" playsinline muted preload="auto"></video>
-    <div id="prompt">Gira tu móvil a horizontal para ir al contenido.</div>
+  <div id="overlay" class="hidden" aria-hidden="false">
+    <video id="phoneVideo" playsinline muted preload="auto" controls>
+      <source src="https://customer-rkin2iztax47x9b5.cloudflarestream.com/88adbd8510319eed50482b7f6b311a42/manifest/video.m3u8" type="application/x-mpegURL">
+      Tu navegador no soporta este video.
+    </video>
+    <div id="prompt">Gira tu móvil a horizontal para ir al contenido. Mientras tanto, mira este avance.</div>
     <div id="rotateHint">Cuando el móvil esté en horizontal, se abrirá el contenido.</div>
-  </div>
 
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script>
-    const PHONE_VIDEO_URL = 'https://customer-rkin2iztax47x9b5.cloudflarestream.com/88adbd8510319eed50482b7f6b311a42/manifest/video.m3u8';
-    const INTRO_VIDEO_URL = 'https://customer-rkin2iztax47x9b5.cloudflarestream.com/43385aff7a1ec19f10482f68a1394852/manifest/video.m3u8';
-    
+    const STREAM_URL = 'https://customer-rkin2iztax47x9b5.cloudflarestream.com/88adbd8510319eed50482b7f6b311a42/manifest/video.m3u8';
     const loading = document.getElementById('loading-screen');
     const overlay = document.getElementById('overlay');
     const video = document.getElementById('phoneVideo');
     let hlsInstance = null;
-    let videoSequence = 0; // 0 = phone, 1 = intro
-    let phoneVideoEnded = false;
 
     function attachHls(url){
-      try {
-        if(window.Hls && Hls.isSupported()){
-          const hls = new Hls();
-          hls.loadSource(url);
-          hls.attachMedia(video);
-          hls.on(Hls.Events.MANIFEST_PARSED, function() {
-            video.play().catch(()=>{});
-          });
-          return hls;
-        }
-      } catch(e) {
-        console.error('HLS Error:', e);
+      if(window.Hls && Hls.isSupported()){
+        const hls = new Hls();
+        hls.loadSource(url);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, function() {
+          video.play().catch(()=>{});
+        });
+        return hls;
+      } else {
+        video.src = url;
+        video.load();
+        video.addEventListener('loadedmetadata', ()=>{ video.play().catch(()=>{}); });
+        return null;
       }
-      // Fallback para Safari
-      video.src = url;
-      video.load();
-      return null;
-    }
-
-    function playPhoneVideo(){
-      videoSequence = 0;
-      phoneVideoEnded = false;
-      if(hlsInstance && hlsInstance.destroy) hlsInstance.destroy();
-      hlsInstance = attachHls(PHONE_VIDEO_URL);
-    }
-
-    function playIntroVideo(){
-      videoSequence = 1;
-      if(hlsInstance && hlsInstance.destroy) hlsInstance.destroy();
-      hlsInstance = attachHls(INTRO_VIDEO_URL);
     }
 
     function finishLoading(){
       loading.classList.add('hidden');
       overlay.classList.remove('hidden');
-      playPhoneVideo();
+      hlsInstance = attachHls(STREAM_URL.trim());
     }
 
     function redirectToContent(){
@@ -81,35 +64,22 @@
 
     function checkOrientation(){
       const isLandscape = window.matchMedia('(orientation: landscape)').matches || window.innerWidth > window.innerHeight;
-      
       if(isLandscape){
-        // Está en horizontal
-        if(phoneVideoEnded && videoSequence === 0){
-          // Video phone terminó, reproducir intro
-          playIntroVideo();
-        } else if(videoSequence === 1){
-          // Ya está reproduciendo intro, esperar a que termine
-        } else if(!phoneVideoEnded){
-          // Video phone aún está reproduciéndose, dejar que continue
-        }
-      }
-    }
-
-    // Cuando termina el video actual
-    video.addEventListener('ended', function(){
-      if(videoSequence === 0){
-        // Terminó video phone, marcar como ended
-        phoneVideoEnded = true;
-        // Esperar a que se gire a horizontal para reproducir intro
-      } else if(videoSequence === 1){
-        // Terminó video intro, ir al contenido
         redirectToContent();
       }
-    });
+    }
 
     window.addEventListener('load', ()=>{ setTimeout(finishLoading, 300); });
     window.addEventListener('orientationchange', ()=>{ setTimeout(checkOrientation, 250); });
     window.addEventListener('resize', ()=>{ setTimeout(checkOrientation, 150); });
+    document.addEventListener('DOMContentLoaded', ()=>{ setTimeout(checkOrientation, 100); });
+
+    video.addEventListener('ended', function(){
+      if(videoSequence === 0){
+        // Terminó video phone, detectar orientación
+        checkOrientation();
+      }
+    });
   </script>
 </body>
 </html>
