@@ -621,11 +621,19 @@
       font-weight: 800;
       cursor: pointer;
       z-index: 40;
-      transition: transform 0.18s ease, background 0.18s ease;
+      transition: transform 0.18s ease, background 0.18s ease, right 0.3s ease;
       user-select: none;
       backdrop-filter: none;
       border: none;
       box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+    }
+
+    @media (orientation: landscape) and (max-height: 500px) {
+      .fondo-autoretratos-toggle {
+        top: 50%;
+        right: -2.2em;
+        transform: translateY(-50%);
+      }
     }
 
     .fondo-autoretratos-toggle:hover {
@@ -766,6 +774,16 @@
       display: flex;
     }
 
+    @media (orientation: landscape) and (max-height: 500px) {
+      .btn-mobile-arrow {
+        position: fixed;
+        right: 20px;
+        top: 50%;
+        bottom: auto;
+        transform: translateY(-50%);
+      }
+    }
+
     @media (max-width: 768px) {
       .btn-mobile-arrow {
         display: flex;
@@ -784,6 +802,23 @@
 
       #swiper-wrapper-mapeo {
         padding-bottom: 80px;
+      }
+
+      /* En modo horizontal en móvil */
+      @media (orientation: landscape) {
+        .btn-mobile-arrow {
+          position: fixed;
+          right: 20px;
+          bottom: auto;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+
+        .fondo-autoretratos-toggle {
+          top: 50%;
+          right: -1.8em;
+          transform: translateY(-50%);
+        }
       }
     }
   </style>
