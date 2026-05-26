@@ -359,6 +359,44 @@
       border-radius: 22px;
     }
 
+    .btn-consent-arrow {
+      display: none;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255, 255, 255, 0.95);
+      color: #000000;
+      font-size: 28px;
+      font-weight: 800;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 14px 24px rgba(0, 0, 0, 0.18);
+      flex-shrink: 0;
+    }
+
+    .btn-consent-arrow:hover {
+      background: #ffffff;
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+      .btn-consent-arrow {
+        display: flex;
+      }
+
+      @media (orientation: landscape) {
+        #consent-overlay .consent-video {
+          max-height: 280px;
+        }
+
+        #consent-overlay .consent-video iframe {
+          max-height: 220px;
+        }
+      }
+    }
+
     @media (max-width: 768px) {
       #consent-overlay .consent-panel {
         width: min(100%, 92%);
@@ -1107,8 +1145,9 @@
 
             A continuación os compartimos un proyecto realizado por Sergi —miembro del observatorio— junto con Ana Apausa sobre el consentimiento a dos voces.</p>
         </div>
-        <div class="consent-block consent-video">
+        <div class="consent-block consent-video" style="position: relative; display: flex; align-items: center; justify-content: center; gap: 16px;">
           <iframe id="consent-video-frame" src="https://www.youtube.com/embed/VDaw7iowP90" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture"></iframe>
+          <button id="btn-consent-arrow" class="btn-consent-arrow" type="button" aria-label="Continuar">›</button>
         </div>
         <div style="text-align: center; margin-top: 16px;">
           <button id="btn-consent-continuar" class="btn-premium" style="padding: 14px 40px; background: #ffffff; color: #000000; font-size: 16px; opacity: 0.95;">Continuar</button>
@@ -2206,6 +2245,10 @@
           if (targetButton) targetButton.click();
         }
       });
+    });
+
+    document.getElementById('btn-consent-arrow').addEventListener('click', () => {
+      document.getElementById('btn-consent-continuar').click();
     });
 
   </script>
