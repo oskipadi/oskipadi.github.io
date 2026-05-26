@@ -384,15 +384,29 @@
     @media (max-width: 768px) {
       .btn-consent-arrow {
         display: flex;
+        margin-left: auto;
+        flex-shrink: 0;
       }
 
       @media (orientation: landscape) {
         #consent-overlay .consent-video {
-          max-height: 280px;
+          max-height: 180px;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          flex-direction: row;
         }
 
         #consent-overlay .consent-video iframe {
-          max-height: 220px;
+          max-height: 140px;
+          flex: 0 1 auto;
+          width: auto;
+          max-width: 60vw;
+        }
+
+        .btn-consent-arrow {
+          margin-left: auto;
+          flex-shrink: 0;
         }
       }
     }
@@ -642,11 +656,12 @@
       text-decoration: none;
     }
 
-    /* Toggle button that sits at the top-right corner of the left swiper */
+    /* Toggle button at the maximum left of fondo_autoretratos */
     .fondo-autoretratos-toggle {
-      position: absolute;
-      top: 10px;
-      right: -3em;
+      position: fixed;
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
       width: 44px;
       height: 44px;
       border-radius: 22px;
@@ -659,21 +674,11 @@
       font-weight: 800;
       cursor: pointer;
       z-index: 40;
-      transition: transform 0.18s ease, background 0.18s ease, right 0.3s ease, position 0.3s ease, top 0.3s ease;
+      transition: transform 0.18s ease, background 0.18s ease;
       user-select: none;
       backdrop-filter: none;
       border: none;
       box-shadow: 0 6px 18px rgba(0,0,0,0.45);
-    }
-
-    @media (orientation: landscape) and (max-height: 500px) {
-      .fondo-autoretratos-toggle {
-        position: fixed;
-        top: 50%;
-        right: auto;
-        left: 20px;
-        transform: translateY(-50%);
-      }
     }
 
     .fondo-autoretratos-toggle:hover {
@@ -814,6 +819,15 @@
       display: flex;
     }
 
+    /* Specific positioning for autoretratos button: 5em to the right of swiper */
+    #btn-mobile-autoretratos-next {
+      position: fixed;
+      right: calc(33% - 5em);
+      top: 50%;
+      bottom: auto;
+      transform: translateY(-50%);
+    }
+
     @media (orientation: landscape) and (max-height: 500px) {
       .btn-mobile-arrow {
         position: fixed;
@@ -851,12 +865,6 @@
           right: 20px;
           bottom: auto;
           top: 50%;
-          transform: translateY(-50%);
-        }
-
-        .fondo-autoretratos-toggle {
-          top: 50%;
-          right: -1.8em;
           transform: translateY(-50%);
         }
       }
