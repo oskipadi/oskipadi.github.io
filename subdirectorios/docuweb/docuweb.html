@@ -1390,10 +1390,22 @@
       loadingScreen.style.opacity = '0';
       setTimeout(() => {
         loadingScreen.style.display = 'none';
-        video.pause();
         video.currentTime = 0;
         showIntroBranding();
         showIntroAlert();
+        
+        // Auto-play video en móvil
+        const isMobile = window.innerWidth <= 768 || window.matchMedia('(max-width: 768px)').matches;
+        if (isMobile) {
+          video.muted = true;
+          video.play().then(() => {
+            video.muted = false;
+          }).catch(err => {
+            console.warn('Autoplay bloqueado, reintentando...');
+            video.muted = true;
+            video.play();
+          });
+        }
       }, 1000);
     };
 
