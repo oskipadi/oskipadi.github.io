@@ -681,6 +681,14 @@
       box-shadow: 0 6px 18px rgba(0,0,0,0.45);
     }
 
+    @media (max-width: 768px) and (orientation: landscape) {
+      .fondo-autoretratos-toggle {
+        top: 80px;
+        left: 20px;
+        transform: none;
+      }
+    }
+
     .fondo-autoretratos-toggle:hover {
       background: rgba(255,255,255,0.12);
       transform: translateY(-2px);
@@ -828,6 +836,15 @@
       transform: translateY(-50%);
     }
 
+    @media (max-width: 768px) and (orientation: landscape) {
+      #btn-mobile-autoretratos-next {
+        right: 20px;
+        bottom: 20px;
+        top: auto;
+        transform: none;
+      }
+    }
+
     @media (orientation: landscape) and (max-height: 500px) {
       .btn-mobile-arrow {
         position: fixed;
@@ -889,9 +906,9 @@
     </div>
     <p id="loading-status"
       style="margin-top: 10px; font-family: sans-serif; color: rgba(255,255,255,0.5); font-size: 10px;"></p>
-    <button id="btn-emergencia"
+    <!-- <button id="btn-emergencia"
       style="display: none; margin-top: 20px; padding: 10px 20px; background: white; color: black; border: none; border-radius: 20px; cursor: pointer; font-weight: bold;">ENTRAR
-      DE TODOS MODOS</button>
+      DE TODOS MODOS</button> -->
   </div>
 
   <style>
