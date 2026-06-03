@@ -213,6 +213,18 @@
       transform: translateY(-2px);
     }
 
+    /* Animación de movimiento suave para botones principales */
+    @keyframes blinking {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    #btn-relaciones,
+    #btn-dinamica,
+    #btn-consentimiento {
+      animation: blinking 2s ease-in-out infinite;
+    }
+
     #consent-overlay {
       position: fixed;
       inset: 0;
@@ -1088,6 +1100,7 @@
     <div id="menu-carga-1">
       <p class="texto-mapeo">Mapeos relacionales fruto de una de las sesiones dentro del observatorio de masculinidades 
         grupos.</p>
+      <p style="color: #ffffff; font-size: 18px; margin: 0 0 30px 0; text-align: center; font-weight: 500; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); font-family: 'Segoe UI', sans-serif;">Presiona uno de los botones para continuar con la historia</p>
       <div class="botones-menu-carga">
         <button id="btn-relaciones" class="btn-premium">Relaciones y no monogamias</button>
       </div>
@@ -1136,6 +1149,7 @@
     </div>
 
     <div id="menu-carga-2" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 200; display: none; flex-direction: column; justify-content: center; align-items: center; background: rgba(0, 0, 0, 0.3);">
+      <p style="color: #ffffff; font-size: 18px; margin: 0 0 30px 0; text-align: center; font-weight: 500; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); font-family: 'Segoe UI', sans-serif;">Presiona uno de los botones para continuar con la historia</p>
       <div class="botones-menu-carga">
         <button id="btn-dinamica" class="btn-premium btn-relaciones-style">Dinámica</button>
         <button id="btn-continuar-carga-2" class="btn-premium">Continuar</button>
@@ -1143,6 +1157,7 @@
     </div>
 
     <div id="menu-carga-3" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 200; display: none; flex-direction: column; justify-content: center; align-items: center; background: rgba(0, 0, 0, 0.3);">
+      <p style="color: #ffffff; font-size: 18px; margin: 0 0 30px 0; text-align: center; font-weight: 500; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); font-family: 'Segoe UI', sans-serif;">Presiona uno de los botones para continuar con la historia</p>
       <div class="botones-menu-carga">
         <button id="btn-consentimiento" class="btn-premium btn-relaciones-style">Consentimiento</button>
         <button id="btn-continuar-carga-3" class="btn-premium">Continuar</button>
@@ -1879,6 +1894,10 @@
       btnDinamica.disabled = true;
       // Ocultar el botón Dinámica al pulsarlo
       btnDinamica.style.display = 'none';
+      // Ocultar texto instructivo
+      const menuCarga2 = document.getElementById('menu-carga-2');
+      const instructText2 = menuCarga2?.querySelector('p');
+      if (instructText2) instructText2.style.display = 'none';
       videoPantallaCarga2.style.opacity = '0';
       videoPantallaCarga2.style.pointerEvents = 'none';
       videoPantallaCarga2.pause();
@@ -1932,6 +1951,10 @@
     });
 
     btnConsentimiento.addEventListener('click', () => {
+      // Ocultar texto instructivo
+      const menuCarga3 = document.getElementById('menu-carga-3');
+      const instructText3 = menuCarga3?.querySelector('p');
+      if (instructText3) instructText3.style.display = 'none';
       // Hide the menu buttons first
       if (menuCarga3) menuCarga3.style.display = 'none';
 
@@ -2218,6 +2241,10 @@
       swiperWrapper.style.display = 'flex';
       document.querySelector('.texto-mapeo').style.display = 'block';
       btnRelaciones.style.display = 'none';
+      // Ocultar texto instructivo
+      const menuCarga1 = document.getElementById('menu-carga-1');
+      const instructText1 = menuCarga1?.querySelector('p:not(.texto-mapeo)');
+      if (instructText1) instructText1.style.display = 'none';
 
       // Inicializar Swiper si no existe
       if (!swiperInstance) {
