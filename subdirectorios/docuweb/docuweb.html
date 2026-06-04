@@ -974,7 +974,7 @@
 
     <video muted playsinline id="video-phone"
       style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; display: none; pointer-events: none; z-index: 4;">
-      <source src="https://customer-rkin2iztax47x9b5.cloudflarestream.com/88adbd8510319eed50482b7f6b311a42/manifest/video.m3u8" type="application/x-mpegURL">
+      <source src="https://customer-rkin2iztax47x9b5.cloudflarestream.com/73abcf25def5df2bb3c56ceb5ce15c71/manifest/video.m3u8" type="application/x-mpegURL">
     </video>
 
     <!-- Intro branding: appears top-left after loading finishes -->
@@ -1446,13 +1446,27 @@
       }
     };
 
+    const hideIntroButtons = () => {
+      if (startButton1) startButton1.style.display = 'none';
+      if (startButton2) startButton2.style.display = 'none';
+      if (skipIntro) skipIntro.style.display = 'none';
+    };
+
+    const showIntroButtons = () => {
+      if (startButton1) startButton1.style.display = 'block';
+      if (startButton2) startButton2.style.display = 'none';
+      if (skipIntro) skipIntro.style.display = 'none';
+    };
+
     const playPhoneIntroVideo = () => {
       if (!videoPhone) {
         showIntroBranding();
         showIntroPoster();
+        showIntroButtons();
         return;
       }
 
+      hideIntroButtons();
       videoPhone.style.display = 'block';
       videoPhone.style.opacity = '1';
       videoPhone.style.pointerEvents = 'auto';
@@ -1466,6 +1480,7 @@
         videoPhone.style.display = 'none';
         showIntroBranding();
         showIntroPoster();
+        showIntroButtons();
       };
 
       videoPhone.onended = cleanupPhoneIntro;
