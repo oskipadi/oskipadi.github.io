@@ -1006,7 +1006,7 @@
     </video>
 
     <button id="skip-intro"
-      style="position: absolute; bottom: 12px; right: 12px; padding: 14px 28px; background: rgba(255,255,255,0.95); border: 2px solid white; cursor: pointer; border-radius: 8px; font-size: 18px; font-weight: 700; z-index: 1001;">Skip
+      style="display: none; position: absolute; bottom: 12px; right: 12px; padding: 14px 28px; background: rgba(255,255,255,0.95); border: 2px solid white; cursor: pointer; border-radius: 8px; font-size: 18px; font-weight: 700; z-index: 1001;">Skip
       intro</button>
     <button id="skip-video"
       style="position: absolute; bottom: 64px; right: 2em; padding: 14px 28px; background: rgba(255,255,255,0.95); border: 2px solid white; cursor: pointer; border-radius: 8px; font-size: 18px; font-weight: 700; z-index: 1001; display:none;">Skip</button>
@@ -1718,7 +1718,7 @@
       if (loadedCount < videosToLoad.length) {
         btnEmergencia.style.display = 'block';
       }
-    }, 5000);
+    }, 10000);
 
     video.addEventListener('ended', () => {
       menuImage.classList.add('visible');

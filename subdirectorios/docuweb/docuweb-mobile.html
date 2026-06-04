@@ -11,6 +11,11 @@
     #phoneVideo{width:100%;max-height:70vh;background:#000;border-radius:8px;display:block}
     #prompt{margin-top:1rem;font-size:1.05rem;line-height:1.4;max-width:92%}
     #rotateHint{margin-top:0.75rem;color:#ddd;font-size:0.95rem}
+    .hidden{display:none !important}
+    @media (orientation: landscape) {
+      #phoneVideo{max-height:none;height:100vh;width:100%;border-radius:0}
+      #rotateHint{display:none}
+    }
   </style>
   <meta name="robots" content="noindex">
 </head>
@@ -32,10 +37,13 @@
     const loading = document.getElementById('loading-screen');
     const overlay = document.getElementById('overlay');
     const video = document.getElementById('phoneVideo');
+    const prompt = document.getElementById('prompt');
+    const rotateHint = document.getElementById('rotateHint');
     
     let hlsInstance = null;
     let videoSequence = 0;
     let phoneVideoEnded = false;
+    let introVideoReadyToRedirect = false;
 
     function setupHls(url) {
       try {
@@ -65,6 +73,7 @@
 
     function playIntroVideo() {
       videoSequence = 1;
+      introVideoReadyToRedirect = false;
       console.log('Playing intro video');
       setupHls(INTRO_VIDEO_URL);
     }
@@ -73,6 +82,7 @@
       loading.classList.add('hidden');
       overlay.classList.remove('hidden');
       playPhoneVideo();
+      checkOrientation();
     }
 
     function redirectToContent() {
@@ -82,16 +92,52 @@
       window.location.replace('docuweb.html');
     }
 
+    function updateOrientationUI(isLandscape) {
+      if (!isLandscape) {
+        overlay.classList.remove('horizontal-only');
+        overlay.classList.add('portrait-only');
+        if (prompt) prompt.textContent = 'Gira el móvil a horizontal para continuar con el contenido.';
+        if (rotateHint) rotateHint.style.display = 'block';
+        if (videoSequence === 1) {
+          try { video.pause(); } catch (e) {}
+        }
+        return;
+      }
+
+      overlay.classList.add('horizontal-only');
+      overlay.classList.remove('portrait-only');
+      if (videoSequence === 0) {
+        if (phoneVideoEnded) {
+          if (prompt) prompt.textContent = 'Reproduciendo contenido en horizontal...';
+          if (rotateHint) rotateHint.style.display = 'none';
+        } else {
+          if (prompt) prompt.textContent = 'Contenido horizontal en reproducción.';
+          if (rotateHint) rotateHint.style.display = 'none';
+        }
+      } else if (videoSequence === 1) {
+        if (prompt) prompt.textContent = 'Reproduciendo contenido principal en horizontal.';
+        if (rotateHint) rotateHint.style.display = 'none';
+        if (isLandscape && video.paused && !introVideoReadyToRedirect) {
+          video.play().catch(() => {});
+        }
+      }
+    }
+
     function checkOrientation() {
       const isLandscape = window.matchMedia('(orientation: landscape)').matches || window.innerWidth > window.innerHeight;
       console.log('Check orientation - landscape:', isLandscape, 'seq:', videoSequence, 'ended:', phoneVideoEnded);
-      
-      if (isLandscape) {
-        if (phoneVideoEnded && videoSequence === 0) {
-          playIntroVideo();
-        } else if (videoSequence === 1) {
-          redirectToContent();
-        }
+      updateOrientationUI(isLandscape);
+
+      if (!isLandscape) {
+        return;
+      }
+
+      if (videoSequence === 0 && phoneVideoEnded) {
+        playIntroVideo();
+      } else if (videoSequence === 1 && introVideoReadyToRedirect) {
+        redirectToContent();
+      } else if (videoSequence === 1 && !introVideoReadyToRedirect && video.paused) {
+        video.play().catch(() => {});
       }
     }
 
@@ -101,7 +147,8 @@
         phoneVideoEnded = true;
         checkOrientation();
       } else if (videoSequence === 1) {
-        redirectToContent();
+        introVideoReadyToRedirect = true;
+        checkOrientation();
       }
     });
 
