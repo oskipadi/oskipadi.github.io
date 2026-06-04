@@ -5,12 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>docuweb</title>
-  <script>
-    // Redirigir a versión móvil en dispositivos móviles
-    if (window.matchMedia('(max-width: 768px)').matches) {
-      window.location.replace('docuweb-mobile.html');
-    }
-  </script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
   <link href="docuweb.css" rel="stylesheet" type="text/css">
   <style>
@@ -935,6 +929,25 @@
         transform: rotate(360deg);
       }
     }
+    .image-container2.rotated-mobile {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vh;
+      height: 100vw;
+      transform-origin: top left;
+      transform: rotate(90deg) translateY(-100vh);
+      overflow: hidden;
+    }
+    @media (orientation: landscape) {
+      .image-container2.rotated-mobile {
+        position: relative;
+        width: 100%;
+        height: auto;
+        transform: none;
+        overflow: visible;
+      }
+    }
   </style>
 
   <button id="intro-alert-toggle" type="button">Info</button>
@@ -1249,7 +1262,23 @@
     const btnContinuarAutoretratos = document.getElementById('btn-continuar-autoretratos');
 
     const videoBackground = document.getElementById('video-background');
+    const imageContainer2 = document.querySelector('.image-container2');
+    let phoneVideoEnded = false;
     const isMobileDevice = () => window.matchMedia('(max-width: 768px)').matches;
+    const isLandscapeMobile = () => window.matchMedia('(orientation: landscape)').matches || window.innerWidth > window.innerHeight;
+    const applyMobileRotation = () => {
+      if (!imageContainer2 || !isMobileDevice() || !phoneVideoEnded) {
+        if (imageContainer2) imageContainer2.classList.remove('rotated-mobile');
+        return;
+      }
+      if (isLandscapeMobile()) {
+        imageContainer2.classList.remove('rotated-mobile');
+      } else {
+        imageContainer2.classList.add('rotated-mobile');
+      }
+    };
+    window.addEventListener('orientationchange', applyMobileRotation);
+    window.addEventListener('resize', applyMobileRotation);
     const hlsVideos = Array.from(document.querySelectorAll('video')).map(videoEl => {
       if (videoEl.id === 'video-phone' && !isMobileDevice()) {
         return null;
@@ -1489,7 +1518,11 @@
         showIntroButtons();
       };
 
-      videoPhone.onended = cleanupPhoneIntro;
+      videoPhone.onended = () => {
+        phoneVideoEnded = true;
+        cleanupPhoneIntro();
+        applyMobileRotation();
+      };
       videoPhone.play().catch((err) => {
         console.warn('No se pudo reproducir el video móvil phone:', err);
         cleanupPhoneIntro();
