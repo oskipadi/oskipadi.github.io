@@ -5,6 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>docuweb</title>
+  <script>
+    // Redirigir a versión móvil en dispositivos móviles
+    if (window.matchMedia('(max-width: 768px)').matches) {
+      window.location.replace('docuweb-mobile.html');
+    }
+  </script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
   <link href="docuweb.css" rel="stylesheet" type="text/css">
   <style>
