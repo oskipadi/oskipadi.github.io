@@ -24,9 +24,20 @@
       font-weight: 600;
       color: #ff9500;
     }
+    #overlay.rotated-content {
+      transform: rotate(90deg);
+      transform-origin: center;
+      width: 100vh;
+      height: 100vw;
+    }
     @media (orientation: landscape) {
       #phoneVideo{max-height:none;height:100vh;width:100%;border-radius:0}
       #rotateHint{display:none}
+      #overlay.rotated-content {
+        transform: none;
+        width: 100%;
+        height: 100%;
+      }
     }
   </style>
   <meta name="robots" content="noindex">
@@ -106,16 +117,17 @@
 
     function updateOrientationUI(isLandscape) {
       if (!isLandscape && phoneVideoEnded) {
-        overlay.classList.add('blocked-portrait');
-        if (prompt) prompt.textContent = 'Este contenido requiere visualizar el móvil en horizontal.';
+        overlay.classList.add('rotated-content');
+        overlay.classList.remove('blocked-portrait');
+        if (prompt) prompt.textContent = 'Contenido rotado para visualización vertical.';
         if (rotateHint) rotateHint.style.display = 'none';
-        try { video.pause(); } catch (e) {}
         return;
       }
 
       if (!isLandscape) {
         overlay.classList.remove('horizontal-only');
         overlay.classList.add('portrait-only');
+        overlay.classList.remove('rotated-content');
         if (prompt) prompt.textContent = 'Gira el móvil a horizontal para continuar con el contenido.';
         if (rotateHint) rotateHint.style.display = 'block';
         try { video.pause(); } catch (e) {}
@@ -123,6 +135,7 @@
       }
 
       overlay.classList.remove('blocked-portrait');
+      overlay.classList.remove('rotated-content');
       overlay.classList.add('horizontal-only');
       overlay.classList.remove('portrait-only');
       if (videoSequence === 0) {
