@@ -971,6 +971,11 @@
     <div id="video-poster-overlay"
       style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('intro.jpg') center/cover no-repeat; z-index: 2; pointer-events: none;"></div>
 
+    <video muted playsinline id="video-phone"
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; display: none; pointer-events: none; z-index: 4;">
+      <source src="https://customer-rkin2iztax47x9b5.cloudflarestream.com/88adbd8510319eed50482b7f6b311a42/manifest/video.m3u8" type="application/x-mpegURL">
+    </video>
+
     <!-- Intro branding: appears top-left after loading finishes -->
     <div id="intro-branding" aria-hidden="true">
       <a class="flecha_izq" href="https://oscarpadilla.eu/">←</a>
@@ -1229,6 +1234,7 @@
     const videoPantallaCarga2 = document.getElementById('video-pantalla_carga_2');
     const videoPantallaCarga3 = document.getElementById('video-pantalla_carga_3');
     const videoTouchMe = document.getElementById('video-touch_me');
+    const videoPhone = document.getElementById('video-phone');
     const videoParte4 = document.getElementById('video-parte4');
     const videoOrigenObservatorio = document.getElementById('video-origen_observatorio');
     const fondoAutoretratosImg = document.getElementById('fondo_autoretratos_img');
@@ -1236,7 +1242,11 @@
     const btnContinuarAutoretratos = document.getElementById('btn-continuar-autoretratos');
 
     const videoBackground = document.getElementById('video-background');
+    const isMobileDevice = () => window.matchMedia('(max-width: 768px)').matches;
     const hlsVideos = Array.from(document.querySelectorAll('video')).map(videoEl => {
+      if (videoEl.id === 'video-phone' && !isMobileDevice()) {
+        return null;
+      }
       const hlsSource = Array.from(videoEl.querySelectorAll('source')).find(source => {
         const type = source.type || '';
         const src = source.src || '';
@@ -1317,6 +1327,10 @@
       { id: 'video-parte4' },
       { id: 'video-origen_observatorio' }
     ];
+
+    if (isMobileDevice() && videoPhone) {
+      videosToLoad.push({ id: 'video-phone' });
+    }
 
     let loadedCount = 0;
     let countdownTimer = null;
@@ -1425,13 +1439,52 @@
       }
     }
 
+    const showIntroPoster = () => {
+      if (videoPosterOverlay) {
+        videoPosterOverlay.style.display = 'block';
+      }
+    };
+
+    const playPhoneIntroVideo = () => {
+      if (!videoPhone) {
+        showIntroBranding();
+        showIntroPoster();
+        return;
+      }
+
+      videoPhone.style.display = 'block';
+      videoPhone.style.opacity = '1';
+      videoPhone.style.pointerEvents = 'auto';
+      videoPhone.muted = true;
+      videoPhone.loop = false;
+      videoPhone.currentTime = 0;
+
+      const cleanupPhoneIntro = () => {
+        videoPhone.style.opacity = '0';
+        videoPhone.style.pointerEvents = 'none';
+        videoPhone.style.display = 'none';
+        showIntroBranding();
+        showIntroPoster();
+      };
+
+      videoPhone.onended = cleanupPhoneIntro;
+      videoPhone.play().catch((err) => {
+        console.warn('No se pudo reproducir el video móvil phone:', err);
+        cleanupPhoneIntro();
+      });
+    };
+
     const hideLoadingScreen = () => {
       loadingScreen.style.opacity = '0';
       setTimeout(() => {
         loadingScreen.style.display = 'none';
         video.currentTime = 0;
-        showIntroBranding();
-        showIntroAlert();
+        if (isMobileDevice()) {
+          playPhoneIntroVideo();
+        } else {
+          showIntroBranding();
+          showIntroAlert();
+        }
       }, 1000);
     };
 
