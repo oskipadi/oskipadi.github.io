@@ -7,37 +7,29 @@
   <style>
     html,body{height:100%;margin:0;font-family:system-ui,Arial,Helvetica,sans-serif;background:#000;color:#fff}
     #loading-screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;color:#fff;z-index:50;font-size:1.1rem}
-    #overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;background:#000;z-index:40;padding:1rem;box-sizing:border-box;text-align:center}
+    #overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;background:#000;z-index:40;padding:1rem;box-sizing:border-box;text-align:center;transition:transform 0.3s ease}
     #phoneVideo{width:100%;max-height:70vh;background:#000;border-radius:8px;display:block}
     #prompt{margin-top:1rem;font-size:1.05rem;line-height:1.4;max-width:92%}
     #rotateHint{margin-top:0.75rem;color:#ddd;font-size:0.95rem}
     .hidden{display:none !important}
-    #overlay.blocked-portrait {
-      background: rgba(0, 0, 0, 0.95);
-      pointer-events: auto;
-    }
-    #overlay.blocked-portrait #phoneVideo {
-      display: none;
-    }
-    #overlay.blocked-portrait #prompt {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: #ff9500;
-    }
-    #overlay.rotated-content {
-      transform: rotate(90deg);
-      transform-origin: center;
+    #overlay.rotated-vertical {
+      transform: rotate(90deg) translateY(-50vh);
       width: 100vh;
       height: 100vw;
     }
+    @media (orientation: portrait) {
+      #overlay.rotated-vertical {
+        transform: rotate(90deg);
+      }
+    }
     @media (orientation: landscape) {
-      #phoneVideo{max-height:none;height:100vh;width:100%;border-radius:0}
-      #rotateHint{display:none}
-      #overlay.rotated-content {
+      #overlay.rotated-vertical {
         transform: none;
         width: 100%;
         height: 100%;
       }
+      #phoneVideo{max-height:none;height:100vh;width:100%;border-radius:0}
+      #rotateHint{display:none}
     }
   </style>
   <meta name="robots" content="noindex">
@@ -116,42 +108,10 @@
     }
 
     function updateOrientationUI(isLandscape) {
-      if (!isLandscape && phoneVideoEnded) {
-        overlay.classList.add('rotated-content');
-        overlay.classList.remove('blocked-portrait');
-        if (prompt) prompt.textContent = 'Contenido rotado para visualización vertical.';
-        if (rotateHint) rotateHint.style.display = 'none';
-        return;
-      }
-
-      if (!isLandscape) {
-        overlay.classList.remove('horizontal-only');
-        overlay.classList.add('portrait-only');
-        overlay.classList.remove('rotated-content');
-        if (prompt) prompt.textContent = 'Gira el móvil a horizontal para continuar con el contenido.';
-        if (rotateHint) rotateHint.style.display = 'block';
-        try { video.pause(); } catch (e) {}
-        return;
-      }
-
-      overlay.classList.remove('blocked-portrait');
-      overlay.classList.remove('rotated-content');
-      overlay.classList.add('horizontal-only');
-      overlay.classList.remove('portrait-only');
-      if (videoSequence === 0) {
-        if (phoneVideoEnded) {
-          if (prompt) prompt.textContent = 'Reproduciendo contenido en horizontal...';
-          if (rotateHint) rotateHint.style.display = 'none';
-        } else {
-          if (prompt) prompt.textContent = 'Contenido horizontal en reproducción.';
-          if (rotateHint) rotateHint.style.display = 'none';
-        }
-      } else if (videoSequence === 1) {
-        if (prompt) prompt.textContent = 'Reproduciendo contenido principal en horizontal.';
-        if (rotateHint) rotateHint.style.display = 'none';
-        if (isLandscape && video.paused && !introVideoReadyToRedirect) {
-          video.play().catch(() => {});
-        }
+      if (isLandscape) {
+        overlay.classList.remove('rotated-vertical');
+      } else {
+        overlay.classList.add('rotated-vertical');
       }
     }
 
@@ -160,16 +120,10 @@
       console.log('Check orientation - landscape:', isLandscape, 'seq:', videoSequence, 'ended:', phoneVideoEnded);
       updateOrientationUI(isLandscape);
 
-      if (!isLandscape) {
-        return;
-      }
-
-      if (videoSequence === 0 && phoneVideoEnded) {
+      if (videoSequence === 0 && phoneVideoEnded && isLandscape) {
         playIntroVideo();
-      } else if (videoSequence === 1 && introVideoReadyToRedirect) {
+      } else if (videoSequence === 1 && introVideoReadyToRedirect && isLandscape) {
         redirectToContent();
-      } else if (videoSequence === 1 && !introVideoReadyToRedirect && video.paused) {
-        video.play().catch(() => {});
       }
     }
 
