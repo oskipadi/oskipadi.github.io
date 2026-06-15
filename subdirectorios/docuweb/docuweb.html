@@ -1016,7 +1016,7 @@
       width: 100vh;
       height: 100vw;
       transform-origin: top left;
-      transform: rotate(90deg);
+      transform: rotate(90deg) translateX(100vw);
       overflow: hidden;
       touch-action: manipulation;
       z-index: 1;
@@ -1032,6 +1032,18 @@
       width: 44px;
       height: auto;
       pointer-events: auto;
+    }
+
+    .button-divider {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 3px;
+      height: 100px;
+      background: #ffffff;
+      opacity: 0.85;
+      border-radius: 1px;
     }
 
     @media (orientation: landscape) {
@@ -1093,11 +1105,12 @@
 
     <img src="menu.png" alt="menu" class="menu-image" style="z-index: 2;">
 
-    <div id="intro-button-group" style="position:absolute; left:50%; top:70%; transform:translate(-50%,-50%); display:flex; gap:12px; z-index:10;">
+    <div id="intro-button-group" style="position:absolute; left:50%; top:70%; transform:translate(-50%,-50%); width:auto; height:60px; z-index:10;">
+      <span class="button-divider" aria-hidden="true"></span>
       <button id="start-button_film" type="button"
-        style="min-width:140px; width:auto; height:60px; padding:0 20px; background:#fffdfd; color:#000000; border:none; border-radius:30px; font-size:20px; cursor:pointer; white-space:nowrap;">FILM</button>
+        style="position:absolute; right:calc(50% + 12px); top:50%; transform:translateY(-50%); min-width:140px; width:auto; height:60px; padding:0 20px; background:#fffdfd; color:#000000; border:none; border-radius:30px; font-size:20px; cursor:pointer; white-space:nowrap;">FILM</button>
       <button id="start-button_1" type="button"
-        style="min-width:190px; width:auto; height:60px; padding:0 20px; background:#fffdfd; color:#000000; border:none; border-radius:30px; font-size:20px; cursor:pointer; white-space:nowrap;">PLAY INTERACTIVE</button>
+        style="position:absolute; left:calc(50% + 12px); top:50%; transform:translateY(-50%); min-width:190px; width:auto; height:60px; padding:0 20px; background:#fffdfd; color:#000000; border:none; border-radius:30px; font-size:20px; cursor:pointer; white-space:nowrap;">PLAY INTERACTIVE</button>
     </div>
 
     <button id="start-button_2"
