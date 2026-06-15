@@ -952,7 +952,7 @@
       }
     }
     .image-container2.rotated-mobile {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       width: 100vh;
@@ -960,27 +960,10 @@
       transform-origin: top left;
       transform: rotate(90deg) translateY(-100vh);
       overflow: hidden;
+      touch-action: manipulation;
+      z-index: 1;
     }
-    .mobile-landscape-lock {
-      position: fixed;
-      inset: 0;
-      z-index: 2000;
-      background: #000;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 1.5rem;
-      font-family: 'Segoe UI', sans-serif;
-      font-size: 20px;
-      line-height: 1.4;
-      letter-spacing: 0.02em;
-    }
-    .mobile-landscape-lock p {
-      max-width: 24rem;
-      margin: 0;
-    }
+
     @media (orientation: landscape) {
       .image-container2.rotated-mobile {
         position: relative;
@@ -1015,10 +998,6 @@
         A continuación os compartimos un proyecto realizado por Sergi —miembro del observatorio— junto con Ana Apausa sobre el consentimiento a dos voces.</p>
       </div>
     </div>
-  </div>
-
-  <div id="mobile-landscape-lock" class="mobile-landscape-lock" style="display:none;">
-    <p>El contenido solo se reproducirá en horizontal. Gira tu móvil para continuar.</p>
   </div>
 
   <div class="image-container2">
@@ -1307,33 +1286,26 @@
 
     const videoBackground = document.getElementById('video-background');
     const imageContainer2 = document.querySelector('.image-container2');
-    const mobileLandscapeLock = document.getElementById('mobile-landscape-lock');
-    let phoneVideoEnded = false;
     const isMobileDevice = () => window.matchMedia('(max-width: 768px)').matches;
     const isLandscapeMobile = () => window.matchMedia('(orientation: landscape)').matches || window.innerWidth > window.innerHeight;
-    const updateLandscapeLock = (isLandscape) => {
-      if (!mobileLandscapeLock || !phoneVideoEnded || !isMobileDevice()) {
-        if (mobileLandscapeLock) mobileLandscapeLock.style.display = 'none';
-        return;
-      }
-      mobileLandscapeLock.style.display = isLandscape ? 'none' : 'flex';
-    };
     const applyMobileRotation = () => {
-      if (!imageContainer2 || !isMobileDevice() || !phoneVideoEnded) {
+      if (!imageContainer2 || !isMobileDevice()) {
         if (imageContainer2) imageContainer2.classList.remove('rotated-mobile');
-        updateLandscapeLock(true);
+        document.body.style.overflow = '';
         return;
       }
       const isLandscape = isLandscapeMobile();
-      updateLandscapeLock(isLandscape);
       if (isLandscape) {
         imageContainer2.classList.remove('rotated-mobile');
+        document.body.style.overflow = '';
       } else {
         imageContainer2.classList.add('rotated-mobile');
+        document.body.style.overflow = 'hidden';
       }
     };
     window.addEventListener('orientationchange', applyMobileRotation);
     window.addEventListener('resize', applyMobileRotation);
+    applyMobileRotation();
     const hlsVideos = Array.from(document.querySelectorAll('video')).map(videoEl => {
       if (videoEl.id === 'video-phone' && !isMobileDevice()) {
         return null;
