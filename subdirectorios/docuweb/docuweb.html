@@ -1083,8 +1083,12 @@
 
     <img src="menu.png" alt="menu" class="menu-image" style="z-index: 2;">
 
-    <button id="start-button_1"
-      style="position:absolute; left:50%; top:70%; transform:translate(-50%,-50%); width:120px; height:60px; background:#fffdfd; color:#000000; border:none; border-radius:30px; font-size:20px; cursor:pointer; z-index:10; display:block;">Play</button>
+    <div id="intro-button-group" style="position:absolute; left:50%; top:70%; transform:translate(-50%,-50%); display:flex; gap:12px; z-index:10;">
+      <button id="start-button_film" type="button"
+        style="width:120px; height:60px; background:#fffdfd; color:#000000; border:none; border-radius:30px; font-size:20px; cursor:pointer;">FILM</button>
+      <button id="start-button_1" type="button"
+        style="width:120px; height:60px; background:#fffdfd; color:#000000; border:none; border-radius:30px; font-size:20px; cursor:pointer;">PLAY INTERACTIVE</button>
+    </div>
 
     <button id="start-button_2"
       style="position:absolute; left:50%; top:55%; transform:translate(-400%,100%); width:80px; height:80px; background:#e53935; color:#fff; border:none; border-radius:50%; font-size:28px; cursor:pointer; z-index:10; display:none;">▶</button>
