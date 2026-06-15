@@ -1016,12 +1016,22 @@
       width: 100vh;
       height: 100vw;
       transform-origin: top left;
-      transform: rotate(90deg) translateX(100vw);
+      transform: rotate(90deg);
       overflow: hidden;
       touch-action: manipulation;
       z-index: 1;
       max-width: none;
       max-height: none;
+    }
+
+    .menu-image {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      z-index: 1005;
+      width: 44px;
+      height: auto;
+      pointer-events: auto;
     }
 
     @media (orientation: landscape) {
@@ -1085,9 +1095,9 @@
 
     <div id="intro-button-group" style="position:absolute; left:50%; top:70%; transform:translate(-50%,-50%); display:flex; gap:12px; z-index:10;">
       <button id="start-button_film" type="button"
-        style="width:120px; height:60px; background:#fffdfd; color:#000000; border:none; border-radius:30px; font-size:20px; cursor:pointer;">FILM</button>
+        style="min-width:140px; width:auto; height:60px; padding:0 20px; background:#fffdfd; color:#000000; border:none; border-radius:30px; font-size:20px; cursor:pointer; white-space:nowrap;">FILM</button>
       <button id="start-button_1" type="button"
-        style="width:120px; height:60px; background:#fffdfd; color:#000000; border:none; border-radius:30px; font-size:20px; cursor:pointer;">PLAY INTERACTIVE</button>
+        style="min-width:190px; width:auto; height:60px; padding:0 20px; background:#fffdfd; color:#000000; border:none; border-radius:30px; font-size:20px; cursor:pointer; white-space:nowrap;">PLAY INTERACTIVE</button>
     </div>
 
     <button id="start-button_2"
@@ -1331,6 +1341,7 @@
     const menuImage = document.querySelector('.menu-image');
     const startButton1 = document.getElementById('start-button_1');
     const startButton2 = document.getElementById('start-button_2');
+    const startButtonFilm = document.getElementById('start-button_film');
     const eyeOverlay = document.getElementById('eye-overlay');
     const eyeStatus = document.getElementById('eye-status');
     const eyeFallback = document.getElementById('eye-fallback');
@@ -1570,10 +1581,12 @@
     const hideIntroButtons = () => {
       if (startButton1) startButton1.style.display = 'none';
       if (startButton2) startButton2.style.display = 'none';
+      if (startButtonFilm) startButtonFilm.style.display = 'none';
       if (skipIntro) skipIntro.style.display = 'none';
     };
 
     const showIntroButtons = () => {
+      if (startButtonFilm) startButtonFilm.style.display = 'block';
       if (startButton1) startButton1.style.display = 'block';
       if (startButton2) startButton2.style.display = 'none';
       if (skipIntro) skipIntro.style.display = 'none';
@@ -1606,19 +1619,6 @@
     const showIntroAlert = () => {
       if (!introAlertOverlay) return;
       introAlertOverlay.style.display = 'flex';
-      
-      // Play video only on mobile
-      const isMobile = window.innerWidth <= 768 || window.matchMedia('(max-width: 768px)').matches;
-      if (isMobile && video) {
-        video.muted = true;
-        video.play().then(() => {
-          video.muted = false;
-        }).catch(err => {
-          console.warn('Autoplay bloqueado, reintentando...');
-          video.muted = true;
-          video.play();
-        });
-      }
     };
 
     const hideIntroAlert = () => {
@@ -1839,6 +1839,7 @@
     startButton1.addEventListener('click', () => {
       if (videoPosterOverlay) videoPosterOverlay.style.display = 'none';
       hideIntroAlert();
+      if (startButtonFilm) startButtonFilm.style.display = 'none';
       // Primero play silenciado (garantizado por el navegador)
       video.muted = true;
       video.play().then(() => {
@@ -1852,6 +1853,14 @@
       startButton1.style.display = 'none';
       skipIntro.style.display = 'block';
     });
+
+    if (startButtonFilm) {
+      startButtonFilm.addEventListener('click', () => {
+        if (videoPosterOverlay) videoPosterOverlay.style.display = 'none';
+        hideIntroAlert();
+        if (startButton1) startButton1.style.display = 'none';
+      });
+    }
 
     startButton2.addEventListener('click', () => {
       if (videoPosterOverlay) videoPosterOverlay.style.display = 'none';
