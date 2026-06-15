@@ -1598,6 +1598,7 @@
       videoPhone.muted = true;
       videoPhone.loop = false;
       videoPhone.currentTime = 0;
+      videoPhone.load();
 
       const cleanupPhoneIntro = () => {
         videoPhone.style.opacity = '0';
@@ -1848,6 +1849,13 @@
         btnEmergencia.style.display = 'block';
       }
     }, 10000);
+
+    setTimeout(() => {
+      if (loadingScreen && loadingScreen.style.display !== 'none') {
+        console.warn('Timeout de carga alcanzado, continuando con la experiencia.');
+        hideLoadingScreen();
+      }
+    }, 14000);
 
     video.addEventListener('ended', () => {
       menuImage.classList.add('visible');
