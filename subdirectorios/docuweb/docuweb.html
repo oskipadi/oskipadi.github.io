@@ -1035,33 +1035,33 @@
     }
   </style>
 
-  <button id="intro-alert-toggle" type="button">Info</button>
-  <div id="intro-alert-overlay" role="dialog" aria-modal="true" aria-labelledby="intro-alert-title">
-    <div id="intro-alert-content">
-      <button id="intro-alert-close" type="button" aria-label="Cerrar aviso">×</button>
-      <div id="intro-alert-wrapper">
-        <h2 id="intro-alert-title">Observatorio de Masculinidades 2025-26</h2>
-        <p>Una urgencia comienza a brotar entre las cuevas del Sacromonte, a orillas de la Alhambra y al margen de la civilización delimitada por la muralla nazarí de Granada…</p>
-        <p>Este abanico de todo lo que implica (o no) la identidad masculina despierta numerosos interrogantes. Como si de un caleidoscopio se tratara, este documental busca ser una ventana de lo que fue vivir y compartir el inicio de este transitar de lo que significa ser hombre para nosotros hoy en día.</p>
-        <p>“No podemos cambiar a los hombres, pero podemos promover, demandar y reafirmar su deseo de cambiar. Podemos respetar la verdad de su ser interior [...] que desean conectar, amar, ser amados”.</p>
-        <p><em>-hooks (2021, p. 23)</em></p>
-      </div>
-    </div>
-  </div>
-
-  <div id="consent-alert-overlay" role="dialog" aria-modal="true" aria-labelledby="consent-alert-title">
-    <div id="consent-alert-content">
-      <button id="consent-alert-close" type="button" aria-label="Cerrar aviso">×</button>
-      <div id="consent-alert-wrapper">
-        <h4 id="consent-alert-title">CONSENTIMIENTO Y AGRESIONES</h4>
-        <p>Este tema, si bien, ha sido revisionado en el observatorio, con la intención de procurar la intimidad compartida por las personas involucradas se ha optado por no registrar esta vez.
-        A continuación os compartimos un proyecto realizado por Sergi —miembro del observatorio— junto con Ana Apausa sobre el consentimiento a dos voces.</p>
-      </div>
-    </div>
-  </div>
-
   <div class="image-container2">
-    <div id="mini-progress" style="position:absolute; top:0; left:0; width:100%; height:12px; background: rgba(255,0,0,0.15); z-index:500; display:none;">
+    <button id="intro-alert-toggle" type="button">Info</button>
+    <div id="intro-alert-overlay" role="dialog" aria-modal="true" aria-labelledby="intro-alert-title">
+      <div id="intro-alert-content">
+        <button id="intro-alert-close" type="button" aria-label="Cerrar aviso">×</button>
+        <div id="intro-alert-wrapper">
+          <h2 id="intro-alert-title">Observatorio de Masculinidades 2025-26</h2>
+          <p>Una urgencia comienza a brotar entre las cuevas del Sacromonte, a orillas de la Alhambra y al margen de la civilización delimitada por la muralla nazarí de Granada…</p>
+          <p>Este abanico de todo lo que implica (o no) la identidad masculina despierta numerosos interrogantes. Como si de un caleidoscopio se tratara, este documental busca ser una ventana de lo que fue vivir y compartir el inicio de este transitar de lo que significa ser hombre para nosotros hoy en día.</p>
+          <p>“No podemos cambiar a los hombres, pero podemos promover, demandar y reafirmar su deseo de cambiar. Podemos respetar la verdad de su ser interior [...] que desean conectar, amar, ser amados”.</p>
+          <p><em>-hooks (2021, p. 23)</em></p>
+        </div>
+      </div>
+    </div>
+
+    <div id="consent-alert-overlay" role="dialog" aria-modal="true" aria-labelledby="consent-alert-title">
+      <div id="consent-alert-content">
+        <button id="consent-alert-close" type="button" aria-label="Cerrar aviso">×</button>
+        <div id="consent-alert-wrapper">
+          <h4 id="consent-alert-title">CONSENTIMIENTO Y AGRESIONES</h4>
+          <p>Este tema, si bien, ha sido revisionado en el observatorio, con la intención de procurar la intimidad compartida por las personas involucradas se ha optado por no registrar esta vez.
+          A continuación os compartimos un proyecto realizado por Sergi —miembro del observatorio— junto con Ana Apausa sobre el consentimiento a dos voces.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="mini-progress" style="position:absolute; top:0; left:0; width:100%; height:12px; background: rgba(255,255,255,0.15); z-index:500; display:none;">
       <div id="mini-progress-bar" style="width:0%; height:100%; background: #ffffff; transition: width 0.1s linear; opacity:0.95;"></div>
     </div>
     <video playsinline id="video-background" poster="intro.jpg" muted
@@ -1074,10 +1074,6 @@
     <div id="video-poster-overlay"
       style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('intro.jpg') center/cover no-repeat; z-index: 2; pointer-events: none;"></div>
 
-    <video muted playsinline id="video-phone"
-      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; display: none; pointer-events: none; z-index: 4;">
-      <source src="https://customer-rkin2iztax47x9b5.cloudflarestream.com/73abcf25def5df2bb3c56ceb5ce15c71/manifest/video.m3u8" type="application/x-mpegURL">
-    </video>
 
     <!-- Intro branding: appears top-left after loading finishes -->
     <div id="intro-branding" aria-hidden="true">
@@ -1340,7 +1336,6 @@
     const videoPantallaCarga2 = document.getElementById('video-pantalla_carga_2');
     const videoPantallaCarga3 = document.getElementById('video-pantalla_carga_3');
     const videoTouchMe = document.getElementById('video-touch_me');
-    const videoPhone = document.getElementById('video-phone');
     const videoParte4 = document.getElementById('video-parte4');
     const videoOrigenObservatorio = document.getElementById('video-origen_observatorio');
     const fondoAutoretratosImg = document.getElementById('fondo_autoretratos_img');
@@ -1454,9 +1449,6 @@
       { id: 'video-origen_observatorio' }
     ];
 
-    if (isMobileDevice() && videoPhone) {
-      videosToLoad.push({ id: 'video-phone' });
-    }
 
     let loadedCount = 0;
     let countdownTimer = null;
@@ -1584,40 +1576,9 @@
     };
 
     const playPhoneIntroVideo = () => {
-      if (!videoPhone) {
-        showIntroBranding();
-        showIntroPoster();
-        showIntroButtons();
-        return;
-      }
-
-      hideIntroButtons();
-      videoPhone.style.display = 'block';
-      videoPhone.style.opacity = '1';
-      videoPhone.style.pointerEvents = 'auto';
-      videoPhone.muted = true;
-      videoPhone.loop = false;
-      videoPhone.currentTime = 0;
-      videoPhone.load();
-
-      const cleanupPhoneIntro = () => {
-        videoPhone.style.opacity = '0';
-        videoPhone.style.pointerEvents = 'none';
-        videoPhone.style.display = 'none';
-        showIntroBranding();
-        showIntroPoster();
-        showIntroButtons();
-      };
-
-      videoPhone.onended = () => {
-        phoneVideoEnded = true;
-        cleanupPhoneIntro();
-        applyMobileRotation();
-      };
-      videoPhone.play().catch((err) => {
-        console.warn('No se pudo reproducir el video móvil phone:', err);
-        cleanupPhoneIntro();
-      });
+      showIntroBranding();
+      showIntroPoster();
+      showIntroButtons();
     };
 
     const hideLoadingScreen = () => {
@@ -1625,12 +1586,8 @@
       setTimeout(() => {
         loadingScreen.style.display = 'none';
         video.currentTime = 0;
-        if (isMobileDevice()) {
-          playPhoneIntroVideo();
-        } else {
-          showIntroBranding();
-          showIntroAlert();
-        }
+        playPhoneIntroVideo();
+        showIntroAlert();
       }, 1000);
     };
 
