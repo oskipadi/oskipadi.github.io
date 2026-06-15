@@ -120,17 +120,6 @@
       text-shadow: 0 0 2px rgba(204, 252, 134, 0.5);
     }
 
-    @media (max-width: 768px) {
-      .site-title {
-        font-size: 20px;
-        max-width: 60px;
-      }
-
-      .flecha_izq {
-        font-size: 1.75em;
-      }
-    }
-
     @keyframes moverFlecha {
       0%   { transform: translateX(0); }
       50%  { transform: translateX(-20px); }
@@ -405,62 +394,7 @@
       transform: scale(1.1);
     }
 
-    @media (max-width: 768px) {
-      .btn-consent-arrow {
-        display: flex;
-        margin-left: auto;
-        flex-shrink: 0;
-      }
 
-      #intro-branding {
-        left: -0.5em;
-      }
-
-      #start-button_2 {
-        left: 50%;
-        transform: translate(-50%, -50%);
-        top: 50%;
-      }
-
-      @media (orientation: landscape) {
-        #consent-overlay .consent-video {
-          max-height: 180px;
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          flex-direction: row;
-        }
-
-        #consent-overlay .consent-video iframe {
-          max-height: 140px;
-          flex: 0 1 auto;
-          width: auto;
-          max-width: 50%;
-        }
-
-        .btn-consent-arrow {
-          margin-left: auto;
-          flex-shrink: 0;
-        }
-      }
-    }
-
-    @media (max-width: 768px) {
-      #consent-overlay .consent-panel {
-        width: min(100%, 92%);
-        max-width: 100%;
-      }
-
-      #consent-overlay .consent-block {
-        padding: 20px;
-      }
-
-      #consent-overlay .consent-video iframe {
-        width: 25%;
-        max-width: 25%;
-        max-height: 45vh;
-      }
-    }
 
     #consent-overlay .consent-block p {
       margin: 0;
@@ -869,114 +803,8 @@
       box-shadow: 0 10px 24px rgba(0,0,0,0.35);
     }
 
-    @media (max-width: 768px) {
-      .btn-continuar {
-        position: fixed;
-        bottom: 18px;
-        right: 18px;
-        left: auto;
-        transform: none;
-        width: 62px;
-        height: 62px;
-        padding: 0;
-        border-radius: 50%;
-        font-size: 32px;
-        line-height: 1;
-        display: none;
-        background: rgba(204, 252, 134, 0.95);
-        color: #08070f;
-        box-shadow: 0 14px 30px rgba(0,0,0,0.35);
-      }
-
-      .btn-continuar-text {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
-      }
-
-      .btn-continuar-icon {
-        display: block;
-      }
-
-      .btn-continuar.show {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-    }
-
     .btn-mobile-arrow {
       display: none;
-      position: absolute;
-      right: 18px;
-      bottom: 18px;
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      border: none;
-      background: rgba(255, 255, 255, 0.95);
-      color: #000000;
-      font-size: 28px;
-      font-weight: 800;
-      box-shadow: 0 14px 24px rgba(0, 0, 0, 0.18);
-      cursor: pointer;
-      align-items: center;
-      justify-content: center;
-      z-index: 60;
-      display: flex;
-    }
-
-   
-
-    @media (max-width: 768px) {
-      @media (orientation: landscape) {
-        #btn-mobile-autoretratos-next {
-          position: fixed;
-          right: 20px;
-          bottom: 20px;
-          top: auto;
-          transform: none;
-          z-index: 100;
-        }
-      }
-    }
-
-    @media (max-width: 768px) {
-      .btn-mobile-arrow {
-        display: flex;
-      }
-
-      .btn-continuar {
-        bottom: auto;
-        position: static;
-        transform: none;
-        margin: 12px auto 0;
-      }
-
-      #fondo-swiper-left {
-        width: min(72%, 320px);
-      }
-
-      #swiper-wrapper-mapeo {
-        padding-bottom: 80px;
-      }
-
-      /* En modo horizontal en móvil */
-      @media (orientation: landscape) {
-        .btn-mobile-arrow {
-          position: fixed;
-          right: 20px;
-          bottom: auto;
-          top: 50%;
-          transform: translateY(-50%);
-        }
-      }
     }
   </style>
 </head>
@@ -1009,20 +837,7 @@
         transform: rotate(360deg);
       }
     }
-    .image-container2.rotated-mobile {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vh;
-      height: 100vw;
-      transform-origin: top left;
-      transform: rotate(90deg) translateX(100vw);
-      overflow: hidden;
-      touch-action: manipulation;
-      z-index: 1;
-      max-width: none;
-      max-height: none;
-    }
+
 
     .menu-image {
       position: absolute;
@@ -1035,26 +850,57 @@
     }
 
     .button-divider {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 3px;
+      width: 2px;
       height: 100px;
       background: #ffffff;
       opacity: 0.85;
       border-radius: 1px;
     }
 
-    @media (orientation: landscape) {
-      .image-container2.rotated-mobile {
-        position: relative;
-        width: 100%;
-        height: auto;
-        transform: none;
-        overflow: visible;
-      }
+    #film-overlay .film-panel {
+      width: min(1000px, 100%);
+      max-width: 1000px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      align-items: stretch;
+      justify-content: center;
+      color: #ffffff;
     }
+
+    #film-overlay .film-block {
+      width: 100%;
+      flex: 1 1 auto;
+      box-sizing: border-box;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+    }
+
+    #film-overlay .film-video {
+      border-radius: 28px;
+      overflow: hidden;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: transparent;
+      padding: 12px;
+    }
+
+    #film-overlay .film-video iframe {
+      width: 100%;
+      max-width: 1362px;
+      aspect-ratio: 16 / 9;
+      border: none;
+      border-radius: 22px;
+    }
+
+
   </style>
 
   <div class="image-container2">
@@ -1105,12 +951,23 @@
 
     <img src="menu.png" alt="menu" class="menu-image" style="z-index: 2;">
 
-    <div id="intro-button-group" style="position:absolute; left:50%; top:70%; transform:translate(-50%,-50%); width:auto; height:60px; z-index:10;">
-      <span class="button-divider" aria-hidden="true"></span>
+    <div id="intro-button-group" style="position:absolute; left:50%; top:70%; transform:translate(-50%,-50%); display:flex; justify-content:center; align-items:center; gap:12px; width:auto; height:60px; z-index:10;">
       <button id="start-button_film" type="button"
-        style="position:absolute; right:calc(50% + 12px); top:50%; transform:translateY(-50%); min-width:140px; width:auto; height:60px; padding:0 20px; background:#fffdfd; color:#000000; border:none; border-radius:30px; font-size:20px; cursor:pointer; white-space:nowrap;">FILM</button>
+        style="min-width:140px; width:auto; height:60px; padding:0 20px; background:#fffdfd; color:#000000; border:none; border-radius:30px; font-size:20px; cursor:pointer; white-space:nowrap;">FILM</button>
+      <span class="button-divider" aria-hidden="true"></span>
       <button id="start-button_1" type="button"
-        style="position:absolute; left:calc(50% + 12px); top:50%; transform:translateY(-50%); min-width:190px; width:auto; height:60px; padding:0 20px; background:#fffdfd; color:#000000; border:none; border-radius:30px; font-size:20px; cursor:pointer; white-space:nowrap;">PLAY INTERACTIVE</button>
+        style="min-width:190px; width:auto; height:60px; padding:0 20px; background:#fffdfd; color:#000000; border:none; border-radius:30px; font-size:20px; cursor:pointer; white-space:nowrap;">PLAY INTERACTIVE</button>
+    </div>
+
+    <div id="film-overlay" style="display:none; position:fixed; inset:0; z-index:1015; background:rgba(0,0,0,0.85); color:#ffffff; justify-content:center; align-items:center; padding:20px;">
+      <div class="film-panel">
+        <div class="film-block film-video">
+          <iframe id="film-video-frame" src="https://www.youtube.com/embed/7BuJj34GHO4" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture" title="FILM"></iframe>
+        </div>
+        <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
+          <button id="film-close" type="button" style="padding:12px 20px; background: transparent; color:#ffffff; border:1px solid rgba(255,255,255,0.65); border-radius:999px; cursor:pointer;">Volver</button>
+        </div>
+      </div>
     </div>
 
     <button id="start-button_2"
@@ -1355,6 +1212,9 @@
     const startButton1 = document.getElementById('start-button_1');
     const startButton2 = document.getElementById('start-button_2');
     const startButtonFilm = document.getElementById('start-button_film');
+    const filmOverlay = document.getElementById('film-overlay');
+    const filmClose = document.getElementById('film-close');
+    const buttonDivider = document.querySelector('.button-divider');
     const eyeOverlay = document.getElementById('eye-overlay');
     const eyeStatus = document.getElementById('eye-status');
     const eyeFallback = document.getElementById('eye-fallback');
@@ -1371,27 +1231,31 @@
     const btnContinuarAutoretratos = document.getElementById('btn-continuar-autoretratos');
 
     const videoBackground = document.getElementById('video-background');
-    const imageContainer2 = document.querySelector('.image-container2');
+    
+    // Helper function for mobile detection
     const isMobileDevice = () => window.matchMedia('(max-width: 768px)').matches;
-    const isLandscapeMobile = () => window.matchMedia('(orientation: landscape)').matches || window.innerWidth > window.innerHeight;
-    const applyMobileRotation = () => {
-      if (!imageContainer2 || !isMobileDevice()) {
-        if (imageContainer2) imageContainer2.classList.remove('rotated-mobile');
-        document.body.style.overflow = '';
-        return;
-      }
-      const isLandscape = isLandscapeMobile();
-      if (isLandscape) {
-        imageContainer2.classList.remove('rotated-mobile');
-        document.body.style.overflow = '';
-      } else {
-        imageContainer2.classList.add('rotated-mobile');
+    
+    // Apply page rotation for portrait orientation on mobile
+    const applyPageRotation = () => {
+      const isMobile = window.matchMedia('(max-width: 768px)').matches;
+      const isPortrait = window.innerHeight > window.innerWidth;
+      
+      if (isMobile && isPortrait) {
+        document.body.style.transform = 'rotate(90deg)';
+        document.body.style.transformOrigin = 'center';
+        document.body.style.width = '100vh';
+        document.body.style.height = '100vw';
         document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.transform = 'none';
+        document.body.style.width = '';
+        document.body.style.height = '';
+        document.body.style.overflow = '';
       }
     };
-    window.addEventListener('orientationchange', applyMobileRotation);
-    window.addEventListener('resize', applyMobileRotation);
-    applyMobileRotation();
+    window.addEventListener('orientationchange', applyPageRotation);
+    window.addEventListener('resize', applyPageRotation);
+    applyPageRotation();
     const hlsVideos = Array.from(document.querySelectorAll('video')).map(videoEl => {
       if (videoEl.id === 'video-phone' && !isMobileDevice()) {
         return null;
@@ -1849,10 +1713,27 @@
       skipIntro.style.display = 'none';
     });
 
+    const showFilmOverlay = () => {
+      if (filmOverlay) filmOverlay.style.display = 'flex';
+      if (buttonDivider) buttonDivider.style.display = 'none';
+      if (startButton1) startButton1.style.display = 'none';
+      if (startButtonFilm) startButtonFilm.style.display = 'none';
+      if (skipIntro) skipIntro.style.display = 'none';
+    };
+
+    const hideFilmOverlay = () => {
+      if (filmOverlay) filmOverlay.style.display = 'none';
+      if (buttonDivider) buttonDivider.style.display = 'block';
+      if (startButtonFilm) startButtonFilm.style.display = 'block';
+      if (startButton1) startButton1.style.display = 'block';
+    };
+
     startButton1.addEventListener('click', () => {
+      hideFilmOverlay();
       if (videoPosterOverlay) videoPosterOverlay.style.display = 'none';
       hideIntroAlert();
       if (startButtonFilm) startButtonFilm.style.display = 'none';
+      if (buttonDivider) buttonDivider.style.display = 'none';
       // Primero play silenciado (garantizado por el navegador)
       video.muted = true;
       video.play().then(() => {
@@ -1868,10 +1749,18 @@
     });
 
     if (startButtonFilm) {
-      startButtonFilm.addEventListener('click', () => {
+      startButtonFilm.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
         if (videoPosterOverlay) videoPosterOverlay.style.display = 'none';
         hideIntroAlert();
-        if (startButton1) startButton1.style.display = 'none';
+        showFilmOverlay();
+      });
+    }
+
+    if (filmClose) {
+      filmClose.addEventListener('click', () => {
+        hideFilmOverlay();
       });
     }
 
