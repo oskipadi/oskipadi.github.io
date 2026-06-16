@@ -900,6 +900,38 @@
       border-radius: 22px;
     }
 
+    #video-phone {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    #portrait-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 2100;
+      background: #000000;
+      color: #ffffff;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 24px;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: clamp(20px, 3vw, 34px);
+      line-height: 1.5;
+    }
+
+    #portrait-overlay p {
+      margin: 0;
+      max-width: 760px;
+      font-weight: 700;
+    }
 
   </style>
 
@@ -942,6 +974,15 @@
     <div id="video-poster-overlay"
       style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('intro.jpg') center/cover no-repeat; z-index: 2; pointer-events: none;"></div>
 
+    <video muted playsinline id="video-phone">
+      <source src="https://customer-rkin2iztax47x9b5.cloudflarestream.com/7c6f8a3078e263da55b147ff6d1c51be/manifest/video.m3u8" type="application/x-mpegURL">
+    </video>
+
+    <div id="portrait-overlay" aria-hidden="true">
+      <div>
+        <p>Este contenido solo se reproducirá en horizontal. Por favor, gira tu dispositivo para continuar...</p>
+      </div>
+    </div>
 
     <!-- Intro branding: appears top-left after loading finishes -->
     <div id="intro-branding" aria-hidden="true">
@@ -1231,34 +1272,65 @@
     const btnContinuarAutoretratos = document.getElementById('btn-continuar-autoretratos');
 
     const videoBackground = document.getElementById('video-background');
-    
+    const phoneVideo = document.getElementById('video-phone');
+    const portraitOverlay = document.getElementById('portrait-overlay');
+
     // Helper function for mobile detection
     const isMobileDevice = () => window.matchMedia('(max-width: 768px)').matches;
-    
-    // Apply page rotation for portrait orientation on mobile
-    const applyPageRotation = () => {
-      const isMobile = window.matchMedia('(max-width: 768px)').matches;
-      const isPortrait = window.innerHeight > window.innerWidth;
-      
-      if (isMobile && isPortrait) {
-        document.body.style.transform = 'rotate(90deg)';
-        document.body.style.transformOrigin = 'center';
-        document.body.style.width = '130vw';
-        document.body.style.height = '90vh';
-        document.body.style.objectFit = 'cover';
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.body.style.transform = 'none';
-        document.body.style.width = '';
-        document.body.style.height = '';
-        document.body.style.overflow = '';
-      }
+    const isPortraitMobile = () => isMobileDevice() && window.innerHeight > window.innerWidth;
+
+    const showPortraitOverlay = () => {
+      if (!portraitOverlay) return;
+      portraitOverlay.style.display = 'flex';
+      portraitOverlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
     };
-    window.addEventListener('orientationchange', applyPageRotation);
-    window.addEventListener('resize', applyPageRotation);
-    applyPageRotation();
+
+    const hidePortraitOverlay = () => {
+      if (!portraitOverlay) return;
+      portraitOverlay.style.display = 'none';
+      portraitOverlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    };
+
+    const showPhoneVideo = async () => {
+      if (!phoneVideo) return;
+      if (videoPosterOverlay) videoPosterOverlay.style.display = 'none';
+      if (videoBackground) {
+        videoBackground.classList.add('video-hidden');
+        videoBackground.style.pointerEvents = 'none';
+      }
+      const introGroup = document.getElementById('intro-button-group');
+      if (introGroup) introGroup.style.display = 'none';
+      if (startButton1) startButton1.style.display = 'none';
+      if (startButton2) startButton2.style.display = 'none';
+      if (startButtonFilm) startButtonFilm.style.display = 'none';
+      if (skipIntro) skipIntro.style.display = 'none';
+
+      phoneVideo.style.opacity = '1';
+      phoneVideo.style.pointerEvents = 'auto';
+      phoneVideo.muted = true;
+      phoneVideo.currentTime = 0;
+      try {
+        await phoneVideo.play();
+      } catch (err) {
+        phoneVideo.muted = true;
+        phoneVideo.play().catch(() => {});
+      }
+      currentStage = 'phone';
+    };
+
+    const maybeShowPhoneVideoAfterReload = () => {
+      if (isPortraitMobile()) {
+        showPhoneVideo();
+        return true;
+      }
+      hidePortraitOverlay();
+      return false;
+    };
+
     const hlsVideos = Array.from(document.querySelectorAll('video')).map(videoEl => {
-      if (videoEl.id === 'video-phone' && !isMobileDevice()) {
+      if (videoEl.id === 'video-phone' && !isPortraitMobile()) {
         return null;
       }
       const hlsSource = Array.from(videoEl.querySelectorAll('source')).find(source => {
@@ -1331,6 +1403,7 @@
     // Lógica de Pre-carga de Videos
     const videosToLoad = [
       { id: 'video-background' },
+      { id: 'video-phone' },
       { id: 'video-parte1' },
       { id: 'video-parte2' },
       { id: 'video-pantalla_carga_1' },
@@ -1481,6 +1554,9 @@
       setTimeout(() => {
         loadingScreen.style.display = 'none';
         video.currentTime = 0;
+        if (maybeShowPhoneVideoAfterReload()) {
+          return;
+        }
         playPhoneIntroVideo();
         showIntroAlert();
       }, 1000);
@@ -1966,6 +2042,15 @@
       if (btnContinuarCarga3) btnContinuarCarga3.style.display = 'inline-block';
       hideSkipVideoButton();
     });
+
+    if (phoneVideo) {
+      phoneVideo.addEventListener('ended', () => {
+        phoneVideo.style.opacity = '0';
+        phoneVideo.style.pointerEvents = 'none';
+        phoneVideo.pause();
+        showPortraitOverlay();
+      });
+    }
 
     btnDinamica.addEventListener('click', () => {
       stopCountdown();
