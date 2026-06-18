@@ -2145,6 +2145,9 @@
         consentOverlay.style.zIndex = '1200';
       }
 
+      // Ensure intro buttons do not appear during the consent flow
+      hideIntroButtons();
+
       // small delay to guarantee stacking order, then show the alert on top
       setTimeout(() => {
         showConsentAlert();
@@ -2173,6 +2176,9 @@
         videoOrigenObservatorio.play();
       });
       currentStage = 'origen_observatorio';
+
+      // Keep intro buttons hidden after continuing from consent
+      hideIntroButtons();
     });
 
     document.getElementById('btn-consent-continuar').addEventListener('click', () => {
@@ -2199,6 +2205,9 @@
         videoOrigenObservatorio.play();
       });
       currentStage = 'origen_observatorio';
+
+      // Ensure FILM / PLAY INTERACTIVE buttons remain hidden
+      hideIntroButtons();
     });
 
     if (videoOrigenObservatorio) {
