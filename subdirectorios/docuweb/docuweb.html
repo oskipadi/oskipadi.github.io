@@ -900,6 +900,88 @@
       border-radius: 22px;
     }
 
+    @media (max-width: 768px) {
+      #film-overlay {
+        padding: 12px;
+        align-items: flex-start;
+      }
+
+      #film-overlay .film-panel {
+        gap: 12px;
+        max-width: 100%;
+      }
+
+      #film-overlay .film-block {
+        padding: 10px;
+        border-radius: 18px;
+      }
+
+      #film-overlay .film-video {
+        padding: 0;
+      }
+
+      #film-overlay .film-video iframe {
+        max-width: 100%;
+        width: 100%;
+        height: min(220px, 48vw);
+        aspect-ratio: unset;
+        border-radius: 14px;
+      }
+
+      #film-overlay .film-actions {
+        gap: 10px;
+        flex-direction: column;
+      }
+
+      #film-overlay .film-actions button {
+        width: 100%;
+        max-width: 220px;
+        padding: 10px 16px;
+        font-size: 15px;
+      }
+
+      #consent-overlay {
+        padding: 12px;
+        align-items: flex-start;
+      }
+
+      #consent-overlay .consent-panel {
+        gap: 12px;
+      }
+
+      #consent-overlay .consent-block {
+        padding: 16px;
+        border-radius: 18px;
+      }
+
+      #consent-overlay .consent-video {
+        padding: 0;
+      }
+
+      #consent-overlay .consent-video iframe {
+        max-width: 100%;
+        width: 100%;
+        height: min(220px, 48vw);
+        aspect-ratio: unset;
+        border-radius: 14px;
+      }
+
+      #consent-overlay .consent-text {
+        max-height: 40vh;
+        overflow: auto;
+      }
+
+      #consent-overlay .consent-block p {
+        font-size: 15px;
+        line-height: 1.5;
+      }
+
+      #consent-overlay .consent-title {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+    }
+
     #video-phone {
       position: absolute;
       inset: 0;
@@ -980,7 +1062,8 @@
 
     <div id="portrait-overlay" aria-hidden="true">
       <div>
-        <p>Este contenido solo se reproducirá en horizontal. Por favor, rota tu dispositivo para continuar...</p>
+        <p>Este contenido solo se reproducirá en horizontal.</p> 
+        <p>Por favor, rota tu dispositivo para continuar...</p>
       </div>
     </div>
 
@@ -1005,7 +1088,8 @@
         <div class="film-block film-video">
           <iframe id="film-video-frame" src="https://www.youtube.com/embed/7BuJj34GHO4" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture" title="FILM"></iframe>
         </div>
-        <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
+        <div class="film-actions" style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
+          <button id="film-continue" type="button" style="padding:12px 20px; background:#ffffff; color:#000000; border:none; border-radius:999px; cursor:pointer; font-weight:600;">Continuar</button>
           <button id="film-close" type="button" style="padding:12px 20px; background: transparent; color:#ffffff; border:1px solid rgba(255,255,255,0.65); border-radius:999px; cursor:pointer;">Volver</button>
         </div>
       </div>
@@ -1255,6 +1339,7 @@
     const startButtonFilm = document.getElementById('start-button_film');
     const filmOverlay = document.getElementById('film-overlay');
     const filmClose = document.getElementById('film-close');
+    const filmContinue = document.getElementById('film-continue');
     const buttonDivider = document.querySelector('.button-divider');
     const eyeOverlay = document.getElementById('eye-overlay');
     const eyeStatus = document.getElementById('eye-status');
@@ -1879,6 +1964,12 @@
 
     if (filmClose) {
       filmClose.addEventListener('click', () => {
+        hideFilmOverlay();
+      });
+    }
+
+    if (filmContinue) {
+      filmContinue.addEventListener('click', () => {
         hideFilmOverlay();
       });
     }
