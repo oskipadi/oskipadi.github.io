@@ -568,41 +568,6 @@
       align-items: center;
     }
 
-    @media (max-width: 768px) and (orientation: landscape) {
-      .swiper-container-wrapper .swiper-button-next,
-      .swiper-container-wrapper .swiper-button-prev {
-        width: 34px;
-        height: 34px;
-        margin-top: 0;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.82);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
-        color: #000000;
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
-      }
-
-      .swiper-container-wrapper .swiper-button-next {
-        right: 10px;
-        top: auto;
-        bottom: 12px;
-        transform: none;
-      }
-
-      .swiper-container-wrapper .swiper-button-prev {
-        left: 10px;
-        top: auto;
-        bottom: 12px;
-        transform: none;
-      }
-
-      .swiper-container-wrapper .swiper-button-next::after,
-      .swiper-container-wrapper .swiper-button-prev::after {
-        font-size: 14px;
-        font-weight: 700;
-      }
-    }
-
     .swiper-slide img {
       display: block;
       width: 100%;
@@ -974,47 +939,6 @@
         padding: 10px 16px;
         font-size: 15px;
       }
-
-      #consent-overlay {
-        padding: 12px;
-        align-items: flex-start;
-      }
-
-      #consent-overlay .consent-panel {
-        gap: 12px;
-      }
-
-      #consent-overlay .consent-block {
-        padding: 16px;
-        border-radius: 18px;
-      }
-
-      #consent-overlay .consent-video {
-        padding: 0;
-      }
-
-      #consent-overlay .consent-video iframe {
-        max-width: 100%;
-        width: 100%;
-        height: min(220px, 48vw);
-        aspect-ratio: unset;
-        border-radius: 14px;
-      }
-
-      #consent-overlay .consent-text {
-        max-height: 40vh;
-        overflow: auto;
-      }
-
-      #consent-overlay .consent-block p {
-        font-size: 15px;
-        line-height: 1.5;
-      }
-
-      #consent-overlay .consent-title {
-        font-size: 24px;
-        margin-bottom: 10px;
-      }
     }
 
     #video-phone {
@@ -1097,8 +1021,7 @@
 
     <div id="portrait-overlay" aria-hidden="true">
       <div>
-        <p>Este contenido solo se reproducirá en horizontal.</p> 
-        <p>Por favor, rota tu dispositivo para continuar...</p>
+        <p>Rota tu dispositivo en horizontalpara continuar...</p>
       </div>
     </div>
 
