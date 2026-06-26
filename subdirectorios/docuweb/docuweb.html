@@ -980,7 +980,7 @@
 
     <div id="portrait-overlay" aria-hidden="true">
       <div>
-        <p>Este contenido solo se reproducirá en horizontal. Por favor, gira tu dispositivo para continuar...</p>
+        <p>Este contenido solo se reproducirá en horizontal. Por favor, rota tu dispositivo para continuar...</p>
       </div>
     </div>
 
@@ -1293,8 +1293,46 @@
       document.body.style.overflow = '';
     };
 
+    const pauseAllVideos = () => {
+      document.querySelectorAll('video').forEach(videoEl => {
+        if (videoEl === phoneVideo) {
+          videoEl.pause();
+          videoEl.currentTime = 0;
+          videoEl.style.opacity = '0';
+          videoEl.style.pointerEvents = 'none';
+          return;
+        }
+        if (!videoEl.paused) {
+          videoEl.pause();
+        }
+      });
+    };
+
+    const updateOrientationLock = () => {
+      if (!isMobileDevice()) {
+        hidePortraitOverlay();
+        return;
+      }
+
+      if (isPortraitMobile()) {
+        showPortraitOverlay();
+        pauseAllVideos();
+        return;
+      }
+
+      hidePortraitOverlay();
+    };
+
     const showPhoneVideo = async () => {
       if (!phoneVideo) return;
+      if (isPortraitMobile()) {
+        showPortraitOverlay();
+        phoneVideo.pause();
+        phoneVideo.currentTime = 0;
+        phoneVideo.style.opacity = '0';
+        phoneVideo.style.pointerEvents = 'none';
+        return;
+      }
       if (videoPosterOverlay) videoPosterOverlay.style.display = 'none';
       if (videoBackground) {
         videoBackground.classList.add('video-hidden');
@@ -1322,7 +1360,7 @@
 
     const maybeShowPhoneVideoAfterReload = () => {
       if (isPortraitMobile()) {
-        showPhoneVideo();
+        updateOrientationLock();
         return true;
       }
       hidePortraitOverlay();
@@ -1375,6 +1413,10 @@
     };
 
     initializeHls();
+    window.addEventListener('resize', updateOrientationLock);
+    window.addEventListener('orientationchange', updateOrientationLock);
+    updateOrientationLock();
+
     const skipOrigen = document.getElementById('skip-origen');
     const menuCarga2 = document.getElementById('menu-carga-2');
     const menuCarga3 = document.getElementById('menu-carga-3');
