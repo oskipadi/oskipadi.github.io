@@ -1320,12 +1320,22 @@
 
     // Helper function for mobile detection
     const isMobileDevice = () => window.matchMedia('(max-width: 768px)').matches;
-    const isPortraitMobile = () => isMobileDevice() && window.innerHeight > window.innerWidth;
+    const isPortraitOrientation = () => {
+      if (typeof window.matchMedia === 'function' && window.matchMedia('(orientation: portrait)').matches) {
+        return true;
+      }
+      if (typeof window.screen !== 'undefined' && window.screen.orientation && window.screen.orientation.type) {
+        return window.screen.orientation.type.startsWith('portrait');
+      }
+      return window.innerHeight >= window.innerWidth;
+    };
+    const shouldShowPortraitOverlay = () => isMobileDevice() && isPortraitOrientation();
 
     const showPortraitOverlay = () => {
       if (!portraitOverlay) return;
       portraitOverlay.style.display = 'flex';
       portraitOverlay.setAttribute('aria-hidden', 'false');
+      document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
     };
 
@@ -1333,6 +1343,7 @@
       if (!portraitOverlay) return;
       portraitOverlay.style.display = 'none';
       portraitOverlay.setAttribute('aria-hidden', 'true');
+      document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
     };
 
@@ -1357,7 +1368,7 @@
         return;
       }
 
-      if (isPortraitMobile()) {
+      if (shouldShowPortraitOverlay()) {
         showPortraitOverlay();
         pauseAllVideos();
         return;
@@ -1368,7 +1379,7 @@
 
     const showPhoneVideo = async () => {
       if (!phoneVideo) return;
-      if (isPortraitMobile()) {
+      if (shouldShowPortraitOverlay()) {
         showPortraitOverlay();
         phoneVideo.pause();
         phoneVideo.currentTime = 0;
@@ -1402,7 +1413,7 @@
     };
 
     const maybeShowPhoneVideoAfterReload = () => {
-      if (isPortraitMobile()) {
+      if (shouldShowPortraitOverlay()) {
         updateOrientationLock();
         return true;
       }
@@ -1411,7 +1422,7 @@
     };
 
     const hlsVideos = Array.from(document.querySelectorAll('video')).map(videoEl => {
-      if (videoEl.id === 'video-phone' && !isPortraitMobile()) {
+      if (videoEl.id === 'video-phone' && !shouldShowPortraitOverlay()) {
         return null;
       }
       const hlsSource = Array.from(videoEl.querySelectorAll('source')).find(source => {
