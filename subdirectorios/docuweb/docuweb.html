@@ -873,6 +873,19 @@
       outline: none;
     }
 
+    @media (max-width: 768px) {
+      #start-button_film {
+        display: none !important;
+      }
+
+      #video-pantalla_carga_1,
+      #video-pantalla_carga_3,
+      #menu-carga-1,
+      #menu-carga-3 {
+        display: none !important;
+      }
+    }
+
     @media (max-width: 768px) and (orientation: landscape) {
       .btn-mobile-arrow.is-visible {
         display: flex;
@@ -1394,6 +1407,12 @@
 
     // Helper function for mobile detection
     const isMobileDevice = () => window.matchMedia('(max-width: 768px)').matches;
+    const syncFilmButtonVisibility = () => {
+      if (!startButtonFilm) return;
+      const isMobile = isMobileDevice();
+      startButtonFilm.style.display = isMobile ? 'none' : 'block';
+      startButtonFilm.disabled = isMobile;
+    };
     const isPortraitOrientation = () => {
       if (typeof window.matchMedia === 'function' && window.matchMedia('(orientation: portrait)').matches) {
         return true;
@@ -1437,6 +1456,7 @@
     };
 
     const updateOrientationLock = () => {
+      syncFilmButtonVisibility();
       if (!isMobileDevice()) {
         hidePortraitOverlay();
         return;
@@ -1707,7 +1727,7 @@
     };
 
     const showIntroButtons = () => {
-      if (startButtonFilm) startButtonFilm.style.display = 'block';
+      syncFilmButtonVisibility();
       if (startButton1) startButton1.style.display = 'block';
       if (startButton2) startButton2.style.display = 'none';
       if (skipIntro) skipIntro.style.display = 'none';
@@ -1813,6 +1833,15 @@
           videoParte2.pause();
           videoParte2.style.opacity = '0';
           videoParte2.style.pointerEvents = 'none';
+          if (isMobileDevice()) {
+            videoParte3.style.opacity = '1';
+            videoParte3.style.pointerEvents = 'auto';
+            videoParte3.muted = false;
+            videoParte3.play().catch(() => { videoParte3.muted = true; videoParte3.play(); });
+            currentStage = 'parte3';
+            hideSkipVideoButton();
+            return;
+          }
           videoPantallaCarga1.style.opacity = '1';
           videoPantallaCarga1.style.pointerEvents = 'auto';
           videoPantallaCarga1.muted = false;
@@ -1852,6 +1881,11 @@
           videoParte4.pause();
           videoParte4.style.opacity = '0';
           videoParte4.style.pointerEvents = 'none';
+          if (isMobileDevice()) {
+            continueFromCarga3();
+            hideSkipVideoButton();
+            return;
+          }
           videoPantallaCarga3.style.opacity = '1';
           videoPantallaCarga3.style.pointerEvents = 'auto';
           videoPantallaCarga3.muted = false;
@@ -1971,7 +2005,7 @@
     const hideFilmOverlay = () => {
       if (filmOverlay) filmOverlay.style.display = 'none';
       if (buttonDivider) buttonDivider.style.display = 'block';
-      if (startButtonFilm) startButtonFilm.style.display = 'block';
+      syncFilmButtonVisibility();
       if (startButton1) startButton1.style.display = 'block';
     };
 
@@ -1997,6 +2031,7 @@
 
     if (startButtonFilm) {
       startButtonFilm.addEventListener('click', (event) => {
+        if (isMobileDevice()) return;
         event.preventDefault();
         event.stopPropagation();
         if (videoPosterOverlay) videoPosterOverlay.style.display = 'none';
@@ -2208,6 +2243,10 @@
     videoParte4.addEventListener('ended', () => {
       videoParte4.style.opacity = '0';
       videoParte4.style.pointerEvents = 'none';
+      if (isMobileDevice()) {
+        continueFromCarga3();
+        return;
+      }
       videoPantallaCarga3.style.opacity = '1';
       videoPantallaCarga3.style.pointerEvents = 'auto';
       videoPantallaCarga3.muted = false;
