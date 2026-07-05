@@ -372,6 +372,47 @@
       border-radius: 22px;
     }
 
+    @media (max-width: 768px) and (orientation: landscape) {
+      #consent-overlay {
+        padding: 10px;
+        align-items: center;
+      }
+
+      #consent-overlay .consent-panel {
+        gap: 10px;
+        max-width: min(860px, 100%);
+        width: 100%;
+      }
+
+      #consent-overlay .consent-block {
+        padding: 10px;
+        border-radius: 16px;
+      }
+
+      #consent-overlay .consent-text {
+        display: none;
+      }
+
+      #consent-overlay .consent-video {
+        padding: 0;
+        justify-content: center;
+      }
+
+      #consent-overlay .consent-video iframe {
+        width: min(100%, 560px);
+        max-width: 560px;
+        height: min(220px, 42vw);
+        aspect-ratio: unset;
+        border-radius: 12px;
+      }
+
+      .btn-consent-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 22px;
+      }
+    }
+
     .btn-consent-arrow {
       display: none;
       width: 52px;
@@ -805,6 +846,37 @@
 
     .btn-mobile-arrow {
       display: none;
+      position: fixed;
+      right: max(10px, env(safe-area-inset-right));
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2200;
+      width: 46px;
+      height: 46px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.95);
+      color: #000000;
+      font-size: 24px;
+      line-height: 1;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      opacity: 0.95;
+    }
+
+    .btn-mobile-arrow:hover,
+    .btn-mobile-arrow:focus-visible {
+      transform: translateY(-50%) scale(1.05);
+      outline: none;
+    }
+
+    @media (max-width: 768px) and (orientation: landscape) {
+      .btn-mobile-arrow.is-visible {
+        display: flex;
+      }
     }
   </style>
 </head>
@@ -902,42 +974,44 @@
 
     @media (max-width: 768px) and (orientation: landscape) {
       #film-overlay {
-        padding: 12px;
-        align-items: flex-start;
+        padding: 8px;
+        align-items: center;
       }
 
       #film-overlay .film-panel {
-        gap: 12px;
-        max-width: 100%;
+        gap: 8px;
+        max-width: min(720px, 100%);
+        width: 100%;
       }
 
       #film-overlay .film-block {
-        padding: 10px;
-        border-radius: 18px;
+        padding: 8px;
+        border-radius: 16px;
       }
 
       #film-overlay .film-video {
-        padding: 0;
+        padding: 2px;
       }
 
       #film-overlay .film-video iframe {
         max-width: 100%;
         width: 100%;
-        height: min(220px, 48vw);
+        height: min(180px, 38vw);
         aspect-ratio: unset;
-        border-radius: 14px;
+        border-radius: 12px;
       }
 
       #film-overlay .film-actions {
-        gap: 10px;
-        flex-direction: column;
+        gap: 8px;
+        flex-direction: row;
+        justify-content: center;
       }
 
       #film-overlay .film-actions button {
-        width: 100%;
-        max-width: 220px;
-        padding: 10px 16px;
-        font-size: 15px;
+        width: auto;
+        max-width: 180px;
+        padding: 8px 14px;
+        font-size: 14px;
       }
     }
 
@@ -2343,6 +2417,7 @@
     // Lógica del nuevo menú
     const btnRelaciones = document.getElementById('btn-relaciones');
     const btnContinuarCarga = document.getElementById('btn-continuar-carga');
+    const btnMobileCargaNext = document.getElementById('btn-mobile-carga-next');
     const swiperWrapper = document.getElementById('swiper-wrapper-mapeo');
     const autoretratosTitle = document.getElementById('autoretratos-title');
     const autoretratosTabContainer = document.getElementById('autoretratos-tab-container');
@@ -2516,6 +2591,9 @@
       swiperWrapper.style.display = 'flex';
       document.querySelector('.texto-mapeo').style.display = 'block';
       btnRelaciones.style.display = 'none';
+      if (btnMobileCargaNext) {
+        btnMobileCargaNext.classList.add('is-visible');
+      }
       // Ocultar texto instructivo
       const menuCarga1 = document.getElementById('menu-carga-1');
       const instructText1 = menuCarga1?.querySelector('p:not(.texto-mapeo)');
@@ -2561,6 +2639,10 @@
         // Aquí puedes definir qué pasa al continuar
         const menuCarga1 = document.getElementById('menu-carga-1');
         if (menuCarga1) menuCarga1.style.display = 'none';
+        if (btnMobileCargaNext) {
+          btnMobileCargaNext.classList.remove('is-visible');
+        }
+
         if (videoPantallaCarga1) {
           videoPantallaCarga1.style.opacity = '0';
           videoPantallaCarga1.pause();
