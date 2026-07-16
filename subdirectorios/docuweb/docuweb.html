@@ -886,6 +886,7 @@
       }
     }
 
+    
     @media (max-width: 768px) and (orientation: landscape) {
       .btn-mobile-arrow.is-visible {
         display: flex;
@@ -1713,6 +1714,29 @@
       }
     }
 
+    function showPantallaCarga1() {
+      stopCountdown();
+      if (videoParte2) {
+        videoParte2.style.opacity = '0';
+        videoParte2.style.pointerEvents = 'none';
+      }
+      if (videoPantallaCarga1) {
+        videoPantallaCarga1.style.opacity = '1';
+        videoPantallaCarga1.style.pointerEvents = 'auto';
+        videoPantallaCarga1.muted = false;
+        videoPantallaCarga1.loop = true;
+        videoPantallaCarga1.play().catch(() => {
+          videoPantallaCarga1.muted = true;
+          videoPantallaCarga1.play();
+        });
+      }
+      const menu = document.getElementById('menu-carga-1');
+      if (menu) menu.style.display = 'flex';
+      startCountdown(10, continueFromCarga1);
+      currentStage = null;
+      hideSkipVideoButton();
+    }
+
     const showIntroPoster = () => {
       if (videoPosterOverlay) {
         videoPosterOverlay.style.display = 'block';
@@ -1831,9 +1855,9 @@
           return;
         case 'parte2':
           videoParte2.pause();
-          videoParte2.style.opacity = '0';
-          videoParte2.style.pointerEvents = 'none';
           if (isMobileDevice()) {
+            videoParte2.style.opacity = '0';
+            videoParte2.style.pointerEvents = 'none';
             videoParte3.style.opacity = '1';
             videoParte3.style.pointerEvents = 'auto';
             videoParte3.muted = false;
@@ -1842,15 +1866,7 @@
             hideSkipVideoButton();
             return;
           }
-          videoPantallaCarga1.style.opacity = '1';
-          videoPantallaCarga1.style.pointerEvents = 'auto';
-          videoPantallaCarga1.muted = false;
-          videoPantallaCarga1.loop = true;
-          videoPantallaCarga1.play();
-          document.getElementById('menu-carga-1').style.display = 'flex';
-          startCountdown(10, continueFromCarga1);
-          currentStage = null;
-          hideSkipVideoButton();
+          showPantallaCarga1();
           return;
         case 'parte3':
           videoParte3.pause();
@@ -2209,18 +2225,7 @@
     });
 
     videoParte2.addEventListener('ended', () => {
-      // Saltar directamente a parte_3 sin mostrar mapeos
-      videoParte2.style.opacity = '0';
-      videoParte2.style.pointerEvents = 'none';
-
-      if (videoParte3) {
-        videoParte3.style.opacity = '1';
-        videoParte3.style.pointerEvents = 'auto';
-        videoParte3.muted = false;
-        videoParte3.play().catch(() => { videoParte3.muted = true; videoParte3.play(); });
-        currentStage = 'parte3';
-        showSkipVideoButton();
-      }
+      showPantallaCarga1();
     });
 
     videoParte3.addEventListener('ended', () => {
