@@ -119,6 +119,7 @@ a{
 .derecha {
   transform: translateX(-250%);
   animation-name: cortina-der;
+  color: #F1E9D9;
 }
 
 /* Texto central */
@@ -126,6 +127,10 @@ a{
   opacity: 0;
   animation: aparecer 1s ease forwards;
   animation-delay: 1s;
+}
+
+.texto .resaltado {
+  color: #F1E9D9;
 }
 
 /* Animaciones */
